@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\UniformController;
+use App\Http\Controllers\User\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,15 +20,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Sinh viên
-Route::get('/', [App\Http\Controllers\User\HomeController::class, 'index']);
-Route::get('/uniforms', [App\Http\Controllers\User\UniformController::class, 'index']);
-Route::get('/orders', [App\Http\Controllers\User\OrderController::class, 'index']);
+Route::prefix('user')->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home.index');
 
-// Admin
-Route::prefix('admin')->group(function () {
-    Route::get('/', [App\Http\Controllers\Admin\DashboardController::class, 'index']);
-    Route::get('/uniforms', [App\Http\Controllers\Admin\ManageUniformController::class, 'index']);
-    Route::get('/orders', [App\Http\Controllers\Admin\ManageOrderController::class, 'index']);
-    Route::get('/users', [App\Http\Controllers\Admin\UserController::class, 'index']);
+    Route::get('/store', [UniformController::class, 'store'])->name('uniforms.store');
+    Route::get('/uniforms', [UniformController::class, 'show_detail'])->name('uniforms.show_detail');
+
+    Route::get('/cart', [OrderController::class, 'cart'])->name('orders.cart');
+    Route::get('/payment', [OrderController::class, 'payment'])->name('orders.payment');
+    Route::get('/profile', function () {
+        return view('user.profile');
+    })->name('user.profile');
 });

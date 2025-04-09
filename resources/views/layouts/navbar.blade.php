@@ -1,12 +1,18 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Đồng phục SV</a>
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Trang chủ</a></li>
-                <li class="nav-item"><a class="nav-link" href="/uniforms">Đồng phục</a></li>
-                <li class="nav-item"><a class="nav-link" href="/orders">Đơn đặt</a></li>
-            </ul>
+<!-- Nav -->
+<header class="header">
+    <img src="{{ asset('images/logo3.jpg') }}" alt="" class="logo">
+    <div class="name-header">
+        <p>TRƯỜNG ĐẠI HỌC</p>
+        <p>KỸ THUẬT - CÔNG NGHỆ CẦN THƠ</p>
+        <p>MÃ TRƯỜNG: KCC</p>
+    </div>
+    <div class="nav-header">
+        <div class="nav-pc d-flex justify-content-around icon-link-hover">
+            <a href="{{ route('uniforms.store') }}" class="nav-item"><i class="fas fa-shopping-bag"></i><span>Cửa hàng</span></a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-comment"></i><span>Chat</span></a>
+            <a href="{{ route('home.index') }}" class="nav-item"><i class="fas fa-home"></i><span>Trang chủ</span></a>
+            <a href="{{ route('orders.cart') }}" class="nav-item"><i class="fa-solid fa-cart-shopping"></i><span>Giỏ hàng</span></a>
+            <a href="{{ route('user.profile') }}" class="nav-item"><i class="fas fa-user"></i><span>Hồ sơ</span></a>
         </div>
     </div>
-</nav>
+</header>

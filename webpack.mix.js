@@ -1,4 +1,4 @@
-const mix = require('laravel-mix');
+const mix = require("laravel-mix");
 
 /*
  |--------------------------------------------------------------------------
@@ -11,7 +11,10 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
+mix.js("resources/js/app.js", "public/js")
+    .js("resources/js/main.js", "public/js")
+    .postCss("resources/css/app.css", "public/css", [
         //
-    ]);
+    ])
+    .css("resources/css/styleMobile.css", "public/css")
+    .css("resources/css/stylePC.css", "public/css");
