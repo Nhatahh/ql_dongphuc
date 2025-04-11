@@ -8,7 +8,7 @@
         <!-- Search -->
         <div class="nav-searchShowDetail row d-flex align-items-center">
             <div class="col-1 text-center py-3">
-                <a href="{{ route('uniforms.store') }} class=" text-decoration-none"><i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i></a>
+                <a href="{{ route('uniforms.store') }}" class=" text-decoration-none"><i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i></a>
             </div>
             <div class="col-8">
                 <div class="search input-group">
@@ -17,8 +17,8 @@
                 </div>
             </div>
             <div class="col-3 d-flex justify-content-end">
-                <a class="btn p-3" href="{{ route('orders.cart') }}><div class="cart col-6"><i class="fa-solid fa-cart-shopping"></i></div></a>
-                <a class="btn p-3" href="{{ route('user.profile') }}><div class="profile col-6"><i class="fa-solid fa-user"></i></div></a>
+                <a class="btn p-3" href="{{ route('orders.cart') }}"><div class="cart col-6"><i class="fa-solid fa-cart-shopping"></i></div></a>
+                <a class="btn p-3" href="{{ route('user.profile') }}"><div class="profile col-6"><i class="fa-solid fa-user"></i></div></a>
             </div>
         </div>
 
@@ -58,7 +58,7 @@
                             <option value="">L</option>
                             <option value="">XL</option>
                         </select> 
-                        <a href="{{ route('orders.cart') }} class="action-item addCart addCartPC btn rounded d-flex"><span class="d-block mt-1"><i class="fa-solid fa-cart-plus me-2"></i>Thêm giỏ hàng</span></a>
+                        <a href="{{ route('orders.cart') }}" class="action-item addCart addCartPC btn rounded d-flex"><span class="d-block mt-1"><i class="fa-solid fa-cart-plus me-2"></i>Thêm giỏ hàng</span></a>
                     </div>
 
                     <div class="d-flex justify-content-between align-content-center mt-md-3">
@@ -67,7 +67,7 @@
                             <input type="number" class="form-control text-center" id="product-quantity" value="1" min="1" max="100">
                             <button class="btn btn-outline-secondary" type="button" onclick="">+</button>
                         </div>
-                        <a href="{{ route('orders.payment') }} class="action-item buyNow buyNowPC btn btn-danger rounded d-flex"><span class="d-block mt-1">Mua ngay</span></a>
+                        <a href="{{ route('orders.payment') }}" class="action-item buyNow buyNowPC btn btn-danger rounded d-flex"><span class="d-block mt-1">Mua ngay</span></a>
                     </div>
                 </div>
                 <!-- Description -->

@@ -9,7 +9,7 @@
             <!-- Search -->
             <div class="nav-search row d-flex align-items-center">
                 <div class="col-1 text-center">
-                    <a href="{{ route('uniforms.store') }} class=" text-decoration-none"><i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i></a>
+                    <a href="{{ route('uniforms.store') }}" class=" text-decoration-none"><i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i></a>
                 </div>
                 <div class="col-9">
                     <div class="search input-group">
@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="col-2 d-flex justify-content-end">
-                    <a class="btn p-3" href="{{ route('user.profile') }}><div class="profile"><i class="fa-solid fa-user"></i></div></a>
+                    <a class="btn p-3" href="{{ route('user.profile') }}"><div class="profile"><i class="fa-solid fa-user"></i></div></a>
                 </div>
             </div>
 

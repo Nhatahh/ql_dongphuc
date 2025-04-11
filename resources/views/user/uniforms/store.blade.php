@@ -14,8 +14,8 @@
                 </div>
             </div>
             <div class="col-3 d-flex justify-content-end">
-                <a class="btn p-3" href="{{ route('orders.cart') }}><div class="cart col-6"><i class="fa-solid fa-cart-shopping"></i></div></a>
-                <a class="btn p-3" href="{{ route('user.profile') }}><div class="profile col-6"><i class="fa-solid fa-user"></i></div></a>
+                <a class="btn p-3" href="{{ route('orders.cart') }}"><div class="cart col-6"><i class="fa-solid fa-cart-shopping"></i></div></a>
+                <a class="btn p-3" href="{{ route('user.profile') }}"><div class="profile col-6"><i class="fa-solid fa-user"></i></div></a>
             </div>
         </div>
         <!-- List Menu -->
@@ -64,112 +64,112 @@
         <div class="product-list">
             <div class="row">
                 <div class="col-6 col-md-3 mt-4">
-                    <a href="{{ route('uniforms.show_detail') }} class="text-decoration-none text-dark">
+                    <a href="{{ route('uniforms.show_detail') }}" class="text-decoration-none text-dark">
                         <div class="product-item card">
                             <img src="{{ asset('images/product3.jpg') }}" class="card-img-top" alt="...">
                             <div class="card-body">
                               <h5 class="card-title">Đồng phục sinh viên</h5>
                               <p class="card-text">Trẻ trung, năng động và tràn đầy nằng lượng</p>
                               <div class="text-center">
-                                <a href="{{ route('orders.cart') }} class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
+                                <a href="{{ route('orders.cart') }}" class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
                               </div>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-6 col-md-3 mt-4">
-                    <a href="{{ route('uniforms.show_detail') }} class="text-decoration-none text-dark">
+                    <a href="{{ route('uniforms.show_detail') }}" class="text-decoration-none text-dark">
                         <div class="product-item card">
                             <img src="{{ asset('images/product2.jpg') }}" class="card-img-top" alt="...">
                             <div class="card-body">
                               <h5 class="card-title">Đồng phục sinh viên</h5>
                               <p class="card-text">Trẻ trung, năng động và tràn đầy nằng lượng</p>
                               <div class="text-center">
-                                <a href="{{ route('orders.cart') }} class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
+                                <a href="{{ route('orders.cart') }}" class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
                               </div>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-6 col-md-3 mt-4">
-                    <a href="{{ route('uniforms.show_detail') }} class="text-decoration-none text-dark">
+                    <a href="{{ route('uniforms.show_detail') }}" class="text-decoration-none text-dark">
                         <div class="product-item card">
                             <img src="{{ asset('images/product1.jpg') }}" class="card-img-top" alt="...">
                             <div class="card-body">
                               <h5 class="card-title">Đồng phục sinh viên</h5>
                               <p class="card-text">Trẻ trung, năng động và tràn đầy nằng lượng</p>
                               <div class="text-center">
-                                <a href="{{ route('orders.cart') }} class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
+                                <a href="{{ route('orders.cart') }}" class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
                               </div>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-6 col-md-3 mt-4">
-                    <a href="{{ route('uniforms.show_detail') }} class="text-decoration-none text-dark">
+                    <a href="{{ route('uniforms.show_detail') }}" class="text-decoration-none text-dark">
                         <div class="product-item card">
                             <img src="{{ asset('images/product1.jpg') }}" class="card-img-top" alt="...">
                             <div class="card-body">
                               <h5 class="card-title">Đồng phục sinh viên</h5>
                               <p class="card-text">Trẻ trung, năng động và tràn đầy nằng lượng</p>
                               <div class="text-center">
-                                <a href="{{ route('orders.cart') }} class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
+                                <a href="{{ route('orders.cart') }}" class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
                               </div>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-6 col-md-3 mt-4">
-                    <a href="{{ route('uniforms.show_detail') }} class="text-decoration-none text-dark">
+                    <a href="{{ route('uniforms.show_detail') }}" class="text-decoration-none text-dark">
                         <div class="product-item card">
                             <img src="{{ asset('images/product2.jpg') }}" class="card-img-top" alt="...">
                             <div class="card-body">
                               <h5 class="card-title">Đồng phục sinh viên</h5>
                               <p class="card-text">Trẻ trung, năng động và tràn đầy nằng lượng</p>
                               <div class="text-center">
-                                <a href="{{ route('orders.cart') }} class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
+                                <a href="{{ route('orders.cart') }}" class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
                               </div>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-6 col-md-3 mt-4">
-                    <a href="{{ route('uniforms.show_detail') }} class="text-decoration-none text-dark">
+                    <a href="{{ route('uniforms.show_detail') }}" class="text-decoration-none text-dark">
                         <div class="product-item card">
                             <img src="{{ asset('images/product3.jpg') }}" class="card-img-top" alt="...">
                             <div class="card-body">
                               <h5 class="card-title">Đồng phục sinh viên</h5>
                               <p class="card-text">Trẻ trung, năng động và tràn đầy nằng lượng</p>
                               <div class="text-center">
-                                <a href="{{ route('orders.cart') }} class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
+                                <a href="{{ route('orders.cart') }}" class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
                               </div>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-6 col-md-3 mt-4">
-                    <a href="{{ route('uniforms.show_detail') }} class="text-decoration-none text-dark">
+                    <a href="{{ route('uniforms.show_detail') }}" class="text-decoration-none text-dark">
                         <div class="product-item card">
                             <img src="{{ asset('images/product1.jpg') }}" class="card-img-top" alt="...">
                             <div class="card-body">
                               <h5 class="card-title">Đồng phục sinh viên</h5>
                               <p class="card-text">Trẻ trung, năng động và tràn đầy nằng lượng</p>
                               <div class="text-center">
-                                <a href="{{ route('orders.cart') }} class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
+                                <a href="{{ route('orders.cart') }}" class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
                               </div>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="col-6 col-md-3 mt-4">
-                    <a href="{{ route('uniforms.show_detail') }} class="text-decoration-none text-dark">
+                    <a href="{{ route('uniforms.show_detail') }}" class="text-decoration-none text-dark">
                         <div class="product-item card">
                             <img src="{{ asset('images/product2.jpg') }}" class="card-img-top" alt="...">
                             <div class="card-body">
                               <h5 class="card-title">Đồng phục sinh viên</h5>
                               <p class="card-text">Trẻ trung, năng động và tràn đầy nằng lượng</p>
                               <div class="text-center">
-                                <a href="{{ route('orders.cart') }} class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
+                                <a href="{{ route('orders.cart') }}" class="order text-white btn btn-primary card-link mt-4"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
                               </div>
                             </div>
                         </div>

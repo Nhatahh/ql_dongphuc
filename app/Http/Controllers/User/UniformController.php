@@ -11,7 +11,7 @@ class UniformController extends Controller
         return view('user.uniforms.store');
     }
 
-    public function show_detail($id) {
+    public function show_detail() {
         return view('user.uniforms.show_detail');
     }
 }
