@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Body -->
-    <div class="body container p-3">
+    <div class="body container">
         <!-- Search -->
         <div class="nav-search row d-flex align-items-center bg-white p-2">
             <div class="col-9">
