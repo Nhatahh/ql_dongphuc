@@ -87,10 +87,10 @@ ul {
     font-size: 1.6rem;
 }
 
-.body {
+/* .body {
     margin-bottom: 100px;
     overflow: hidden;
-}
+} */
 
 .card-title {
     display: -webkit-box;
@@ -438,6 +438,7 @@ ul {
 
 .nav-item.active {
     color: rgb(255, 3, 3);
-    background-color: #a200ff; /* Bootstrap primary color */
+    background-color: #a200ff; 
     font-weight: bold;
 }
+

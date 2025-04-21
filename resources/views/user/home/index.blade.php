@@ -4,12 +4,11 @@
 
 @section('content')
     <!-- Body -->
-    <div class="body container p-3">
+    <div class="body container">
         <div class="title text-center">
             <h5><strong>ĐỒNG PHỤC SINH VIÊN</strong></h5>
             <h4>HỆ THỐNG ĐẶT MUA ĐỒNG PHỤC NHANH CHÓNG VÀ TIỆN LỢI</h4>
         </div>
-    
         <!-- Slider -->
         <div class="row mt-4">
             <div class="col-12">
