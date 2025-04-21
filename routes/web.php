@@ -4,6 +4,8 @@ use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UniformController;
 use App\Http\Controllers\User\OrderController;
+use App\Http\Controllers\Admin\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +36,17 @@ Route::prefix('user')->group(function () {
 
 
     Route::get('/payment', [OrderController::class, 'payment'])->name('orders.payment');
-    Route::get('/profile', function () {
-        return view('user.profile');
-    })->name('user.profile');
+    // Route::get('/profile', function () {
+    //     return view('user.profile');
+    // })->name('user.profile');
+    Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::get('users', [UserController::class, 'index'])->name('user.index');
+
+
+
+
+
+
+
+
 });
