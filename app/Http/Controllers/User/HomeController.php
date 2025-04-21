@@ -4,11 +4,14 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 class HomeController extends Controller
 {
-    public function index()
-    {
-        return view('user.home.index');
+    public function index() {
+        $sanphams = DB::table('sanpham')->get();
+        return view('user.home.index', compact('sanphams'));
     }
+
 }
