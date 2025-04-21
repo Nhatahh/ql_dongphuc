@@ -28,7 +28,9 @@ Route::prefix('user')->group(function () {
     Route::get('/store', [UniformController::class, 'store'])->name('uniforms.store');
     Route::get('/dm_select2',[UniformController::class,'dm_select2']);
 
-    Route::get('/show_detail', [UniformController::class, 'show_detail'])->name('uniforms.show_detail');
+    // Route::get('/show_detail', [UniformController::class, 'show_detail'])->name('uniforms.show_detail');
+    Route::get('/show_detail/{sp_id}', [UniformController::class, 'showDetail'])->name('uniforms.show_detail');
+
 
     Route::get('/cart', [OrderController::class, 'cart'])->name('orders.cart');
     // Route::get('/cart', [OrderController::class, 'cart'])->name('orders.cart')->middleware('auth');

@@ -57,7 +57,33 @@ $(".btn-update-quantity").on("click", function () {
         },
     });
 });
-
+function showProductDetail(sp_id) {
+    $.ajax({
+        url: "/show_detail/" + sp_id, // Gửi yêu cầu tới route đã định nghĩa
+        type: "GET",
+        success: function (res) {
+            if (res.status === "success") {
+                // Xử lý dữ liệu sản phẩm trả về
+                const sanpham = res.sanpham;
+                const detailHtml = `
+                        <h3>${sanpham.tensp}</h3>
+                        <img src="{{ asset('images/') }}/${sanpham.image_url}" alt="${sanpham.tensp}" class="img-fluid">
+                        <p><strong>Giá:</strong> ${sanpham.gia} VND</p>
+                        <p><strong>Mô tả:</strong> ${sanpham.mota}</p>
+                        <p><strong>Size:</strong> ${sanpham.size}</p>
+                    `;
+                // Hiển thị thông tin chi tiết sản phẩm trong modal hoặc nơi bạn muốn
+                $("#product-detail-container").html(detailHtml); // Ví dụ sử dụng modal hoặc một div cụ thể
+                $("#product-detail-modal").modal("show"); // Hiển thị modal nếu có
+            } else {
+                toastr.error(res.message); // Hiển thị lỗi nếu không tìm thấy sản phẩm
+            }
+        },
+        error: function () {
+            toastr.error("Có lỗi xảy ra khi tải chi tiết sản phẩm.");
+        },
+    });
+}
 // function changeQuantity(button, delta) {
 //     const input = button.parentElement.querySelector("input[type=number]");
 //     let value = parseInt(input.value) + delta;

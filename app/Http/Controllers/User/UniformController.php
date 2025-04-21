@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use App\Models\Product;
 
 class UniformController extends Controller
 {
@@ -40,16 +41,42 @@ class UniformController extends Controller
         return view('user.uniforms.store', compact('sanphams'));
     }
 
-    public function show_detail() {
-        $chitietSanpham = DB::table('sanpham')
-            ->join('kho', 'kho.sp_id', '=', 'sanpham.sp_id')
-            ->join('danhmuc', 'danhmuc.dm_id', '=', 'sanpham.sp_id')
-            ->join('danhgia', 'danhgia.sp_id', '=', 'sanpham.sp_id')
-            ->join('users', 'users.user_id', '=', 'danhgia.user_id')
-            ->where('sanpham.id', 1)
+    public function showDetail($sp_id)
+    {
+        $ct_Spham = DB::table('sanpham as sp')
+            ->leftJoin('danhmuc', 'sp.dm_id', '=', 'danhmuc.dm_id')
+            ->leftJoin('nhasanxuat', 'sp.nsx_id', '=', 'nhasanxuat.nsx_id')
+            ->leftJoin('kho', 'kho.sp_id', '=', 'sp.sp_id')
+            ->leftJoin('size', 'size.size_id', '=', 'kho.size_id')
+            ->leftJoin('mau', 'mau.mau_id', '=', 'kho.mau_id')
+            ->leftJoin('danhgia', 'danhgia.kho_id', '=', 'kho.kho_id')
+            ->leftJoin('users', 'users.user_id', '=', 'danhgia.user_id')
+            ->where('sp.sp_id', $sp_id)
+            ->select(
+                'sp.*', 
+                'danhmuc.ten as ten_danhmuc', 
+                'nhasanxuat.ten as ten_nsx', 
+                'kho.tonkho', 
+                'size.ten as ten_size', 
+                'mau.ten as ten_mau', 
+                'users.username as username',
+                'danhgia.created_at as created_at',
+                
+            )
             ->first();
 
-        return view('user.uniforms.show_detail', compact('chitietSanpham'));
+        if (!$ct_Spham) {
+            abort(404, 'Không tìm thấy sản phẩm');
+        }
+
+        $sizes = DB::table('size')->get();
+
+        $danhgias = DB::table('danhgia as dg')
+            ->leftJoin('kho', 'kho.kho_id', '=', 'dg.kho_id')
+            ->where('sp_id', $sp_id)
+            ->get();
+
+        return view('user.uniforms.show_detail', compact('ct_Spham', 'sizes', 'danhgias'));
     }
 
     public function dm_select2()
