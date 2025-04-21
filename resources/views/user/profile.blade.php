@@ -21,9 +21,9 @@
 
         <div class="user-info d-flex flex-column align-items-center">
             <img class="img-fluid mb-2 mt-4" src="../assets/img/slider2.jpg" alt="">
-            <h3>User1</h3>
-            <p>0394563211</p>
-            <p>abc@gmail.com</p>
+            <h3>{{ $user->username }}</h3>
+            <p>{{ $user->sdt }}</p>
+            <p>{{ $user->email }}</p>
         </div>
 
         <div class="profile-active d-flex justify-content-center mt-5 text-center">
