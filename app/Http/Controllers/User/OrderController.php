@@ -12,6 +12,6 @@ class OrderController extends Controller
     }
 
     public function payment() {
-        return view('user.order.payment');
+        return view('user.orders.payment');
     }
 }

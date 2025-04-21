@@ -42,21 +42,17 @@
             <!-- Product Infomation -->
             <div class="col-12 col-md-6">
                 <div class="product-info col-12 ps-md-5 mt-md-0 d-flex flex-column mt-4">
-                    <h1>Đồng phục sinh viên</h1>
+                    <h1>{{ $chitietSanpham->tensp }}</h1>
                     <div class="d-flex">
-                        <label>Loại: <span class="product-info__cate fw-bold">Áo sơ mi</span></label>
-                        <label>Tồn kho: <span class="product-info__stock">98</span></label>
+                        <label>Loại: <span class="product-info__cate fw-bold">{{ $chitietSanpham->ten }}</span></label>
+                        <label>Tồn kho: <span class="product-info__stock">{{ $chitietSanpham->tonkho }}</span></label>
                     </div>
 
-                    <span class="product-info__price fw-bold">69,999đ</span>
+                    <span class="product-info__price fw-bold">{{ $chitietSanpham->gia }}</span>
 
                     <div class="d-flex justify-content-between align-content-center">
-                        <select class="product-info__size form-select mt-2 w-25">
-                            <option selected>Size</option>
-                            <option value="">S</option>
-                            <option value="">M</option>
-                            <option value="">L</option>
-                            <option value="">XL</option>
+                        <select class="product-info__size form-select mt-2 w-25" id="size">
+                            
                         </select> 
                         <a href="{{ route('orders.cart') }}" class="action-item addCart addCartPC btn rounded d-flex"><span class="d-block mt-1"><i class="fa-solid fa-cart-plus me-2"></i>Thêm giỏ hàng</span></a>
                     </div>
@@ -75,7 +71,7 @@
                     <h2>Mô tả sản phẩm</h2>
                     <div class="mt-3" id="desc">
                         <div class="card card-body" style="font-size: 1.4rem;">
-                            <p> Tên sản phẩm: Áo đồng phục trường CTUET</p>
+                            <p> Tên sản phẩm: {{ $chitietSanpham->tensp  }}</p>
                             <p>🏫 Dành cho: Học sinh/Sinh viên CTUET</p>
                             <h4>✅ Chất liệu:</h4>
                             <p>Được làm từ vải cotton 65/45 thoáng mát, thấm hút mồ hôi tốt.
@@ -118,13 +114,13 @@
                     </div>
                     <div class="mt-3">
                         <h3>Tên: </h3>
-                        <p>Nội dung đánh giá </p>
+                        <p>Nội dung đánh giá: {{ $chitietSanpham->binhluan }}</p>
 
                         <div class="user-rate d-flex align-items-center">
                             <img src="{{ asset('images/product2.jpg') }}" alt="" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: contain;">
                             <div class="row">
-                                <span><b>Tên khách hàng</b></span>
-                                <span>Ngày đánh giá</span>
+                                <span><b>Tên khách hàng: {{ $chitietSanpham->username }}</b></span>
+                                <span>Ngày đánh giá: {{ $chitietSanpham->created_at}}</span>
                             </div>
                         </div>
                     </div>
