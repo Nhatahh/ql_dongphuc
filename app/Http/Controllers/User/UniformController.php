@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use App\Models\Product;
+use Illuminate\Support\Facades\Validator;
+
 
 class UniformController extends Controller
 {
@@ -43,7 +45,7 @@ class UniformController extends Controller
 
     public function showDetail($sp_id)
     {
-        $ct_Spham = DB::table('sanpham as sp')
+        $ct_sp = DB::table('sanpham as sp')
             ->leftJoin('danhmuc', 'sp.dm_id', '=', 'danhmuc.dm_id')
             ->leftJoin('nhasanxuat', 'sp.nsx_id', '=', 'nhasanxuat.nsx_id')
             ->leftJoin('kho', 'kho.sp_id', '=', 'sp.sp_id')
@@ -65,7 +67,7 @@ class UniformController extends Controller
             )
             ->first();
 
-        if (!$ct_Spham) {
+        if (!$ct_sp) {
             abort(404, 'Không tìm thấy sản phẩm');
         }
 
@@ -76,7 +78,7 @@ class UniformController extends Controller
             ->where('sp_id', $sp_id)
             ->get();
 
-        return view('user.uniforms.show_detail', compact('ct_Spham', 'sizes', 'danhgias'));
+        return view('user.uniforms.show_detail', compact('ct_sp', 'sizes', 'danhgias'));
     }
 
     public function dm_select2()

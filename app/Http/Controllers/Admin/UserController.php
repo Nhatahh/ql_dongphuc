@@ -10,7 +10,8 @@ class UserController extends Controller
 {
     public function profile()
     {
-        $user = DB::table('users')->where('id', 1)->first();
+        $user_id = 'U01';
+        $user = DB::table('users')->where('user_id', $user_id)->first();
         return view('user.profile', compact('user'));
     }
 

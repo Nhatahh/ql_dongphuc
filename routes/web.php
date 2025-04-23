@@ -35,6 +35,8 @@ Route::prefix('user')->group(function () {
     Route::get('/cart', [OrderController::class, 'cart'])->name('orders.cart');
     // Route::get('/cart', [OrderController::class, 'cart'])->name('orders.cart')->middleware('auth');
     Route::post('/cart/update-quantity', [OrderController::class, 'updateQuantity'])->name('cart.updateQuantity');
+    Route::delete('/cart/delete/{gh_id}', [OrderController::class, 'deleteProduct'])->name('cart.deleteProduct');
+
 
 
     Route::get('/payment', [OrderController::class, 'payment'])->name('orders.payment');

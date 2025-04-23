@@ -27,30 +27,30 @@
             <!-- Product-img -->
             <div class="product-img col-12 col-md-6">
                 <div class="row">
-                    <img src="{{ asset('images/' . $ct_Spham->image_url) }}" alt="" class="product-img__main img-fluid">
+                    <img src="{{ asset('images/' . $ct_sp->image_url) }}" alt="" class="product-img__main img-fluid">
                 </div>
                 <div class="product-img__extra row mt-3 flex-nowrap overflow-auto">
-                    <img src="{{ asset('images/' . $ct_Spham->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3">
-                    <img src="{{ asset('images/' . $ct_Spham->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3">
-                    <img src="{{ asset('images/' . $ct_Spham->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3">
-                    <img src="{{ asset('images/' . $ct_Spham->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3">
-                    <img src="{{ asset('images/' . $ct_Spham->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3">
-                    <img src="{{ asset('images/' . $ct_Spham->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3">
+                    <img src="{{ asset('images/' . $ct_sp->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3">
+                    <img src="{{ asset('images/' . $ct_sp->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3">
+                    <img src="{{ asset('images/' . $ct_sp->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3">
+                    <img src="{{ asset('images/' . $ct_sp->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3">
+                    <img src="{{ asset('images/' . $ct_sp->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3">
+                    <img src="{{ asset('images/' . $ct_sp->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3">
                 </div>
             </div>
             <!-- Product Infomation -->
             <div class="col-12 col-md-6">
                 <div class="product-info fs-1 col-12 ps-md-5 mt-md-0 d-flex flex-column mt-4">
-                    <h1 class="fw-bold">{{ $ct_Spham->tensp }}</h1>
+                    <h1 class="fw-bold">{{ $ct_sp->tensp }}</h1>
                     <div class="d-flex flex-wrap gap-3 mt-2">
                         <label>Loại: <span class="product-info__cate fw-bold">
-                            {{ $ct_Spham->loaiSanPham->ten ?? 'Không rõ' }}
+                            {{ $ct_sp->loaiSanPham->ten ?? 'Không rõ' }}
                         </span></label>
-                        <label>Tồn kho: <span class="product-info__stock">{{ $ct_Spham->tonkho }}</span></label>
+                        <label>Tồn kho: <span class="product-info__stock">{{ $ct_sp->tonkho }}</span></label>
                     </div>
 
                     <span class="product-info__price fw-bolder fs-2 mt-3" style="color: red;">
-                        {{ number_format($ct_Spham->gia, 0, ',', '.') }} VND
+                        {{ number_format($ct_sp->gia, 0, ',', '.') }} VND
                     </span>
 
                     <div class="d-flex justify-content-between align-items-center mt-3">
@@ -83,7 +83,7 @@
                     <h2>Mô tả sản phẩm</h2>
                     <div class="mt-3" id="desc">
                         <div class="card card-body" style="font-size: 1.4rem;">
-                            {{ $ct_Spham->mota }}
+                            {{ $ct_sp->mota }}
                         </div>
                     </div>
                 </div>
@@ -110,8 +110,8 @@
                         <div class="user-rate d-flex align-items-center">
                             <img src="{{ asset('images/product2.jpg') }}" alt="" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: contain;">
                             <div class="row">
-                                <span><b>Tên khách hàng: {{ $ct_Spham->username }}</b></span>
-                                <span>Ngày đánh giá: {{ $ct_Spham->created_at}}</span>
+                                <span><b>Tên khách hàng: {{ $ct_sp->username }}</b></span>
+                                <span>Ngày đánh giá: {{ $ct_sp->created_at}}</span>
                             </div>
                         </div>
                     </div>

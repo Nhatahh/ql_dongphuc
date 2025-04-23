@@ -62,7 +62,7 @@
                                 <div class="text-center fs-2 fw-bold gia" style="color: red;">
                                     {{ number_format($sp->gia, 0, ',', '.') }} VND
                                 </div>
-                                <a href="{{ route('uniforms.show_detail') }}" style="text-decoration: none;">
+                                <a href="{{ route('uniforms.show_detail', $sp->sp_id) }}" style="text-decoration: none;">
                                     <div class="card-title fs-2 tensp" style="color: black;">{{ $sp->tensp }}</div>
                                 </a>
                                     <p class="card-text fs-3 mota">{{ $sp->mota }}</p>
