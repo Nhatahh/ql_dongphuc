@@ -4,26 +4,27 @@
 
 @section('content')
     <!-- Body -->
-    <div class="body container mt-2 bg-white">    
+    <div class="body">    
         <div class="body-bar row d-flex align-items-center">
-            <div class="col-1 text-center py-3">
-                <a href="{{ route('uniforms.store') }} class=" text-decoration-none"><i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i></a>
+            <div class="col-1 text-center">
+                <a href="#" class=" text-decoration-none"><i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i></a>
             </div>
-            <div class="col-8 d-flex justify-content-center" style="font-size: 1.4rem; translate: 10%;">
+            <div class="col-10 fs-1 fw-bolder text-center">
                 Trang cá nhân
             </div>
-            <div class="col-3 d-flex justify-content-end">
-                <a class="btn p-3" href="{{ route('orders.cart') }}><div class="cart col-6"><i class="fa-regular fa-bell"></i></div></a>
-                <a class="btn p-3" href="{{ route('user.profile') }}><div class="profile col-6"><i class="fa-solid fa-user"></i></div></a>
+            <div class="col-1 text-center">
+                <a class="btn" href="#"><div class="cart col-6"><i class="fa-regular fa-bell"></i></div></a>
             </div>
         </div>
 
 
         <div class="user-info d-flex flex-column align-items-center">
-            <img class="img-fluid mb-2 mt-4" src="../assets/img/slider2.jpg" alt="">
-            <h3>{{ $user->username }}</h3>
-            <p>{{ $user->sdt }}</p>
-            <p>{{ $user->email }}</p>
+            <img class="img-fluid mb-2 mt-4" src="{{ asset('images/avt/' . $user->avt_images) }}" alt="avt">
+            <p class="fs-2 fw-bold">{{ $user->hoten }}</p><br>
+            <p class="fs-3">MSSV: {{ $user->mssv }}</p>
+            <p class="fs-3">Tên tài khoản: {{ $user->username }}</p>
+            <p class="fs-3">Số điện thoại: {{ $user->sdt }}</p>
+            <p class="fs-3">Email: {{ $user->email }}</p>
         </div>
 
         <div class="profile-active d-flex justify-content-center mt-5 text-center">
@@ -46,6 +47,4 @@
         </div>
     </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="{{ asset('js/main.js') }}"></script>
 @endsection
