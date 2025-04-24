@@ -28,7 +28,23 @@ Route::prefix('user')->group(function () {
 
     Route::get('/cart', [OrderController::class, 'cart'])->name('orders.cart');
     Route::get('/payment', [OrderController::class, 'payment'])->name('orders.payment');
+<<<<<<< Updated upstream
     Route::get('/profile', function () {
         return view('user.profile');
     })->name('user.profile');
 });
+=======
+    // Route::get('/profile', function () {
+    //     return view('user.profile');
+    // })->name('user.profile');
+    Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::get('users', [UserController::class, 'index'])->name('user.index');
+
+
+
+    
+    Route::get('/sign_in', [UserController::class, 'formSignIn'])->name('user.sign_in');
+
+
+});
+>>>>>>> Stashed changes

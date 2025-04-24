@@ -6,7 +6,7 @@
     <!-- Body -->
     <div class="body container p-3 mt-2 bg-white">
         <!-- Search -->
-        <div class="nav-search-pay row d-flex align-items-center">
+        <div class="nav-search row d-flex align-items-center bg-white" style="margin-top: 130px">
             <div class="col-1 text-center py-3">
                 <a href="{{ route('uniforms.store') }}" class=" text-decoration-none"><i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i></a>
             </div>

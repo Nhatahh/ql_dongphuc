@@ -7,14 +7,14 @@
     <div class="body container mt-2 bg-white">    
         <div class="body-bar row d-flex align-items-center">
             <div class="col-1 text-center py-3">
-                <a href="{{ route('uniforms.store') }} class=" text-decoration-none"><i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i></a>
+                <a href="{{ route('uniforms.store') }}" class=" text-decoration-none"><i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i></a>
             </div>
             <div class="col-8 d-flex justify-content-center" style="font-size: 1.4rem; translate: 10%;">
                 Trang cá nhân
             </div>
             <div class="col-3 d-flex justify-content-end">
-                <a class="btn p-3" href="{{ route('orders.cart') }}><div class="cart col-6"><i class="fa-regular fa-bell"></i></div></a>
-                <a class="btn p-3" href="{{ route('user.profile') }}><div class="profile col-6"><i class="fa-solid fa-user"></i></div></a>
+                <a class="btn p-3" href="{{ route('orders.cart') }}"><div class="cart col-6"><i class="fa-regular fa-bell"></i></div></a>
+                <a class="btn p-3" href="{{ route('user.profile') }}"><div class="profile col-6"><i class="fa-solid fa-user"></i></div></a>
             </div>
         </div>
 

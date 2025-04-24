@@ -5,7 +5,10 @@
 @section('content')
     <!-- Body -->
     <div class="body container p-3">
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
         <div class="title text-center">
             <h5><strong>ĐỒNG PHỤC SINH VIÊN</strong></h5>
             <h6>HỆ THỐNG ĐẶT MUA ĐỒNG PHỤC NHANH CHÓNG VÀ TIỆN LỢI</h6>
@@ -38,14 +41,22 @@
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                         <i class="fa-solid fa-circle-chevron-right fs-2 text-white"></i>
                     </button>
+<<<<<<< Updated upstream
                   </div>
+=======
+                </div>
+>>>>>>> Stashed changes
             </div>
         </div>
 
         <!-- Banner -->
         <div class="row mt-3">
             <div class="col-12">
+<<<<<<< Updated upstream
                 <img class="w-100" src="assets/img/banner.jpg" alt="">
+=======
+                <img class="w-100" src="{{ asset('images/banner.jpg') }}" alt="">
+>>>>>>> Stashed changes
             </div>
         </div>
 
@@ -57,6 +68,7 @@
         <!-- Product -->
         <div class="product row mt-2">
             <div class="row d-flex flex-nowrap overflow-auto">
+<<<<<<< Updated upstream
                 <div class="col-6 col-md-4">
                     <a href="{{ route('uniforms.show_detail') }}" class="text-decoration-none text-dark">
                         <div class="card">
@@ -82,6 +94,25 @@
                             <a href="#" class="order text-white btn btn-primary card-link"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
                             </div>
                         </div>
+=======
+                @foreach($sanphams as $sp)
+                    <div class="col-6 col-md-3 mt-4">
+                        <a href="{{ route('uniforms.show_detail', $sp->id) }}" class="text-decoration-none text-dark">
+                            <div class="card">
+                                <img src="{{ asset('images/' . $sp->image_url) }}" class="card-img-top" alt="{{ $sp->tensp }}">
+                                <div class="card-body">
+                                    <div class="text-center fs-2 fw-bold gia" style="color: red;">
+                                        {{ number_format($sp->gia, 0, ',', '.') }} VND
+                                    </div>
+                                    <h5 class="card-title">{{ $sp->tensp }}</h5>
+                                    <p class="card-text">{{ $sp->mota }}</p>
+                                    <div class="text-center">
+                                    <a href="#" class="order text-white btn btn-primary card-link mt-3"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+>>>>>>> Stashed changes
                     </div>
                 </div>
 
@@ -117,3 +148,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 @endsection
+
+
