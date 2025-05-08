@@ -5,10 +5,6 @@
 @section('content')
     <!-- Body -->
     <div class="body container p-3">
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
         <div class="title text-center">
             <h5><strong>ĐỒNG PHỤC SINH VIÊN</strong></h5>
             <h6>HỆ THỐNG ĐẶT MUA ĐỒNG PHỤC NHANH CHÓNG VÀ TIỆN LỢI</h6>
@@ -41,22 +37,14 @@
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
                         <i class="fa-solid fa-circle-chevron-right fs-2 text-white"></i>
                     </button>
-<<<<<<< Updated upstream
-                  </div>
-=======
                 </div>
->>>>>>> Stashed changes
             </div>
         </div>
 
         <!-- Banner -->
         <div class="row mt-3">
             <div class="col-12">
-<<<<<<< Updated upstream
-                <img class="w-100" src="assets/img/banner.jpg" alt="">
-=======
                 <img class="w-100" src="{{ asset('images/banner.jpg') }}" alt="">
->>>>>>> Stashed changes
             </div>
         </div>
 
@@ -68,33 +56,6 @@
         <!-- Product -->
         <div class="product row mt-2">
             <div class="row d-flex flex-nowrap overflow-auto">
-<<<<<<< Updated upstream
-                <div class="col-6 col-md-4">
-                    <a href="{{ route('uniforms.show_detail') }}" class="text-decoration-none text-dark">
-                        <div class="card">
-                            <img src="{{ asset('images/slider2.jpg') }}" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Đồng phục sinh viên</h5>
-                                <p class="card-text">Trẻ trung, năng động và tràn đầy nằng lượng</p>
-                                <div class="text-center">
-                                <a href="{{ route('orders.cart') }}" class="order text-white btn btn-primary card-link mt-3"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-6 col-md-4">
-                    <div class="card">
-                        <img src="{{ asset('images/slider1.jpg') }}"  class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Đồng phục sinh viên</h5>
-                            <p class="card-text">Trẻ trung, năng động và tràn đầy nằng lượng</p>
-                            <div class="text-center">
-                            <a href="#" class="order text-white btn btn-primary card-link"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
-                            </div>
-                        </div>
-=======
                 @foreach($sanphams as $sp)
                     <div class="col-6 col-md-3 mt-4">
                         <a href="{{ route('uniforms.show_detail', $sp->id) }}" class="text-decoration-none text-dark">
@@ -112,35 +73,8 @@
                                 </div>
                             </div>
                         </a>
->>>>>>> Stashed changes
                     </div>
-                </div>
-
-                <div class="col-6 col-md-4">
-                    <div class="card">
-                        <img src="{{ asset('images/slider3.jpg') }}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                        <h5 class="card-title">Đồng phục sinh viên</h5>
-                        <p class="card-text">Trẻ trung, năng động và tràn đầy nằng lượng</p>
-                        <div class="text-center">
-                            <a href="#" class="order text-white btn btn-primary card-link"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-md-4">
-                    <div class="card">
-                        <img src="{{ asset('images/slider2.jpg') }}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                        <h5 class="card-title">Đồng phục sinh viên</h5>
-                        <p class="card-text">Trẻ trung, năng động và tràn đầy nằng lượng</p>
-                        <div class="text-center">
-                            <a href="#" class="order text-white btn btn-primary card-link"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
-                        </div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </div>

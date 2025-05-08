@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;  
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-<<<<<<< Updated upstream
-    //
-=======
     public function profile()
     {
-        $user = DB::table('users')->where('id', 1)->first();
+        $user_id = 'U01';
+        $user = DB::table('users')->where('user_id', $user_id)->first();
         return view('user.profile', compact('user'));
     }
 
@@ -21,5 +20,4 @@ class UserController extends Controller
     {
         return view('user.form.sign_in');
     }
->>>>>>> Stashed changes
 }

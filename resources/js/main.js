@@ -11,8 +11,6 @@ function showDetailAction() {
   });
 }
 
-<<<<<<< Updated upstream
-=======
 $(".btn-update-quantity").on("click", function () {
     let kho_id = $(this).data("kho-id");
     let soluong = $("#soluong_" + kho_id).val();
@@ -119,5 +117,4 @@ function showDetailAction() {
     });
 }
 
->>>>>>> Stashed changes
 document.addEventListener("DOMContentLoaded", function () {});

@@ -1,21 +1,13 @@
 <!-- Nav -->
 <header class="header">
-<<<<<<< Updated upstream
-    <img src="{{ asset('images/logo3.jpg') }}" alt="" class="logo">
-=======
     <a href="{{ route('home.index') }}">
         <img src="{{ asset('images/logo3.jpg') }}" alt="aa" class="logo">
     </a>
->>>>>>> Stashed changes
     <div class="name-header">
         <p>TRƯỜNG ĐẠI HỌC</p>
         <p>KỸ THUẬT - CÔNG NGHỆ CẦN THƠ</p>
         <p>MÃ TRƯỜNG: KCC</p>
-<<<<<<< Updated upstream
-    </div>
-=======
     </div>        
->>>>>>> Stashed changes
     <div class="nav-header">
         <div class="nav-pc d-flex justify-content-around icon-link-hover">
             <a href="{{ route('uniforms.store') }}" class="nav-item"><i class="fas fa-shopping-bag"></i><span>Cửa hàng</span></a>

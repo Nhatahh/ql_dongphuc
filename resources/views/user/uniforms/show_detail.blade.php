@@ -49,16 +49,6 @@
 
                     <span class="product-info__price fw-bold">69,999đ</span>
 
-<<<<<<< Updated upstream
-                    <div class="d-flex justify-content-between align-content-center">
-                        <select class="product-info__size form-select mt-2 w-25">
-                            <option selected>Size</option>
-                            <option value="">S</option>
-                            <option value="">M</option>
-                            <option value="">L</option>
-                            <option value="">XL</option>
-                        </select> 
-=======
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <select class="product-info__size form-select mt-2 w-25" id="size">
                             @foreach($sizes as $size)
@@ -66,7 +56,6 @@
                             @endforeach
                         </select>
 
->>>>>>> Stashed changes
                         <a href="{{ route('orders.cart') }}" class="action-item addCart addCartPC btn rounded d-flex"><span class="d-block mt-1"><i class="fa-solid fa-cart-plus me-2"></i>Thêm giỏ hàng</span></a>
                     </div>
 
@@ -76,13 +65,7 @@
                             <input type="number" class="form-control text-center" id="product-quantity" value="1" min="1" max="100">
                             <button class="btn btn-outline-secondary" type="button" onclick="">+</button>
                         </div>
-<<<<<<< Updated upstream
                         <a href="{{ route('orders.payment') }}" class="action-item buyNow buyNowPC btn btn-danger rounded d-flex"><span class="d-block mt-1">Mua ngay</span></a>
-=======
-
-                        <a href="{{ route('orders.payment') }}" class="action-item buyNow buyNowPC btn btn-danger rounded d-flex"><span class="d-block mt-1">Mua ngay</span></a>
-                        </a>
->>>>>>> Stashed changes
                     </div>
                 </div>
                 <!-- Description -->
