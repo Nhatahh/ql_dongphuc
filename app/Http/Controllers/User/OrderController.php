@@ -18,7 +18,7 @@ class OrderController extends Controller
         // } else {
         //     return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để xem giỏ hàng');
         // }
-        $user_id = 'U01'; //Giả sử User có id là U01 đang đăng nhập
+        $user_id = '1'; //Giả sử User có id là U01 đang đăng nhập
         $cartItems = DB::table('giohang as gh')
                     ->join('sanpham', 'sanpham.sp_id', '=', 'gh.sp_id')
                     ->join('users', 'users.user_id', '=', 'gh.user_id')
@@ -29,10 +29,12 @@ class OrderController extends Controller
                     ->select(
                         'gh.*',
                         'sanpham.tensp',
+                        'sanpham.sp_id as sp_id',
                         'sanpham.gia',
                         'sanpham.image_url',
                         'mau.ten as tenmau',
                         'size.ten as tensize',
+                        'kho.kho_id as kho_id',                        
                     )
                     ->get();
 
@@ -56,7 +58,7 @@ class OrderController extends Controller
             'soluong.min' => 'Số lượng tối thiểu là 1',
         ]);
 
-        $user_id = 'U01'; // giả sử người dùng đã đăng nhập với user_id = U01
+        $user_id = '1'; // giả sử người dùng đã đăng nhập với user_id = U01
 
         if ($validator->fails()) {
             return response()->json($validator->errors());

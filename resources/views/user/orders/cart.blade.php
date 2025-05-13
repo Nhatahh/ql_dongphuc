@@ -29,8 +29,8 @@
                             <input type="checkbox" class="cart-item__checkbox form-check-input ms-2 me-4">
                             <img src="{{ asset('images/' . $item->image_url) }}" class="cart-item__img img-fluid rounded me-3">
                             <div class="cart-item__content flex-grow-1">
-                                <p class="mb-1 fw-bold">{{ $item->tensp }}</p>
-                                <p class="text-danger fw-bold mb-1">{{ number_format($item->gia, 0, ',', '.') }}đ</p>
+                                <a href="{{ route('uniforms.show_detail', $item->sp_id) }}" style="text-decoration: none; color: black;"><p class="mb-1 fw-bold fs-2">{{ $item->tensp }}</p></a>
+                                <p class="fw-bold" style="color: red;">{{ number_format($item->gia, 0, ',', '.') }}đ</p>
                                 <div class="input-group product-quantity align-items-center float-start">
                                     <button class="btn btn-outline-secondary" type="button" onclick="changeQuantity(this, -1)">-</button>
                                     <input type="number" class="form-control text-center form-control-sm quantity-input"
@@ -39,7 +39,8 @@
                                     <span class="ms-2 text-danger err_soluong" id="err_soluong_{{ $item->kho_id }}"></span>
                                     
                                 </div>
-                                <button class="btn btn-success ms-2 btn-update-quantity" data-kho-id="{{ $item->kho_id }}">Cập nhật</button>
+                                <button class="btn btn-success ms-2 btn-update-quantity" data-kho-id="{{ $item->gh_id }}">Cập nhật</button>
+                                <button class="btn btn-danger ms-2 btn-update-quantity" data-kho-id="{{ $item->gh_id }}">Xóa</button>
                             </div>
                         </div>
                     @endforeach
@@ -47,7 +48,4 @@
             </div>
         </div>
     </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-<script src="{{ asset('js/main.js') }}"></script>
 @endsection

@@ -4,7 +4,7 @@ use App\Http\Controllers\User\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UniformController;
 use App\Http\Controllers\User\OrderController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\User\UserController;
 
 
 /*
@@ -19,7 +19,7 @@ use App\Http\Controllers\Admin\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('home.index');
 });
 
 Route::prefix('user')->group(function () {
@@ -30,15 +30,14 @@ Route::prefix('user')->group(function () {
 
     Route::get('/cart', [OrderController::class, 'cart'])->name('orders.cart');
     Route::get('/payment', [OrderController::class, 'payment'])->name('orders.payment');
-    // Route::get('/profile', function () {
-    //     return view('user.profile');
-    // })->name('user.profile');
+
     Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::get('/dt_profile', [UserController::class, 'data_profile'])->name('user.dt_profile');
     Route::get('users', [UserController::class, 'index'])->name('user.index');
 
 
 
-    
+
     Route::get('/sign_in', [UserController::class, 'formSignIn'])->name('user.sign_in');
 
 

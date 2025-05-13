@@ -6,10 +6,9 @@
     <!-- Body -->
     <div class="body container p-3">
         <div class="title text-center">
-            <h5><strong>ĐỒNG PHỤC SINH VIÊN</strong></h5>
-            <h6>HỆ THỐNG ĐẶT MUA ĐỒNG PHỤC NHANH CHÓNG VÀ TIỆN LỢI</h6>
+            <b class="fs-1">ĐỒNG PHỤC SINH VIÊN CTUT</b>
+            <p class="fs-3">HỆ THỐNG ĐẶT MUA ĐỒNG PHỤC NHANH CHÓNG VÀ TIỆN LỢI</p>
         </div>
-        
 
         <!-- Slider -->
         <div class="row mt-4">
@@ -58,7 +57,7 @@
             <div class="row d-flex flex-nowrap overflow-auto">
                 @foreach($sanphams as $sp)
                     <div class="col-6 col-md-3 mt-4">
-                        <a href="{{ route('uniforms.show_detail', $sp->id) }}" class="text-decoration-none text-dark">
+                        <a href="{{ route('uniforms.show_detail', $sp->sp_id) }}" class="text-decoration-none text-dark">
                             <div class="card">
                                 <img src="{{ asset('images/' . $sp->image_url) }}" class="card-img-top" alt="{{ $sp->tensp }}">
                                 <div class="card-body">
@@ -78,9 +77,6 @@
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
 @endsection
 
 

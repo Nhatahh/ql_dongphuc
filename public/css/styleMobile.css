@@ -442,3 +442,30 @@
     background-color: #a200ff; /* Bootstrap primary color */
     font-weight: bold;
   }
+
+  .tabs {
+    list-style: none;
+  }
+  
+  .tabs .icon-active {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: #2f5db3;
+  }
+  
+  .tabs i {
+    line-height: 50px;
+    font-size: 2rem;
+    color: white;
+    margin: 0 10px;
+  }
+
+  .tab--active {
+    transform: scale(1.1);
+    transition: transform ease .1s;
+  }
+  
+  .tab--active span {
+    color: #D96C3B;
+  }  

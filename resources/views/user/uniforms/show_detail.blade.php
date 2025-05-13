@@ -26,29 +26,24 @@
             <!-- Product-img -->
             <div class="product-img col-12 col-md-6">
                 <div class="row">
-                    <img src="{{ asset('images/product1.jpg') }}" alt="" class="product-img__main img-fluid">
+                    <img src="{{ asset('images/' . $ct_sp->image_url) }}" alt="" class="product-img__main img-fluid">
                 </div>
                 <div class="product-img__extra row mt-3 flex-nowrap overflow-auto">
+                    <img src="{{ asset('images/' . $ct_sp->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3">
                     <img src="{{ asset('images/product1.jpg') }}" alt="" class="product-img__extra-item img-fluid col-3">
                     <img src="{{ asset('images/product2.jpg') }}" alt="" class="product-img__extra-item img-fluid col-3">
                     <img src="{{ asset('images/product3.jpg') }}" alt="" class="product-img__extra-item img-fluid col-3">
-                    <img src="{{ asset('images/product1.jpg') }}" alt="" class="product-img__extra-item img-fluid col-3">
-                    <img src="{{ asset('images/product2.jpg') }}" alt="" class="product-img__extra-item img-fluid col-3">
-                    <img src="{{ asset('images/product3.jpg') }}" alt="" class="product-img__extra-item img-fluid col-3">
-                    <img src="{{ asset('images/product1.jpg') }}" alt="" class="product-img__extra-item img-fluid col-3">
                 </div>
             </div>
             <!-- Product Infomation -->
             <div class="col-12 col-md-6">
                 <div class="product-info col-12 ps-md-5 mt-md-0 d-flex flex-column mt-4">
-                    <h1>Đồng phục sinh viên</h1>
+                    <h1><strong>{{ $ct_sp->tensp }}</strong></h1>
                     <div class="d-flex">
-                        <label>Loại: <span class="product-info__cate fw-bold">Áo sơ mi</span></label>
-                        <label>Tồn kho: <span class="product-info__stock">98</span></label>
+                        <label>Loại: <span class="product-info__cate">{{ $ct_sp->ten_danhmuc }}</span></label>
+                        <label>Tồn kho: <span class="product-info__stock">{{ $ct_sp->tonkho }}</span></label>
                     </div>
-
-                    <span class="product-info__price fw-bold">69,999đ</span>
-
+                    <span class="product-info__price fw-bold" style="color: red;">{{ number_format($ct_sp->gia, 0, ',', '.') }} VND</span>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <select class="product-info__size form-select mt-2 w-25" id="size">
                             @foreach($sizes as $size)
@@ -73,32 +68,7 @@
                     <h2>Mô tả sản phẩm</h2>
                     <div class="mt-3" id="desc">
                         <div class="card card-body" style="font-size: 1.4rem;">
-                            <p> Tên sản phẩm: Áo đồng phục trường CTUET</p>
-                            <p>🏫 Dành cho: Học sinh/Sinh viên CTUET</p>
-                            <h4>✅ Chất liệu:</h4>
-                            <p>Được làm từ vải cotton 65/45 thoáng mát, thấm hút mồ hôi tốt.
-                                Vải co giãn nhẹ, giữ form lâu dài, không nhăn, không phai màu.
-                            </p>
-                            <h4>✅ Thiết kế:</h4>
-                            <p>Kiểu dáng trẻ trung, năng động, phù hợp cho học sinh/sinh viên.
-                                Cổ áo: Có thể là cổ trụ (áo polo) hoặc cổ tròn (áo thun).
-                                Logo trường được in/thêu trên ngực trái, tạo sự tự hào và nhận diện.
-                                Màu sắc: Màu chủ đạo theo thiết kế của trường (thường là trắng, xanh, xám, hoặc đỏ).
-                            </p>
-                            <h4>✅ Size & Độ vừa vặn:</h4>
-                            
-                            Có nhiều size từ S → XXL, phù hợp cho từng vóc dáng học sinh/sinh viên.
-                            Form áo: Thoải mái, dễ vận động trong các hoạt động thể chất & học tập.
-                            <h4>✅ Công dụng:</h4>
-                            
-                            Mặc hàng ngày đến trường theo quy định.
-                            Dễ phối đồ với quần jean, kaki, hoặc chân váy.
-                            Thích hợp cho các hoạt động ngoại khóa, sự kiện trường học.
-                            <h4>✅ Hướng dẫn bảo quản:</h4>
-                            
-                            Giặt với nước lạnh, tránh dùng chất tẩy mạnh.
-                            Phơi nơi râm mát, tránh ánh nắng trực tiếp để giữ màu áo bền lâu.
-                            Ủi ở nhiệt độ thấp nếu cần.
+                            {{ $ct_sp->mota }}
                         </div>
                     </div>
                 </div>
@@ -130,22 +100,10 @@
             </div> 
         </div>
     </div>
+@endsection
 
-
-    <!-- Footer Nav -->
-    <!-- <div class="nav-cart">
-        <div class="row g-0">
-            <a href="#" class="action-item col-3 py-sm-3 btn"><i class="fa-brands fa-rocketchat me-2"></i><span>Chat</span></a>
-            <a href="cart.html" class="action-item addCart col-4 btn"><i class="fa-solid fa-cart-plus me-2"></i><span>Thêm giỏ hàng</span></a>
-            <a href="payment.html" class="action-item buyNow col-5 btn btn-danger"><span>Mua ngay</span></a>
-        </div>
-    </div> -->
-
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
+@push('scripts')
     <script>
         showDetailAction()
     </script>
-@endsection
+@endpush
