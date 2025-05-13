@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UniformController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\SearchController;
 
 
 /*
@@ -35,7 +36,7 @@ Route::prefix('user')->group(function () {
     Route::get('/dt_profile', [UserController::class, 'data_profile'])->name('user.dt_profile');
     Route::get('users', [UserController::class, 'index'])->name('user.index');
 
-
+    Route::get('/search', [SearchController::class, 'search'])->name('user.search');
 
 
     Route::get('/sign_in', [UserController::class, 'formSignIn'])->name('user.sign_in');

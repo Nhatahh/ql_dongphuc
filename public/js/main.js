@@ -4,9 +4,6 @@ $(document).ready(function () {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
         },
     });
-
-
-
 });
 
 $(".btn-update-quantity").on("click", function () {
@@ -133,4 +130,75 @@ function profileTab(selector) {
     });
 }
 
+// Search
+function formatCurrency(value) {
+    return new Intl.NumberFormat("vi-VN").format(value);
+}
+document.getElementById("searchInput").addEventListener("keyup", function () {
+    const query = this.value.trim();
 
+    if (!query) {
+        document.getElementById("searchResults").style.display = "none";
+        return;
+    }
+
+    fetch(`${searchURL}?query=${encodeURIComponent(query)}`)
+        .then((response) => response.json())
+        .then((data) => {
+            const resultsContainer = document.getElementById("searchResults");
+            resultsContainer.innerHTML = "";
+
+            if (data.length > 0) {
+                data.forEach((item) => {
+                    resultsContainer.innerHTML += `
+                        <div class="search-item">
+                            <a class="sreach-a" href="${linksearchURL}${
+                        item.sp_id
+                    }" style="color: black;">
+                                <div class="row">
+                                    <div class="col-4 d-flex-column justify-content-center align-items-center">
+                                        <img src="${imgURL}/${
+                        item.image_url
+                    }" alt="${item.tensp}" width="80%" class="me-2" />
+                                    </div>
+                                    <div class="col-8 ">
+                                        <h1><strong>${item.tensp}</strong></h1>
+                                        <h2  style="color: red;">${formatCurrency(
+                                            item.gia
+                                        )} VND</h2>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    `;
+                });
+            } else {
+                resultsContainer.innerHTML =
+                    "<h3 class='text-danger'>Không tìm thấy sản phẩm nào!!!</h3>";
+            }
+
+            resultsContainer.style.display = "block";
+        })
+        .catch((err) => console.error("Lỗi tìm kiếm!!!"));
+});
+// Ẩn kết quả tìm kiếm khi click ra ngoài
+document.addEventListener("click", function (e) {
+    const searchInput = document.getElementById("searchInput");
+    const resultsContainer = document.getElementById("searchResults");
+
+    if (
+        !searchInput.contains(e.target) &&
+        !resultsContainer.contains(e.target)
+    ) {
+        resultsContainer.style.display = "none";
+    }
+});
+//Ham xoa dau tieng viet
+function removeVietnameseTones(str) {
+    return str
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/đ/g, "d")
+        .replace(/Đ/g, "D")
+        .toLowerCase();
+}

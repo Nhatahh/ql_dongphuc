@@ -9,3 +9,8 @@
         <a href="{{ route('user.profile') }}" class="nav-item"><i class="fas fa-user"></i><span>Hồ sơ</span></a>
     </div>
 </div>
+<script>
+    const searchURL = "{{ route('user.search') }}";
+    const linksearchURL = "{{ url('user/uniforms') }}/"; 
+    const imgURL = "{{ asset('images') }}"; 
+</script>

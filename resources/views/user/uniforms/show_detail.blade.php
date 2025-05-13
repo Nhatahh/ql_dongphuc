@@ -8,17 +8,13 @@
         <!-- Search -->
         <div class="nav-searchShowDetail row d-flex align-items-center bg-white" style="margin-top: 130px">
             <div class="col-1 text-center py-3">
-                <a href="store.html" class=" text-decoration-none"><i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i></a>
+                <a href="{{ route('uniforms.store') }}" class=" text-decoration-none"><i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i></a>
             </div>
-            <div class="col-8">
-                <div class="search input-group">
-                    <input type="text" class="form-control w-50" placeholder="Nhập từ khóa...">
-                    <span class="input-group-text"><i class="fas fa-search"></i></span>
+            <div class="col-11 d-flex justify-content-center">
+                <div class="position-relative w-75">
+                    <input id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+                    <div id="searchResults" class="dropdown-menu w-100 shadow" style="max-height: 400px; overflow-y: auto;"></div>
                 </div>
-            </div>
-            <div class="col-3 d-flex justify-content-end">
-                <a class="btn p-3" href="cart.html"><div class="cart col-6"><i class="fa-solid fa-cart-shopping"></i></div></a>
-                <a class="btn p-3" href="profile.html"><div class="profile col-6"><i class="fa-solid fa-user"></i></div></a>
             </div>
         </div>
         <!-- Product-Detail -->

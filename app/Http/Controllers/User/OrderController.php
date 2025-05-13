@@ -28,7 +28,7 @@ class OrderController extends Controller
                     ->where('gh.user_id', $user_id)
                     ->select(
                         'gh.*',
-                        'sanpham.tensp',
+                        'sanpham.tensp as tensp',
                         'sanpham.sp_id as sp_id',
                         'sanpham.gia',
                         'sanpham.image_url',
