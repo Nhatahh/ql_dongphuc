@@ -133,9 +133,9 @@ class UniformController extends Controller
         }
 
         // Lọc theo giá
-        if ($request->gia === 'Tăng dần') {
+        if ($request->gia === '2') {
             $query->orderBy('sanpham.gia', 'asc');
-        } elseif ($request->gia === 'Giảm dần') {
+        } elseif ($request->gia === '1') {
             $query->orderBy('sanpham.gia', 'desc');
         }
 

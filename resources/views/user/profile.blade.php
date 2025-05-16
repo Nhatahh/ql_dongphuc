@@ -75,11 +75,11 @@
         </li>
         <li>
           <a
-            href="#unknown-tab"
+            href="{{ route('user.sign_in') }}"
             class="d-flex flex-column align-items-center text-decoration-none text-dark"
           >
-            <i class="icon-active fa-solid fa-box-open"></i>
-            <span>Chưa biết</span>
+            <i class="icon-active bi bi-box-arrow-right"></i>
+            <span>Đăng xuất</span>
           </a>
         </li>
       </ul>

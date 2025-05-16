@@ -30,8 +30,6 @@
 
 
 
-
-
     @stack('styles') {{-- Cho phép trang con đẩy thêm CSS nếu cần --}}
 </head>
 <body>

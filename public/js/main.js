@@ -48,6 +48,15 @@ $("#nsxSelect2").select2({
         cache: true,
     },
 });
+// Select2 Giá
+$("#giaSelect2").select2({
+    placeholder: "--- Chọn giá ---",
+    allowClear: true,
+    data: [
+        { id: "1", text: "Giảm dần" },
+        { id: "2", text: "Tăng dần" },
+    ],
+});
 
 // Get size select2
 $(".getsizeSelect2").each(function () {
@@ -458,7 +467,7 @@ $("#filterButton").on("click", function () {
     const url = $(this).data("url");
     const danhmuc = $("#danhmucSelect2").val();
     const nsx_id = $("#nsxSelect2").val();
-    const gia = $("#giaSelect").val();
+    const gia = $("#giaSelect2").val();
 
     const params = new URLSearchParams({
         danhmuc: danhmuc,
