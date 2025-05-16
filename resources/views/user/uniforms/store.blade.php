@@ -29,10 +29,8 @@
                     <option value="">--- Chọn size ---</option>
                 </select> 
                 <!-- select giá -->
-                <select id="giaSelect" class="form-select" style="max-width: 200px;">
-                    <option selected>--- Chọn giá ---</option>
-                    <option value="Giảm dần">Giảm dần</option>
-                    <option value="Tăng dần">Tăng dần</option>
+                <select id="giaSelect2" class="form-select" style="max-width: 200px;">
+                    <option value="">--- Chọn giá ---</option>
                 </select>
             </div>
             <button class="btn btn-danger" id="filterButton" data-url="{{ route('store.filter') }}">Lọc</button>
