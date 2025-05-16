@@ -29,29 +29,51 @@
                     </div>
                 @else
                     @foreach ($cartItems as $item)
-                        <div class="col-12 cart-item-wrapper">
-                            <div class="cart-item border rounded p-2 mb-3 d-flex flex-wrap align-items-center"
-                            data-name="{{ $item->tensp }}">
-                                <div class="col-2">
-                                    <input type="checkbox" class="form-check-input ms-2 me-3">
-                                    <img src="{{ asset('images/' . $item->image_url) }}" class="img-fluid rounded me-3 w-100" style="max-width: 100px;">
+                        <div class="col-12 mb-3 cart-item-wrapper">
+                            <div class="row cart-item border rounded p-2 align-items-center gx-2" data-name="{{ $item->tensp }}">
+                                <!-- Checkbox -->
+                                <div class="col-1 d-flex justify-content-center align-items-center">
+                                    <input type="checkbox" class="form-check-input" style="border: 1px solid black;">
                                 </div>
-                                <div class="col-3">
+                                <!-- Hình ảnh -->
+                                <div class="col-2 d-flex justify-content-center align-items-center">
                                     <a href="{{ route('uniforms.show_detail', $item->sp_id) }}" class="text-decoration-none text-dark">
-                                        <h2 class="mb-1 fw-bold">{{ $item->tensp }}</h2>
+                                        <img src="{{ asset('images/' . $item->image_url) }}" class="img-fluid rounded w-100" style="max-width: 100px;">
                                     </a>
-                                    <h3 class="fw-bold text-danger">{{ number_format($item->gia, 0, ',', '.') }}đ</h3>
                                 </div>
-                                <div class="col-5 input-group product-quantity align-items-center mb-2" style="max-width: 200px;">
-                                    <button class="btn btn-outline-secondary btn-sm" type="button" onclick="changeQuantity(this, -1)">-</button>
-                                    <input type="number" class="form-control text-center form-control-sm quantity-input"
-                                        value="{{ $item->soluong }}" min="1"
-                                        data-kho-id="{{ $item->kho_id }}" id="soluong_{{ $item->kho_id }}">
-                                    <button class="btn btn-outline-secondary btn-sm" type="button" onclick="changeQuantity(this, 1)">+</button>
+                                <!-- Tên và giá -->
+                                <div class="col-3 d-flex justify-content-center align-items-center">
+                                    <div>
+                                        <a href="{{ route('uniforms.show_detail', $item->sp_id) }}" class="text-decoration-none text-dark">
+                                            <h2 class="fw-bold mb-1">{{ $item->tensp }}</h2>
+                                        </a>
+                                        <h3 class="fw-bold text-danger mb-0">{{ number_format($item->gia, 0, ',', '.') }} VND</h3>
+                                    </div>
                                 </div>
-                                <div class="col-2 d-flex gap-2 justify-content-start">
-                                    <button class="btn btn-success btn-sm" data-kho-id="{{ $item->gh_id }}">Cập nhật</button>
-                                    <button class="btn btn-danger btn-sm" data-kho-id="{{ $item->gh_id }}">Xóa</button>
+                                <!-- Số lượng -->
+                                <div class="col-3 gap-3 d-flex flex-column justify-content-center align-items-center">
+                                    <div class="input-group quantity-group" style="max-width: 100px;">
+                                        <button class="btn btn-outline-secondary btn-sm" type="button" onclick="changeQuantity(this, -1)">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <input type="number"
+                                            class="form-control text-center form-control-sm quantity-input"
+                                            value="{{ $item->soluong }}" min="1"
+                                            data-gh-id="{{ $item->gh_id }}" id="soluong_{{ $item->gh_id }}"
+                                            data-current-quantity="{{ $item->soluong }}">
+                                        <button class="btn btn-outline-secondary btn-sm" type="button" onclick="changeQuantity(this, 1)">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <!-- select 2 size -->
+                                    <select class="getsizeSelect2 w-75" class="form-select" data-gh-id="{{ $item->gh_id }}" data-current-size="{{ $item->size_id ?? '' }}">
+                                        <option value="">--- Chọn size ---</option>
+                                    </select>
+                                </div>
+                                <!-- Nút thao tác -->
+                                <div class="col-3 d-flex justify-content-center align-items-center gap-2 flex-column flex-md-row">
+                                    <button class="btn btn-success btn-update-quantity" data-gh-id="{{ $item->gh_id }}" data-url="{{ route('cart.updateQuantity') }}">Cập nhật</button>
+                                    <button class="btn btn-danger" data-gh-id="{{ $item->gh_id }}">Xóa</button>
                                 </div>
                             </div>
                         </div>

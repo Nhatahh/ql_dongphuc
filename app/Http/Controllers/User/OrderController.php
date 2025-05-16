@@ -41,37 +41,45 @@ class OrderController extends Controller
         return view('user.orders.cart', compact('cartItems'));
     }
 
+    public function getSizes(Request $request)
+    {
+        $ghId = $request->input('gh_id');
+
+        $cartSize = DB::table('giohang')
+            ->join('size', 'giohang.size_id', '=', 'size.size_id')
+            ->where('giohang.gh_id', $ghId)
+            ->select('giohang.size_id as id', 'size.ten as text')
+            ->first();
+    
+        if (!$cartSize) {
+            return response()->json([]);
+        }
+        return response()->json([$cartSize]);
+    }
+
     // Cập nhật số lượng sản phẩm
     public function updateQuantity(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'gh_id' => 'required|integer|exists:giohang,gh_id',
             'soluong' => 'required|integer|min:1',
-        ],
-        [
-            'gh_id.required' => 'Thiếu gh_id',
-            'gh_id.integer' => 'Sai định dạng gh_id',
-            'gh_id.exists' => 'Sản phẩm không tồn tại trong giỏ hàng',
-
-            'soluong.required' => 'Vui lòng nhập số lượng',
-            'soluong.integer' => 'Số lượng phải là số nguyên',
-            'soluong.min' => 'Số lượng tối thiểu là 1',
+            'size_id' => 'required|integer|exists:size,size_id', // validate size_id
         ]);
-
-        $user_id = '1'; // giả sử người dùng đã đăng nhập với user_id = U01
-
+    
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json($validator->errors(), 422);
         }
-
+    
         try {
             DB::beginTransaction();
-            $id = $user_id;
-
+    
             $updated = DB::table('giohang')
-            ->where('gh_id', $request->gh_id)
-            ->update(['soluong' => $request->soluong]);
-
+                ->where('gh_id', $request->gh_id)
+                ->update([
+                    'soluong' => $request->soluong,
+                    'size_id' => $request->size_id,  // cập nhật size_id
+                ]);
+    
             if ($updated == 1) {
                 DB::commit();
                 return response("1", 200); // thành công
@@ -84,6 +92,7 @@ class OrderController extends Controller
             return response("-1", 500); // lỗi hệ thống
         }
     }
+
 
     // Xóa sản phẩm
     public function deleteProduct($gh_id) {

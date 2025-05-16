@@ -6,17 +6,111 @@ $(document).ready(function () {
     });
 });
 
+// Load Size select2
+$("#sizeSelect2").select2({
+    placeholder: "--- Chọn size ---",
+    allowClear: true,
+    ajax: {
+        url: "/user/sizes",
+        dataType: "json",
+        delay: 250,
+        processResults: function (data) {
+            return { results: data };
+        },
+        cache: true,
+    },
+});
+
+// Get size select2
+$(".getsizeSelect2").each(function () {
+    let $select = $(this);
+    let ghId = $select.data("gh-id");
+
+    // Gọi ajax lấy size hiện tại
+    $.ajax({
+        url: "/user/getSizes",
+        data: { gh_id: ghId },
+        success: function (data) {
+            if (data.length > 0) {
+                // Tạo option cho size hiện tại và chọn nó
+                let option = new Option(data[0].text, data[0].id, true, true);
+                $select.append(option).trigger("change");
+            }
+        },
+    });
+
+    // Khởi tạo Select2 với ajax load tất cả size
+    $select.select2({
+        placeholder: "--- Chọn size ---",
+        allowClear: true,
+        ajax: {
+            url: "/user/sizes",
+            dataType: "json",
+            delay: 250,
+            processResults: function (data) {
+                return { results: data };
+            },
+            cache: true,
+        },
+    });
+});
+
+// Chức năng nút tăng giảm số lượng (+,-)
+function changeQuantity(button, delta) {
+    let input = $(button)
+        .closest(".quantity-group")
+        .find("input.quantity-input");
+    let currentVal = parseInt(input.val());
+
+    if (isNaN(currentVal)) {
+        currentVal = 1;
+    }
+
+    let newVal = currentVal + delta;
+
+    if (newVal < 1) {
+        newVal = 1;
+    }
+
+    input.val(newVal);
+}
+
+// Cập nhật sản phẩm
 $(".btn-update-quantity").on("click", function () {
-    let kho_id = $(this).data("kho-id");
-    let soluong = $("#soluong_" + kho_id).val();
+    let gh_id = $(this).data("gh-id");
+    let url = $(this).data("url");
+    let soluong = $("#soluong_" + gh_id).val();
+
+    // Lấy giá trị size hiện tại của select2 tương ứng
+    let size_id = $(".getsizeSelect2[data-gh-id='" + gh_id + "']").val();
+
+    // Kiểm tra nếu chưa chọn size
+    if (!size_id) {
+        toastr.error("Vui lòng chọn size!!!");
+        return; // dừng gửi ajax
+    }
+
+    // Lấy giá trị hiện tại từ data attribute
+    let currentQuantity = $("#soluong_" + gh_id).data("current-quantity");
+    let currentSize =
+        $(".getsizeSelect2[data-gh-id='" + gh_id + "']").data("current-size") ||
+        "";
+
+    // Kiểm tra có thay đổi gì không
+    if (soluong == currentQuantity && size_id == currentSize) {
+        toastr.info("Bạn chưa thay đổi số lượng hoặc size.");
+        return;
+    }
+
     $(".err_soluong").text(""); // clear lỗi
 
     $.ajax({
-        url: "{{ route('cart.updateQuantity') }}", // Route xử lý
+        url: url,
         method: "POST",
         data: {
-            kho_id: kho_id,
+            gh_id: gh_id,
             soluong: soluong,
+            size_id: size_id,
         },
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -25,7 +119,6 @@ $(".btn-update-quantity").on("click", function () {
             switch (response) {
                 case "1":
                     toastr.success("Cập nhật thành công");
-                    // location.reload(); // nếu muốn reload lại trang
                     break;
                 case "0":
                     toastr.warning("Sản phẩm không tồn tại trong giỏ hàng");
@@ -41,8 +134,20 @@ $(".btn-update-quantity").on("click", function () {
                     break;
             }
         },
+        error: function (xhr) {
+            if (xhr.status === 422) {
+                let errors = xhr.responseJSON;
+                const keys = Object.keys(errors);
+                for (let i = 0; i < keys.length; i++) {
+                    $("#err_soluong_" + keys[i]).text(errors[keys[i]]);
+                }
+            } else {
+                toastr.error("Lỗi không xác định");
+            }
+        },
     });
 });
+
 function showProductDetail(sp_id) {
     $.ajax({
         url: "/show_detail/" + sp_id, // Gửi yêu cầu tới route đã định nghĩa
@@ -83,7 +188,6 @@ function showDetailAction() {
         };
     });
 }
-
 function profileTab(selector) {
     // Lấy ul, a, div và kiểm tra
     this.container = document.querySelector(`${selector}`);
@@ -181,6 +285,7 @@ document.getElementById("searchInput").addEventListener("keyup", function () {
         })
         .catch((err) => console.error("Lỗi tìm kiếm!!!"));
 });
+
 // Ẩn kết quả tìm kiếm khi click ra ngoài
 document.addEventListener("click", function (e) {
     const searchInput = document.getElementById("searchInput");
@@ -193,7 +298,8 @@ document.addEventListener("click", function (e) {
         resultsContainer.style.display = "none";
     }
 });
-//Ham xoa dau tieng viet
+
+//Hàm xóa dấu tiếng Việt
 function removeVietnameseTones(str) {
     return str
         .normalize("NFD")

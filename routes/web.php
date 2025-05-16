@@ -6,6 +6,7 @@ use App\Http\Controllers\User\UniformController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\SearchController;
+use App\Http\Controllers\User\SizeController;
 
 
 /*
@@ -30,6 +31,12 @@ Route::prefix('user')->group(function () {
     Route::get('/uniforms/{sp_id}', [UniformController::class, 'showDetail'])->name('uniforms.show_detail');
 
     Route::get('/cart', [OrderController::class, 'cart'])->name('orders.cart');
+    Route::get('/getSizes', [OrderController::class, 'getSizes']);
+    Route::post('/cart/update', [OrderController::class, 'updateQuantity'])->name('cart.updateQuantity');
+
+    Route::get('/sizes', [SizeController::class, 'sizes']);
+    
+
     Route::get('/payment', [OrderController::class, 'payment'])->name('orders.payment');
 
     Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');

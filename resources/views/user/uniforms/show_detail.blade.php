@@ -40,23 +40,27 @@
                         <label>Tồn kho: <span class="product-info__stock">{{ $ct_sp->tonkho }}</span></label>
                     </div>
                     <span class="product-info__price fw-bold" style="color: red;">{{ number_format($ct_sp->gia, 0, ',', '.') }} VND</span>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <select class="product-info__size form-select mt-2 w-25" id="size">
-                            @foreach($sizes as $size)
-                                <option value="{{ $size->size_id }}">{{ $size->ten }}</option>
-                            @endforeach
-                        </select>
-
-                        <a href="{{ route('orders.cart') }}" class="action-item addCart addCartPC btn rounded d-flex"><span class="d-block mt-1"><i class="fa-solid fa-cart-plus me-2"></i>Thêm giỏ hàng</span></a>
-                    </div>
-
-                    <div class="d-flex justify-content-between align-content-center mt-md-3">
-                        <div class="product-quantity input-group mb-3 mt-4 mb-md-0 mt-md-0 w-25">
-                            <button class="btn btn-outline-secondary" type="button" onclick="">−</button>
-                            <input type="number" class="form-control text-center" id="product-quantity" value="1" min="1" max="100">
-                            <button class="btn btn-outline-secondary" type="button" onclick="">+</button>
+                    <div class="gap-3 d-flex justify-content-evenly mt-3">
+                        <div class="input-group quantity-group" style="max-width: 100px;">
+                            <button class="btn btn-outline-secondary btn-sm" type="button" onclick="changeQuantity(this, -1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="number"
+                                class="form-control text-center form-control-sm quantity-input"
+                                value="1" min="1"
+                                data-gh-id="" id="soluong_">
+                            <button class="btn btn-outline-secondary btn-sm" type="button" onclick="changeQuantity(this, 1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
                         </div>
+                        <!-- select 2 size -->
+                        <select id="sizeSelect2" class="form-select w-75">
+                            <option value="">--- Chọn size ---</option>
+                        </select>                        
+                    </div>
+                    <div class="gap-3 d-flex mt-3">
                         <a href="{{ route('orders.payment') }}" class="action-item buyNow buyNowPC btn btn-danger rounded d-flex"><span class="d-block mt-1">Mua ngay</span></a>
+                        <a href="{{ route('orders.cart') }}" class="action-item addCart addCartPC btn rounded d-flex"><span class="d-block mt-1"><i class="fa-solid fa-cart-plus me-2"></i>Thêm giỏ hàng</span></a>
                     </div>
                 </div>
                 <!-- Description -->
