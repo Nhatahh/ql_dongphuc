@@ -66,7 +66,7 @@
                                         </button>
                                     </div>
                                     <!-- select 2 size -->
-                                    <select class="getsizeSelect2 w-75" class="form-select" data-gh-id="{{ $item->gh_id }}" data-current-size="{{ $item->size_id ?? '' }}">
+                                    <select class="getsizeSelect2" class="form-select" data-gh-id="{{ $item->gh_id }}" data-current-size="{{ $item->size_id ?? '' }}">
                                         <option value="">--- Chọn size ---</option>
                                     </select>
                                 </div>
