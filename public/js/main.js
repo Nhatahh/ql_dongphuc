@@ -20,6 +20,20 @@ $("#sizeSelect2").select2({
         cache: true,
     },
 });
+// Load Danh mục select2
+$("#danhmucSelect2").select2({
+    placeholder: "--- Chọn danh mục ---",
+    allowClear: true,
+    ajax: {
+        url: "/user/danhmuc",
+        dataType: "json",
+        delay: 250,
+        processResults: function (data) {
+            return { results: data };
+        },
+        cache: true,
+    },
+});
 
 // Get size select2
 $(".getsizeSelect2").each(function () {

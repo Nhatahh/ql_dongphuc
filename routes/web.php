@@ -7,6 +7,7 @@ use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\SearchController;
 use App\Http\Controllers\User\SizeController;
+use App\Http\Controllers\User\DanhmucController;
 
 
 /*
@@ -35,6 +36,7 @@ Route::prefix('user')->group(function () {
     Route::post('/cart/update', [OrderController::class, 'updateQuantity'])->name('cart.updateQuantity');
 
     Route::get('/sizes', [SizeController::class, 'sizes']);
+    Route::get('/danhmuc', [DanhmucController::class, 'danhmuc']);
     
 
     Route::get('/payment', [OrderController::class, 'payment'])->name('orders.payment');

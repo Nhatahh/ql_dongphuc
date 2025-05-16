@@ -17,41 +17,26 @@
         <li class="menu-item btn col-2">Phổ biến</li>
         <li class="menu-item btn col-2">Bán chạy</li>
         <li class="menu-item btn filter col-2" data-bs-toggle="collapse" data-bs-target="#filter-modal">Lọc</li>
-            <!-- Modal filter -->
-            <form action="" method="" id="filter-modal" class="collapse">
-                <div class="gender d-flex mt-2" style="font-size: 1.2rem;">
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gender" id="male" value="male">
-                        <label class="form-check-label" for="male">Nam</label>
-                    </div>
-                    <div class="form-check" style="margin-left: 10px;">
-                        <input class="form-check-input" type="radio" name="gender" id="female" value="female">
-                        <label class="form-check-label" for="female">Nữ</label>
-                    </div>
-                </div>
-                <select class="form-select mt-2">
-                    <option selected>Loại</option>
-                    <option value="">Áo thể dục</option>
-                    <option value="">Quần thể dục</option>
-                    <option value="">Áo sơ mi</option>
-                    <option value="">Quần sơ mi</option>
-                </select>
-                <select class="form-select mt-2">
-                    <option selected>Size</option>
-                    <option value="">S</option>
-                    <option value="">M</option>
-                    <option value="">L</option>
-                    <option value="">XL</option>
-                </select>   
-                <select class="form-select mt-2">
-                    <option selected>Giá</option>
+        <!-- Modal filter -->
+        <div id="filter-modal" class="collapse border border-dark border-1 bg-white text-center p-3 mt-3">
+            <div class="d-flex justify-content-center gap-2 mb-2">
+                <!-- select 2 danh muc -->
+                <select id="danhmucSelect2" class="form-select">
+                    <option value="">--- Chọn danh mục ---</option>
+                </select> 
+                <!-- select 2 size -->
+                <select id="sizeSelect2" class="form-select">
+                    <option value="">--- Chọn size ---</option>
+                </select> 
+                <!-- select giá -->
+                <select id="giaSelect" class="form-select" style="max-width: 200px;">
+                    <option selected>--- Chọn giá ---</option>
                     <option value="">Giảm dần</option>
                     <option value="">Tăng dần</option>
                 </select>
-                <div class="text-center mt-3">
-                    <button type="submit" class="btn btn-danger w-50">OK</button>   
-                </div>
-            </form>
+            </div>
+            <button class="btn btn-danger" data-url="">Lọc</button>
+        </div>
     </ul>
     <div class="product-list">
         <div class="row">

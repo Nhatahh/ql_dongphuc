@@ -60,7 +60,9 @@
                     </div>
                     <div class="gap-3 d-flex mt-3">
                         <a href="{{ route('orders.payment') }}" class="action-item buyNow buyNowPC btn btn-danger rounded d-flex"><span class="d-block mt-1">Mua ngay</span></a>
-                        <a href="{{ route('orders.cart') }}" class="action-item addCart addCartPC btn rounded d-flex"><span class="d-block mt-1"><i class="fa-solid fa-cart-plus me-2"></i>Thêm giỏ hàng</span></a>
+                        <a href="{{ route('orders.cart') }}" class="action-item addCart addCartPC btn rounded d-flex">
+                            <span class="d-block mt-1"><i class="fa-solid fa-cart-plus me-2"></i>Thêm giỏ hàng</span>
+                        </a>
                     </div>
                 </div>
                 <!-- Description -->
