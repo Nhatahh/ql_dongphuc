@@ -74,57 +74,76 @@
                     </div>
                 </div>
             </div>
-            <!-- Rating -->
-            <div class="product-rating col-12 mt-4">
-                <h3>Đánh giá sản phẩm</h3>
-                <div class="product-rating__content mt-3">
-                    <div class="stars">
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                    </div>
-                    <div class="mt-3">
-                        <h3>Tên: </h3>
-                        <p>Nội dung đánh giá </p>
 
-                        <div class="user-rate d-flex align-items-center">
-                            <img src="{{ asset('images/product2.jpg') }}" alt="" class="rounded-circle me-2" style="width: 30px; height: 30px; object-fit: contain;">
-                            <div class="row">
-                                <span><b>Tên khách hàng</b></span>
-                                <span>Ngày đánh giá</span>
+            <!-- Đánh giá sản phẩm -->
+            <div class="product-rating col-12 mt-4">
+                <h3><i class="fa-solid fa-star text-warning me-2"></i>Đánh giá sản phẩm</h3>
+                @if ($danhgias->isEmpty())
+                    <div class="text-center w-100 py-5">
+                        <i class="fa-solid fa-star fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">Chưa có đánh giá cho sản phẩm này.</h5>
+                    </div>
+                @else
+                @foreach ($danhgias as $dg)
+                    <div class="product-rating__content mt-4 p-3 border rounded">
+                    <div class="d-flex align-items-center mb-2"> 
+                        <img src="{{ asset('images/avt/' . $dg->avt_url) }}" alt="avatar" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
+
+                        <div>
+                            <strong>{{ $dg->user_name ?? 'Khách hàng' }}</strong>
+                            <div class="text-warning">
+                                @for ($i = 0; $i < $dg->rating; $i++)
+                                    <i class="fa-solid fa-star"></i>
+                                @endfor
+                                @for ($i = $dg->rating; $i < 5; $i++)
+                                    <i class="fa-regular fa-star"></i>
+                                @endfor
                             </div>
+                            <small class="text-muted">{{ $dg->created_at}} 
                         </div>
                     </div>
+
+                    <p class="mt-2 fs-5 text-dark">{{ $dg->binhluan }}</p>
+
+                    {{-- Hình ảnh đánh giá --}}
+                    <div class="d-flex gap-2 mt-3">
+                        @if($dg->anh_url)
+                        <img src="{{ asset('images/danhgia/' . $dg->anh_url) }}" alt="hình đánh giá" style="width: 80px; height: auto;" class="rounded">
+                        @endif
+                    </div>
+
                 </div>
-            </div> 
+                @endforeach
+                @endif
+            </div>
+
+            <!-- Gợi ý sản phẩm -->
             <div class="product-list">
-        <div class="suggest mt-4 d-flex justify-content-between">
-            <span class="fw-bold fst-italic fs-4">Gợi ý cho bạn</span>
-        </div>
-        <div class="row">
-            @foreach($sanphams as $sp)
-                <div class="col-6 col-md-3 mt-4">
-                    <a href="{{ route('uniforms.show_detail', $sp->sp_id) }}" class="text-decoration-none text-dark">
-                        <div class="card">
-                            <img src="{{ asset('images/' . $sp->image_url) }}" class="card-img-top" alt="{{ $sp->tensp }}">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $sp->tensp }}</h5>
-                                <p class="card-text">{{ $sp->mota }}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <p class="fs-4 fw-bold" style="color: red;">
-                                        {{ number_format($sp->gia, 0, ',', '.') }} ₫
-                                    </p>
-                                    <p class="fs-5">Đã bán: 111</p>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
+                <div class="suggest mt-4 d-flex justify-content-between">
+                    <span class="fw-bold fst-italic fs-4">Gợi ý cho bạn</span>
                 </div>
-            @endforeach
-        </div>
-    </div>
+                <div class="row">
+                    @foreach($sanphams as $sp)
+                        <div class="col-6 col-md-3 mt-4">
+                            <a href="{{ route('uniforms.show_detail', $sp->sp_id) }}" class="text-decoration-none text-dark">
+                                <div class="card">
+                                    <img src="{{ asset('images/' . $sp->image_url) }}" class="card-img-top" alt="{{ $sp->tensp }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $sp->tensp }}</h5>
+                                        <p class="card-text">{{ $sp->mota }}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="fs-4 fw-bold" style="color: red;">
+                                                {{ number_format($sp->gia, 0, ',', '.') }} ₫
+                                            </p>
+                                            <p class="fs-5">Đã bán: 111</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </div>
 @endsection

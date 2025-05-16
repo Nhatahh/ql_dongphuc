@@ -6,7 +6,7 @@ $(document).ready(function () {
     });
 });
 
-// Load Size select2
+// Size Select2
 $("#sizeSelect2").select2({
     placeholder: "--- Chọn size ---",
     allowClear: true,
@@ -20,7 +20,7 @@ $("#sizeSelect2").select2({
         cache: true,
     },
 });
-// Load Danh mục select2
+// Danh mục Select2
 $("#danhmucSelect2").select2({
     placeholder: "--- Chọn danh mục ---",
     allowClear: true,
@@ -34,7 +34,7 @@ $("#danhmucSelect2").select2({
         cache: true,
     },
 });
-// Load Nhà sản xuất select2
+// Nhà sản xuất Select2
 $("#nsxSelect2").select2({
     placeholder: "--- Chọn nhà sản xuất ---",
     allowClear: true,
@@ -48,7 +48,21 @@ $("#nsxSelect2").select2({
         cache: true,
     },
 });
-// Select2 Giá
+// Phương thức thanh toán Select2
+$("#ptThanhToanSelect2").select2({
+    placeholder: "--- Chọn nhà phương thức thanh toán ---",
+    allowClear: true,
+    ajax: {
+        url: "/user/ptThanhToan",
+        dataType: "json",
+        delay: 250,
+        processResults: function (data) {
+            return { results: data };
+        },
+        cache: true,
+    },
+});
+// Giá Select2
 $("#giaSelect2").select2({
     placeholder: "--- Chọn giá ---",
     allowClear: true,

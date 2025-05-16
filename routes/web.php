@@ -9,6 +9,7 @@ use App\Http\Controllers\User\SearchController;
 use App\Http\Controllers\User\SizeController;
 use App\Http\Controllers\User\DanhmucController;
 use App\Http\Controllers\User\nhaSXController;
+use App\Http\Controllers\User\ptThanhToanController;
 use App\Http\Controllers\Auth\LoginController;
 
 
@@ -47,6 +48,7 @@ Route::prefix('user')->group(function () {
     Route::get('/sizes', [SizeController::class, 'sizes']);
     Route::get('/danhmuc', [DanhmucController::class, 'danhmuc']);
     Route::get('/nsx', [nhaSXController::class, 'nsx']);
+    Route::get('/ptThanhToan', [ptThanhToanController::class, 'ptThanhToan']);
 
     Route::get('/payment', [OrderController::class, 'payment'])->name('orders.payment');
 

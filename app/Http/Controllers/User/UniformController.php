@@ -48,9 +48,16 @@ class UniformController extends Controller
 
         $sizes = DB::table('size')->get();
 
-        $danhgias = DB::table('danhgia as dg')
-            ->leftJoin('kho', 'kho.kho_id', '=', 'dg.kho_id')
-            ->where('sp_id', $sp_id)
+        $danhgias = DB::table('danhgia')
+            ->join('users', 'danhgia.user_id', '=', 'users.id')
+            ->join('kho', 'danhgia.kho_id', '=', 'kho.kho_id')
+            ->join('sanpham', 'kho.sp_id', '=', 'sanpham.sp_id') 
+            ->where('sanpham.sp_id', $sp_id)
+            ->select(
+                'danhgia.*', 
+                'users.hoten as user_name', 
+                'users.avt_url as avt_url'
+            )
             ->get();
 
         return view('user.uniforms.show_detail', compact('ct_sp', 'sizes', 'danhgias','sanphams'));

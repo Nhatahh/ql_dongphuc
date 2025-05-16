@@ -22,6 +22,28 @@
             </div>
         </div>
 
+        <!-- Tóm tắt đơn hàng -->
+        <div class="order-summary-box my-3 p-3 rounded shadow-sm bg-light border">
+            <div class="d-flex flex-column gap-3 align-items-center">
+                <div class="col-12 text-center text-md-start">
+                    <strong>Tổng tiền hàng:</strong>
+                    <span class="text-danger fw-bold fs-5" id="totalPrice">
+                        {{ number_format($cartItems->sum(fn($item) => $item->gia * $item->soluong), 0, ',', '.') }} ₫
+                    </span>
+                </div>
+
+                <div class="col-12">
+                    <select class="form-select w-100" id="ptThanhToanSelect2">
+                    </select>
+                </div>
+
+                <div class="col-12 text-center text-md-end">
+                    <button id="checkoutBtn" class="btn btn-primary px-4 w-100 w-md-auto">Thanh toán</button>
+                </div>
+            </div>
+        </div>
+
+
         <!-- Giỏ hàng -->
         <div class="cart-list mt-4" style="max-height: 75vh;">
             <div class="row g-0">
