@@ -40,7 +40,7 @@
                         <label>Loại: <span class="product-info__cate">{{ $ct_sp->ten_danhmuc }}</span></label>
                         <label>Nhà sản xuất: <span class="product-info__nsx">{{ $ct_sp->ten_nsx }}</span></label>
                     </div>
-                    <span class="product-info__price fw-bold" style="color: red;">{{ number_format($ct_sp->gia, 0, ',', '.') }} VND</span>
+                    <span class="product-info__price fw-bold" style="color: red;">{{ number_format($ct_sp->gia, 0, ',', '.') }} ₫</span>
                     <div class="gap-3 d-flex justify-content-center mt-3">
                         <div class="input-group quantity-group" style="max-width: 100px;">
                             <button class="btn btn-outline-secondary btn-sm" type="button" onclick="changeQuantity(this, -1)">

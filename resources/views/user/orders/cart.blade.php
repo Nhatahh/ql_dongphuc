@@ -50,7 +50,7 @@
                                         <a href="{{ route('uniforms.show_detail', $item->sp_id) }}" class="text-decoration-none text-dark">
                                             <h2 class="fw-bold mb-1">{{ $item->tensp }}</h2>
                                         </a>
-                                        <h3 class="fw-bold text-danger mb-0">{{ number_format($item->gia, 0, ',', '.') }} VND</h3>
+                                        <h3 class="fw-bold text-danger mb-0">{{ number_format($item->gia, 0, ',', '.') }} ₫</h3>
                                     </div>
                                 </div>
                                 <!-- Số lượng -->

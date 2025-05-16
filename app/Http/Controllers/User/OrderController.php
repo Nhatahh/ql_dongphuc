@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Validator;
 class OrderController extends Controller
 {
     public function cart() {
-        // if (Auth::check()) {
-        //     $user_id = Auth::user()->user_id;
-        // } else {
-        //     return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để xem giỏ hàng');
-        // }
-        $user_id = '1'; //Giả sử User có id là U01 đang đăng nhập
+        if (Auth::check()) {
+            $user_id = Auth::user()->user_id;
+        } else {
+            return redirect()->route('login');
+        }
+        // $user_id = Auth::user()->user_id; 
         $cartItems = DB::table('giohang as gh')
                     ->join('sanpham', 'sanpham.sp_id', '=', 'gh.sp_id')
                     ->join('users', 'users.user_id', '=', 'gh.user_id')

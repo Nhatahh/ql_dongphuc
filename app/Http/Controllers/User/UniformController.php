@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Collection;
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
@@ -25,7 +26,6 @@ class UniformController extends Controller
             ->leftJoin('nhasanxuat', 'sp.nsx_id', '=', 'nhasanxuat.nsx_id')
             ->leftJoin('kho', 'kho.sp_id', '=', 'sp.sp_id')
             ->leftJoin('size', 'size.size_id', '=', 'kho.size_id')
-            ->leftJoin('mau', 'mau.mau_id', '=', 'kho.mau_id')
             ->leftJoin('danhgia', 'danhgia.kho_id', '=', 'kho.kho_id')
             ->leftJoin('users', 'users.user_id', '=', 'danhgia.user_id')
             ->where('sp.sp_id', $sp_id)
@@ -71,7 +71,11 @@ class UniformController extends Controller
         try {
             DB::beginTransaction();
 
-            $user_id = 1; 
+            if (Auth::check()) {
+                $user_id = Auth::user()->user_id;
+            } else {
+                return redirect()->route('login');
+            }
 
             // Kiểm tra sản phẩm đã tồn tại trong giỏ chưa (cùng size)
             $exists = DB::table('giohang')

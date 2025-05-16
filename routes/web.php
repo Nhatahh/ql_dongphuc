@@ -9,6 +9,7 @@ use App\Http\Controllers\User\SearchController;
 use App\Http\Controllers\User\SizeController;
 use App\Http\Controllers\User\DanhmucController;
 use App\Http\Controllers\User\nhaSXController;
+use App\Http\Controllers\Auth\LoginController;
 
 
 /*
@@ -24,7 +25,7 @@ use App\Http\Controllers\User\nhaSXController;
 
 Route::get('/', function () {
     return redirect()->route('home.index');
-});
+})->name('/');
 
 Route::prefix('user')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home.index');
@@ -55,9 +56,9 @@ Route::prefix('user')->group(function () {
 
     Route::get('/search', [SearchController::class, 'search'])->name('user.search');
 
-
-    Route::get('/sign_in', [UserController::class, 'formSignIn'])->name('user.sign_in');
-
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 });
 

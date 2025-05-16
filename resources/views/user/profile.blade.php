@@ -74,20 +74,18 @@
           </a>
         </li>
         <li>
-          <a
-            href="{{ route('user.sign_in') }}"
-            class="d-flex flex-column align-items-center text-decoration-none text-dark"
-          >
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+              @csrf
+          </form>
+          <a href="#" 
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
+            class="d-flex flex-column align-items-center text-decoration-none text-dark">
             <i class="icon-active bi bi-box-arrow-right"></i>
             <span>Đăng xuất</span>
           </a>
         </li>
       </ul>
-
-
       <hr>
-
-
       <!-- Order Tab -->
       <div id="order-tab">
         <div class="cart-list col-12 mt-4 p-4" style="max-height: 75vh">
@@ -105,7 +103,7 @@
               />
               <div class="cart-item__content flex-grow-1">
                 <p class="mb-1 fw-bold">{{ $u->tensp }}</p>
-                <p class="text-danger fw-bold mb-1">{{ $u->gia }}</p>
+                <p class="text-danger fw-bold mb-1">{{ number_format($u->gia, 0, ',', '.') }} ₫</p>
               </div>
               <button class="btn btn-danger">Hủy hàng</button>
             </div>
@@ -131,8 +129,8 @@
                 class="cart-item__img img-fluid rounded me-3"
               />
               <div class="cart-item__content flex-grow-1">
-                <p class="mb-1 fw-bold">Đồng phục sinh viên</p>
-                <p class="text-danger fw-bold mb-1">69,999đ</p>
+                <p class="mb-1 fw-bold">{{ $u->tensp }}</p>
+                <p class="text-danger fw-bold mb-1">{{ number_format($u->gia, 0, ',', '.') }} ₫</p>
                 <div class="input-group" style="max-width: 60px">
                   <button
                     class="btn btn-outline-secondary btn-sm"

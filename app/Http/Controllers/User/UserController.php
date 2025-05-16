@@ -4,13 +4,18 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;  
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
     public function profile()
     {
-        $user_id = '1';
+        if (Auth::check()) {
+            $user_id = Auth::user()->user_id;
+        } else {
+            return redirect()->route('login');
+        }
         $user = DB::table('giohang as gh')
         ->join('sanpham', 'sanpham.sp_id', '=', 'gh.sp_id')
         ->join('users', 'users.user_id', '=', 'gh.user_id')
@@ -36,11 +41,11 @@ class UserController extends Controller
         return view('user.profile', compact('user'));
     }
 
-
     public function formSignIn()
     {
         return view('user.form.sign_in');
     }
+
 
 
 }

@@ -19,36 +19,31 @@
       <img src="{{ asset('images/logo3.jpg') }}" alt="logo">
     </div>
     <div class="login-form">
-      <form action="" method="">
-      <h2>Xin chào, hãy tham gia cùng chúng tôi nhé!</h2>
+      <form action="{{ route('login.post') }}" method="POST">
+      @csrf
+        <h2>Xin chào, hãy tham gia cùng chúng tôi nhé!</h2>
 
-      <div class="form-group mb-3">
-        <label>Email hoặc số điện thoại</label>
-        <input class="form-control input-animate" type="text" placeholder="Nhập email hoặc SĐT" required>
-      </div>
+        <div class="form-group mb-3">
+          <label>Tên tài khoản hoặc email</label>
+          <input name="login" type="text" class="form-control input-animate" placeholder="Nhập tên tài khoản hoặc email" required>
+        </div>
 
-      <div class="form-group mb-3">
-        <label>Mật khẩu</label>
-        <input class="form-control input-animate" type="password" placeholder="Nhập mật khẩu" required>
-      </div>
+        <div class="form-group mb-3">
+          <label>Mật khẩu</label>
+          <input name="password" type="password" class="form-control input-animate" placeholder="Nhập mật khẩu" required>
+        </div>
 
-      <div class="form-check mb-3">
-        <input type="checkbox" class="form-check-input" id="rememberMe">
-        <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
-      </div>
+        <div class="form-check mb-3">
+          <input type="checkbox" class="form-check-input" id="rememberMe">
+          <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
+        </div>
 
-      <button type="submit" class="signinBtn">Đăng nhập</button>
+        <button type="submit" class="signinBtn">Đăng nhập</button>
 
-      <div class="google-login mb-3">
-        <a href="{{ route('login.google') }}" class="google-btn">
-          <i class="fa-brands fa-google"></i> Đăng nhập với Google
-        </a>
-      </div>
-
-      <div class="form-footer">
-        <a href="#">Quên mật khẩu?</a> |
-        <a href="#" class="signupLink">Đăng ký tài khoản</a>
-      </div>
+        <div class="form-footer">
+          <a href="#">Quên mật khẩu?</a> |
+          <a href="#" class="signupLink">Đăng ký tài khoản</a>
+        </div>
 
       </form>
     </div>
