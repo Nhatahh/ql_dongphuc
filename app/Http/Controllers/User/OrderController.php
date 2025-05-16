@@ -23,7 +23,6 @@ class OrderController extends Controller
                     ->join('sanpham', 'sanpham.sp_id', '=', 'gh.sp_id')
                     ->join('users', 'users.user_id', '=', 'gh.user_id')
                     ->join('kho', 'sanpham.kho_id', '=', 'kho.kho_id')
-                    ->join('mau', 'gh.mau_id', '=', 'mau.mau_id')
                     ->join('size', 'gh.size_id', '=', 'size.size_id')
                     ->where('gh.user_id', $user_id)
                     ->select(
@@ -32,7 +31,6 @@ class OrderController extends Controller
                         'sanpham.sp_id as sp_id',
                         'sanpham.gia',
                         'sanpham.image_url',
-                        'mau.ten as tenmau',
                         'size.ten as tensize',
                         'kho.kho_id as kho_id',                        
                     )
@@ -72,21 +70,54 @@ class OrderController extends Controller
     
         try {
             DB::beginTransaction();
-    
-            $updated = DB::table('giohang')
-                ->where('gh_id', $request->gh_id)
-                ->update([
-                    'soluong' => $request->soluong,
-                    'size_id' => $request->size_id,  // cập nhật size_id
-                ]);
-    
-            if ($updated == 1) {
-                DB::commit();
-                return response("1", 200); // thành công
-            } else {
+
+            $giohang = DB::table('giohang')->where('gh_id', $request->gh_id)->first();
+
+            if (!$giohang) {
                 DB::rollBack();
-                return response("0", 200); // không tìm thấy sản phẩm
+                return response("0", 200); // không tồn tại
             }
+
+            $user_id = $giohang->user_id;
+            $sp_id = $giohang->sp_id;
+
+            // Kiểm tra có dòng nào khác giống sp_id + size_id không?
+            $existing = DB::table('giohang')
+                        ->where('user_id', $user_id)
+                        ->where('sp_id', $sp_id)
+                        ->where('size_id', $request->size_id)
+                        ->where('gh_id', '!=', $request->gh_id)
+                        ->first();
+    
+            if ($existing) {
+                // Gộp số lượng
+                $tongSoluong = $existing->soluong + $request->soluong;
+    
+                // Cập nhật dòng còn lại
+                DB::table('giohang')
+                    ->where('gh_id', $existing->gh_id)
+                    ->update([
+                        'soluong' => $tongSoluong,
+                        'created_at' => now(),
+                    ]);
+    
+                // Xóa dòng hiện tại
+                DB::table('giohang')
+                    ->where('gh_id', $request->gh_id)
+                    ->delete();
+            } else {
+                // Cập nhật bình thường
+                DB::table('giohang')
+                    ->where('gh_id', $request->gh_id)
+                    ->update([
+                        'soluong' => $request->soluong,
+                        'size_id' => $request->size_id,
+                        'created_at' => now(),
+                    ]);
+            }
+
+            DB::commit();
+            return response("1", 200);
         } catch (\Exception $e) {
             DB::rollBack();
             return response("-1", 500); // lỗi hệ thống

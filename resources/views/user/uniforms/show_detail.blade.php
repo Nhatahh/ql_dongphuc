@@ -34,13 +34,14 @@
             <!-- Product Infomation -->
             <div class="col-12 col-md-6">
                 <div class="product-info col-12 ps-md-5 mt-md-0 d-flex flex-column mt-4">
-                    <h1><strong>{{ $ct_sp->tensp }}</strong></h1>
-                    <div class="d-flex">
-                        <label>Loại: <span class="product-info__cate">{{ $ct_sp->ten_danhmuc }}</span></label>
+                    <div class="fs-1"><strong>{{ $ct_sp->tensp }}</strong></div>
+                    <div class="d-flex flex-column">
                         <label>Tồn kho: <span class="product-info__stock">{{ $ct_sp->tonkho }}</span></label>
+                        <label>Loại: <span class="product-info__cate">{{ $ct_sp->ten_danhmuc }}</span></label>
+                        <label>Nhà sản xuất: <span class="product-info__nsx">{{ $ct_sp->ten_nsx }}</span></label>
                     </div>
                     <span class="product-info__price fw-bold" style="color: red;">{{ number_format($ct_sp->gia, 0, ',', '.') }} VND</span>
-                    <div class="gap-3 d-flex justify-content-evenly mt-3">
+                    <div class="gap-3 d-flex justify-content-center mt-3">
                         <div class="input-group quantity-group" style="max-width: 100px;">
                             <button class="btn btn-outline-secondary btn-sm" type="button" onclick="changeQuantity(this, -1)">
                                 <i class="fas fa-minus"></i>
@@ -48,21 +49,19 @@
                             <input type="number"
                                 class="form-control text-center form-control-sm quantity-input"
                                 value="1" min="1"
-                                data-gh-id="" id="soluong_">
+                                data-sp-id="{{ $ct_sp->sp_id }}" id="soluong_{{ $ct_sp->sp_id }}">
                             <button class="btn btn-outline-secondary btn-sm" type="button" onclick="changeQuantity(this, 1)">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
                         <!-- select 2 size -->
-                        <select id="sizeSelect2" class="form-select w-75">
+                        <select id="sizeSelect2" class="form-select sizeSelect2" style="max-width: 200px;" data-sp-id="{{ $ct_sp->sp_id }}">
                             <option value="">--- Chọn size ---</option>
                         </select>                        
                     </div>
-                    <div class="gap-3 d-flex mt-3">
-                        <a href="{{ route('orders.payment') }}" class="action-item buyNow buyNowPC btn btn-danger rounded d-flex"><span class="d-block mt-1">Mua ngay</span></a>
-                        <a href="{{ route('orders.cart') }}" class="action-item addCart addCartPC btn rounded d-flex">
-                            <span class="d-block mt-1"><i class="fa-solid fa-cart-plus me-2"></i>Thêm giỏ hàng</span>
-                        </a>
+                    <div class="gap-3 d-flex justify-content-center mt-3">
+                        <button class="btn btn-danger fs-4 w-50" data-sp-id="{{ $ct_sp->sp_id }}" data-url=""><i class="bi bi-bag-check-fill"></i> Mua ngay</button>
+                        <button class="btn btn-primary btn-addSP fs-4 w-50" data-sp-id="{{ $ct_sp->sp_id }}" data-url="{{ route('addSP') }}" data-cart-url="{{ route('orders.cart') }}"><i class="fa-solid fa-cart-plus"></i> Thêm giỏ hàng</button>
                     </div>
                 </div>
                 <!-- Description -->

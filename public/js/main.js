@@ -34,6 +34,20 @@ $("#danhmucSelect2").select2({
         cache: true,
     },
 });
+// Load Nhà sản xuất select2
+$("#nsxSelect2").select2({
+    placeholder: "--- Chọn nhà sản xuất ---",
+    allowClear: true,
+    ajax: {
+        url: "/user/nsx",
+        dataType: "json",
+        delay: 250,
+        processResults: function (data) {
+            return { results: data };
+        },
+        cache: true,
+    },
+});
 
 // Get size select2
 $(".getsizeSelect2").each(function () {
@@ -89,9 +103,65 @@ function changeQuantity(button, delta) {
     input.val(newVal);
 }
 
+// Thêm sản phẩm
+$(".btn-addSP").on("click", function () {
+    let sp_id = $(this).data("sp-id");
+    let url = $(this).data("url");
+    let cart_url = $(this).data("cart-url");
+    let soluong = $("#soluong_" + sp_id).val();
+
+    // Lấy giá trị size hiện tại của select2 tương ứng
+    let size_id = $(".sizeSelect2[data-sp-id='" + sp_id + "']").val();
+
+    // Kiểm tra nếu chưa chọn size
+    if (!size_id) {
+        toastr.error("Vui lòng chọn size!!!");
+        return;
+    }
+
+    $.ajax({
+        url: url,
+        method: "POST",
+        data: {
+            sp_id: sp_id,
+            soluong: soluong,
+            size_id: size_id,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (response) {
+            switch (response) {
+                case "1":
+                    toastr.success("Đã thêm sản phẩm vào giỏ hàng.");
+                    window.location.href = cart_url;
+                    break;
+                case "0":
+                    toastr.warning("Thêm sản phẩm thất bại!!!");
+                    break;
+                case "-1":
+                    toastr.error("Hệ thống lỗi");
+                    break;
+            }
+        },
+        error: function (xhr) {
+            // if (xhr.status === 422) {
+            //     let errors = xhr.responseJSON;
+            //     const keys = Object.keys(errors);
+            //     for (let i = 0; i < keys.length; i++) {
+            //         $("#err_soluong_" + keys[i]).text(errors[keys[i]]);
+            //     }
+            // } else {
+            toastr.error("Lỗi không xác định");
+            // }
+        },
+    });
+});
+
 // Cập nhật sản phẩm
 $(".btn-update-quantity").on("click", function () {
     let gh_id = $(this).data("gh-id");
+    let user_id = $(this).data("user_id");
     let url = $(this).data("url");
     let soluong = $("#soluong_" + gh_id).val();
 
@@ -123,6 +193,7 @@ $(".btn-update-quantity").on("click", function () {
         method: "POST",
         data: {
             gh_id: gh_id,
+            user_id: user_id,
             soluong: soluong,
             size_id: size_id,
         },
@@ -322,3 +393,26 @@ function removeVietnameseTones(str) {
         .replace(/Đ/g, "D")
         .toLowerCase();
 }
+
+//Lọc trong trang store
+$("#filterButton").on("click", function () {
+    const url = $(this).data("url");
+    const danhmuc = $("#danhmucSelect2").val();
+    const nsx_id = $("#nsxSelect2").val();
+    const gia = $("#giaSelect").val();
+
+    const params = new URLSearchParams({
+        danhmuc: danhmuc,
+        nsx_id: nsx_id,
+        gia: gia,
+    });
+    window.location.href = `${url}?${params.toString()}`;
+});
+// Lọc - Mới nhất - Bán chạy - Phổ biến
+$(".sort-button").on("click", function () {
+    const sortType = $(this).data("sort");
+    const url = $(this).data("url");
+
+    const params = new URLSearchParams({ sort: sortType });
+    window.location.href = `${url}?${params.toString()}`;
+});

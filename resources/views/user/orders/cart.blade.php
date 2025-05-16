@@ -66,13 +66,13 @@
                                         </button>
                                     </div>
                                     <!-- select 2 size -->
-                                    <select class="getsizeSelect2" class="form-select" data-gh-id="{{ $item->gh_id }}" data-current-size="{{ $item->size_id ?? '' }}">
+                                    <select class="form-select getsizeSelect2" data-gh-id="{{ $item->gh_id }}" data-current-size="{{ $item->size_id ?? '' }}">
                                         <option value="">--- Chọn size ---</option>
                                     </select>
                                 </div>
                                 <!-- Nút thao tác -->
                                 <div class="col-3 d-flex justify-content-center align-items-center gap-2 flex-column flex-md-row">
-                                    <button class="btn btn-success btn-update-quantity" data-gh-id="{{ $item->gh_id }}" data-url="{{ route('cart.updateQuantity') }}">Cập nhật</button>
+                                    <button class="btn btn-success btn-update-quantity" data-gh-id="{{ $item->gh_id }}" data-user-id="{{ $item->user_id }}" data-url="{{ route('cart.updateQuantity') }}">Cập nhật</button>
                                     <button class="btn btn-danger" data-gh-id="{{ $item->gh_id }}">Xóa</button>
                                 </div>
                             </div>

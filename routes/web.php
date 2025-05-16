@@ -8,6 +8,7 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\SearchController;
 use App\Http\Controllers\User\SizeController;
 use App\Http\Controllers\User\DanhmucController;
+use App\Http\Controllers\User\nhaSXController;
 
 
 /*
@@ -29,7 +30,12 @@ Route::prefix('user')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home.index');
 
     Route::get('/store', [UniformController::class, 'store'])->name('uniforms.store');
+    Route::get('/store/filter', [UniformController::class, 'filter'])->name('store.filter');
     Route::get('/uniforms/{sp_id}', [UniformController::class, 'showDetail'])->name('uniforms.show_detail');
+    Route::post('/uniforms/addSP', [UniformController::class, 'addSP'])->name('addSP');
+    
+
+
 
     Route::get('/cart', [OrderController::class, 'cart'])->name('orders.cart');
     Route::get('/getSizes', [OrderController::class, 'getSizes']);
@@ -37,7 +43,7 @@ Route::prefix('user')->group(function () {
 
     Route::get('/sizes', [SizeController::class, 'sizes']);
     Route::get('/danhmuc', [DanhmucController::class, 'danhmuc']);
-    
+    Route::get('/nsx', [nhaSXController::class, 'nsx']);
 
     Route::get('/payment', [OrderController::class, 'payment'])->name('orders.payment');
 
@@ -52,3 +58,4 @@ Route::prefix('user')->group(function () {
 
 
 });
+
