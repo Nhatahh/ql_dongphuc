@@ -76,7 +76,7 @@
                                 <!-- Nút thao tác -->
                                 <div class="col-3 d-flex justify-content-center align-items-center gap-2 flex-column flex-md-row">
                                     <button class="btn btn-success btn-update-quantity" data-gh-id="{{ $item->gh_id }}" data-user-id="{{ $item->user_id }}" data-url="{{ route('cart.updateQuantity') }}">Cập nhật</button>
-                                    <button class="btn btn-danger" data-gh-id="{{ $item->gh_id }}">Xóa</button>
+                                    <button class="btn btn-danger btn-delete-item" data-gh-id="{{ $item->gh_id }}" data-url="{{ route('cart.delete') }}">Xóa</button>
                                 </div>
                             </div>
                         </div>

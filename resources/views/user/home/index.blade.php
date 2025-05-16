@@ -61,13 +61,13 @@
                             <div class="card">
                                 <img src="{{ asset('images/' . $sp->image_url) }}" class="card-img-top" alt="{{ $sp->tensp }}">
                                 <div class="card-body">
-                                    <div class="text-center fs-2 fw-bold gia" style="color: red;">
-                                        {{ number_format($sp->gia, 0, ',', '.') }} VND
-                                    </div>
                                     <h5 class="card-title">{{ $sp->tensp }}</h5>
                                     <p class="card-text">{{ $sp->mota }}</p>
-                                    <div class="text-center">
-                                    <a href="#" class="order text-white btn btn-primary card-link mt-3"><i class="fa-solid fa-gift me-1"></i> Đặt hàng</a>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <p class="fs-4 fw-bold" style="color: red;">
+                                            {{ number_format($sp->gia, 0, ',', '.') }} ₫
+                                        </p>
+                                        <p class="fs-5">Đã bán: 111</p>
                                     </div>
                                 </div>
                             </div>

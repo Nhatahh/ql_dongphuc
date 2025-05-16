@@ -76,7 +76,7 @@
             </div>
             <!-- Rating -->
             <div class="product-rating col-12 mt-4">
-                <h1>Đánh giá sản phẩm</h1>
+                <h3>Đánh giá sản phẩm</h3>
                 <div class="product-rating__content mt-3">
                     <div class="stars">
                         <i class="fa-regular fa-star"></i>
@@ -99,6 +99,32 @@
                     </div>
                 </div>
             </div> 
+            <div class="product-list">
+        <div class="suggest mt-4 d-flex justify-content-between">
+            <span class="fw-bold fst-italic fs-4">Gợi ý cho bạn</span>
+        </div>
+        <div class="row">
+            @foreach($sanphams as $sp)
+                <div class="col-6 col-md-3 mt-4">
+                    <a href="{{ route('uniforms.show_detail', $sp->sp_id) }}" class="text-decoration-none text-dark">
+                        <div class="card">
+                            <img src="{{ asset('images/' . $sp->image_url) }}" class="card-img-top" alt="{{ $sp->tensp }}">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $sp->tensp }}</h5>
+                                <p class="card-text">{{ $sp->mota }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p class="fs-4 fw-bold" style="color: red;">
+                                        {{ number_format($sp->gia, 0, ',', '.') }} ₫
+                                    </p>
+                                    <p class="fs-5">Đã bán: 111</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endforeach
+        </div>
+    </div>
         </div>
     </div>
 @endsection

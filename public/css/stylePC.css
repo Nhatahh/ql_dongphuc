@@ -165,8 +165,6 @@
         width: 100px !important;
     }
 
-    
-
     #filter-modal label,
     #filter-modal select,
     #filter-modal button {
@@ -177,67 +175,130 @@
         opacity: 0.7;
         cursor: pointer;
     }
-}
 
-.tabs {
-    justify-content: space-evenly !important;
-}
-
-.tabs div:hover {
-    opacity: 0.8;
-}
-
-#searchResults {
-  overflow-y: auto;
-  display: none;
-  z-index: 9999;
-  background-color: #fff;
-  box-shadow: 0 5px 5px rgba(48, 48, 48, 0.582);
-  top: 30px;
-  padding: 10px;
-  border-radius: 8px;
-}
-#searchResults .search-item {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-#searchResults .search-item:hover {
-  background-color: #b7b7b7;
-}
-.sreach-a {
-  text-decoration: none;
-}
-.dropdown-item:hover {
-  background-color: #f0f0f0;
-  cursor: pointer;
-}
-
-/* Định dạng cho loader */
-#loading {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-}
-.spinner {
-    border: 3px solid #ffffff;
-    border-top: 3px solid #000000;
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-    animation: spin 2s linear infinite;
-}
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
+    .tabs {
+        justify-content: space-evenly !important;
     }
-    100% {
-        transform: rotate(360deg);
+
+    .tabs div:hover {
+        opacity: 0.8;
+    }
+
+    #searchResults {
+        overflow-y: auto;
+        display: none;
+        z-index: 9999;
+        background-color: #fff;
+        box-shadow: 0 5px 5px rgba(48, 48, 48, 0.582);
+        top: 30px;
+        padding: 10px;
+        border-radius: 8px;
+    }
+    #searchResults .search-item {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    #searchResults .search-item:hover {
+        background-color: #b7b7b7;
+    }
+    .sreach-a {
+        text-decoration: none;
+    }
+    .dropdown-item:hover {
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+
+    /* Định dạng cho loader */
+    #loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+    }
+    .spinner {
+        border: 3px solid #ffffff;
+        border-top: 3px solid #000000;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .tabs {
+        justify-content: space-evenly !important;
+    }
+
+    .tabs div:hover {
+        opacity: 0.8;
+    }
+
+    #searchResults {
+        overflow-y: auto;
+        display: none;
+        z-index: 9999;
+        background-color: #fff;
+        box-shadow: 0 5px 5px rgba(48, 48, 48, 0.582);
+        top: 30px;
+        padding: 10px;
+        border-radius: 8px;
+    }
+    #searchResults .search-item {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    #searchResults .search-item:hover {
+        background-color: #b7b7b7;
+    }
+    .sreach-a {
+        text-decoration: none;
+    }
+    .dropdown-item:hover {
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+
+    /* Định dạng cho loader */
+    #loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+    }
+    .spinner {
+        border: 3px solid #ffffff;
+        border-top: 3px solid #000000;
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
     }
 }

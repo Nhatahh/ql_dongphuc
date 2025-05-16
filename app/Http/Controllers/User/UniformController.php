@@ -44,6 +44,7 @@ class UniformController extends Controller
         if (!$ct_sp) {
             abort(404, 'Không tìm thấy sản phẩm');
         }
+        $sanphams = DB::table('sanpham')->get();
 
         $sizes = DB::table('size')->get();
 
@@ -52,7 +53,7 @@ class UniformController extends Controller
             ->where('sp_id', $sp_id)
             ->get();
 
-        return view('user.uniforms.show_detail', compact('ct_sp', 'sizes', 'danhgias'));
+        return view('user.uniforms.show_detail', compact('ct_sp', 'sizes', 'danhgias','sanphams'));
     }
 
     public function addSP(Request $request)
