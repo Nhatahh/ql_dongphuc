@@ -4,6 +4,9 @@
 
 @section('content')
 <div class="body p-3 mt-2 bg-white">
+    <div id="loading" class="loader" style="display:none;">
+        <div class="spinner"></div>
+    </div>
     <div class="container">
         <!-- Search -->
         <div class="nav-search row d-flex align-items-center">
@@ -28,7 +31,7 @@
                         <h5 class="text-muted">Không có sản phẩm nào trong giỏ hàng.</h5>
                     </div>
                 @else
-                    @foreach ($cartItems as $item)
+                @foreach ($cartItems as $item)
                         <div class="col-12 mb-3 cart-item-wrapper">
                             <div class="row cart-item border rounded p-2 align-items-center gx-2" data-name="{{ $item->tensp }}">
                                 <!-- Checkbox -->

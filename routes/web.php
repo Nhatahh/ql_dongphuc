@@ -40,6 +40,8 @@ Route::prefix('user')->group(function () {
     Route::get('/cart', [OrderController::class, 'cart'])->name('orders.cart');
     Route::get('/getSizes', [OrderController::class, 'getSizes']);
     Route::post('/cart/update', [OrderController::class, 'updateQuantity'])->name('cart.updateQuantity');
+    Route::delete('/cart/delete', [OrderController::class, 'deleteSP'])->name('cart.delete');
+
 
     Route::get('/sizes', [SizeController::class, 'sizes']);
     Route::get('/danhmuc', [DanhmucController::class, 'danhmuc']);

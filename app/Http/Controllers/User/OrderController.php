@@ -124,13 +124,12 @@ class OrderController extends Controller
         }
     }
 
-
     // Xóa sản phẩm
-    public function deleteProduct($gh_id) {
+    public function deleteSP(Request $request) {
         try {
             DB::beginTransaction();
             $deleted = DB::table('giohang')
-                        ->where('gh_id', $gh_id)
+                        ->where('gh_id', $request->gh_id)
                         ->delete();
             if ($deleted == 1) {
                 DB::commit();

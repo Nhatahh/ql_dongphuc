@@ -188,48 +188,107 @@ $(".btn-update-quantity").on("click", function () {
 
     $(".err_soluong").text(""); // clear lỗi
 
-    $.ajax({
-        url: url,
-        method: "POST",
-        data: {
-            gh_id: gh_id,
-            user_id: user_id,
-            soluong: soluong,
-            size_id: size_id,
-        },
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        success: function (response) {
-            switch (response) {
-                case "1":
-                    toastr.success("Cập nhật thành công");
-                    break;
-                case "0":
-                    toastr.warning("Sản phẩm không tồn tại trong giỏ hàng");
-                    break;
-                case "-1":
-                    toastr.error("Hệ thống lỗi");
-                    break;
-                default:
-                    const keys = Object.keys(response);
-                    for (let i = 0; i < keys.length; i++) {
-                        $("#err_soluong_" + keys[i]).text(response[keys[i]]);
-                    }
-                    break;
-            }
-        },
-        error: function (xhr) {
-            if (xhr.status === 422) {
-                let errors = xhr.responseJSON;
-                const keys = Object.keys(errors);
-                for (let i = 0; i < keys.length; i++) {
-                    $("#err_soluong_" + keys[i]).text(errors[keys[i]]);
+    $("#loading").show();
+
+    setTimeout(() => {
+        $.ajax({
+            url: url,
+            method: "POST",
+            data: {
+                gh_id: gh_id,
+                user_id: user_id,
+                soluong: soluong,
+                size_id: size_id,
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (response) {
+                switch (response) {
+                    case "1":
+                        toastr.success("Cập nhật thành công");
+                        $("#loading").hide();
+                        break;
+                    case "0":
+                        toastr.warning("Sản phẩm không tồn tại trong giỏ hàng");
+                        $("#loading").hide();
+                        break;
+                    case "-1":
+                        toastr.error("Hệ thống lỗi");
+                        $("#loading").hide();
+                        break;
+                    default:
+                        const keys = Object.keys(response);
+                        for (let i = 0; i < keys.length; i++) {
+                            $("#err_soluong_" + keys[i]).text(
+                                response[keys[i]]
+                            );
+                        }
+                        break;
                 }
-            } else {
-                toastr.error("Lỗi không xác định");
-            }
-        },
+            },
+            error: function (xhr) {
+                if (xhr.status === 422) {
+                    let errors = xhr.responseJSON;
+                    const keys = Object.keys(errors);
+                    for (let i = 0; i < keys.length; i++) {
+                        $("#err_soluong_" + keys[i]).text(errors[keys[i]]);
+                    }
+                } else {
+                    toastr.error("Lỗi không xác định");
+                    $("#loading").hide();
+                }
+            },
+        });
+    }, 500);
+});
+
+// Xóa sản phẩm
+$(".btn-delete-item").on("click", function () {
+    let gh_id = $(this).data("gh-id");
+    let url = $(this).data("url");
+
+    Swal.fire({
+        title: "Xác nhận xóa?",
+        text: "Bạn có chắc chắn muốn xóa sản phẩm này không?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Đồng ý",
+        cancelButtonText: "Hủy",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $("#loading").show();
+            setTimeout(() => {
+                $.ajax({
+                    url: url,
+                    method: "delete",
+                    data: {
+                        gh_id: gh_id,
+                    },
+                    success: function (response) {
+                        switch (response) {
+                            case "1":
+                                toastr.success("Đã xóa sản phẩm khỏi giỏ hàng");
+                                $("#loading").hide();
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 500);
+                                break;
+                            case "0":
+                                toastr.error("Xóa thất bại");
+                                $("#loading").hide();
+                                break;
+                            case "-1":
+                                toastr.error("Hệ thống lỗi");
+                                $("#loading").hide();
+                                break;
+                        }
+                    },
+                });
+            }, 1000);
+        }
     });
 });
 
