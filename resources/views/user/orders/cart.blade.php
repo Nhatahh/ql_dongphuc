@@ -37,7 +37,7 @@
                                 <div class="row cart-item border rounded p-2 align-items-center gx-2" data-name="{{ $item->tensp }}">
                                     <!-- Checkbox -->
                                     <div class="col-1 d-flex justify-content-center align-items-center">
-                                        <input type="checkbox" class="form-check-input" style="border: 1px solid black;">
+                                        <input type="checkbox" class="form-check-input item-checkbox" style="border: 1px solid black;">
                                     </div>
                                     <!-- Hình ảnh -->
                                     <div class="col-2 d-flex justify-content-center align-items-center">
@@ -124,6 +124,8 @@
 @push('scripts')
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+
+        // Tìm kiếm trong giỏ hàng
         const searchInput = document.getElementById("searchGioHang");
         const noResultsMessage = document.getElementById("noResultsMessage");
         const items = document.querySelectorAll(".cart-item");
@@ -151,6 +153,42 @@
                 noResultsMessage.style.display = "none";
             }
         });
+
+        // Cập nhật tổng tiền khi nhấn vào checkbox
+        const checkboxes = document.querySelectorAll(".item-checkbox");
+        const totalPriceEl = document.getElementById("totalPrice");
+
+        function updateTotalPrice() {
+            let total = 0;
+
+            checkboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    const item = checkbox.closest(".cart-item");
+                    const quantityInput = item.querySelector(".quantity-input");
+                    const quantity = quantityInput
+                        ? parseInt(quantityInput.value)
+                        : 1;
+
+                    // Lấy giá từ thẻ <h3 class="text-danger">
+                    const priceText =
+                        item.querySelector("h3.text-danger")?.innerText || "0";
+                    const price = parseInt(priceText.replace(/[^\d]/g, "")) || 0;
+
+                    total += price * quantity;
+                }
+            });
+
+            // Hiển thị tổng tiền theo định dạng Việt Nam
+            totalPriceEl.textContent =
+                new Intl.NumberFormat("vi-VN").format(total) + " ₫";
+        }
+
+        // Gắn sự kiện click cho tất cả checkbox
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener("change", updateTotalPrice);
+        });
+
+        updateTotalPrice();
     });
 </script>
 @endpush

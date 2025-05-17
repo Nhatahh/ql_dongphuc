@@ -230,7 +230,64 @@ $(".btn-update-quantity").on("click", function () {
                 switch (response) {
                     case "1":
                         toastr.success("Cập nhật thành công");
-                        window.location.reload();
+                        // window.location.reload();
+
+                        // Cập nhật lại quantity hiện tại để lần sau check
+                        $("#soluong_" + gh_id).data(
+                            "current-quantity",
+                            soluong
+                        );
+                        $(".getsizeSelect2[data-gh-id='" + gh_id + "']").data(
+                            "current-size",
+                            size_id
+                        );
+
+                        // Tính lại tổng tiền nếu checkbox được tick
+                        let checkbox = $(
+                            ".btn-update-quantity[data-gh-id='" + gh_id + "']"
+                        )
+                            .closest(".cart-item")
+                            .find(".item-checkbox");
+
+                        if (checkbox.is(":checked")) {
+                            // Lấy đơn giá từ HTML
+                            let giaText = $(
+                                ".btn-update-quantity[data-gh-id='" +
+                                    gh_id +
+                                    "']"
+                            )
+                                .closest(".cart-item")
+                                .find("h3.text-danger")
+                                .text()
+                                .replace(/\D/g, "");
+                            let gia = parseInt(giaText);
+
+                            let thanhTien = gia * parseInt(soluong);
+
+                            // Cập nhật lại tổng tiền
+                            let total = 0;
+                            $(".item-checkbox").each(function () {
+                                if ($(this).is(":checked")) {
+                                    let item = $(this).closest(".cart-item");
+                                    let giaItem = parseInt(
+                                        item
+                                            .find("h3.text-danger")
+                                            .text()
+                                            .replace(/\D/g, "")
+                                    );
+                                    let slItem = parseInt(
+                                        item.find(".quantity-input").val()
+                                    );
+                                    total += giaItem * slItem;
+                                }
+                            });
+
+                            // Hiển thị tổng tiền mới
+                            $("#totalPrice").text(
+                                total.toLocaleString("vi-VN") + " ₫"
+                            );
+                        }
+
                         $("#loading").hide();
                         break;
                     case "0":
@@ -252,16 +309,16 @@ $(".btn-update-quantity").on("click", function () {
                 }
             },
             error: function (xhr) {
-                if (xhr.status === 422) {
-                    let errors = xhr.responseJSON;
-                    const keys = Object.keys(errors);
-                    for (let i = 0; i < keys.length; i++) {
-                        $("#err_soluong_" + keys[i]).text(errors[keys[i]]);
-                    }
-                } else {
-                    toastr.error("Lỗi không xác định");
-                    $("#loading").hide();
-                }
+                // if (xhr.status === 422) {
+                //     let errors = xhr.responseJSON;
+                //     const keys = Object.keys(errors);
+                //     for (let i = 0; i < keys.length; i++) {
+                //         $("#err_soluong_" + keys[i]).text(errors[keys[i]]);
+                //     }
+                // } else {
+                toastr.error("Lỗi không xác định");
+                // $("#loading").hide();
+                // }
             },
         });
     }, 500);
@@ -402,10 +459,12 @@ function profileTab(selector) {
     });
 }
 
-// Search
+// Định dạng đơn vị tiền
 function formatCurrency(value) {
     return new Intl.NumberFormat("vi-VN").format(value);
 }
+
+// Tìm kiếm
 document.getElementById("searchInput").addEventListener("keyup", function () {
     const query = this.value.trim();
 
