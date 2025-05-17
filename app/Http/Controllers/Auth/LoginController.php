@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
@@ -17,10 +18,31 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
-            'login' => 'required|string',
-            'password' => 'required|string',
+        $validator = Validator::make( $request->all(),
+            [
+            'login' => [
+                'required',
+                'string',
+                'regex:/^([a-zA-Z0-9_]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/'
+            ],
+            'password' => [
+                'required',
+                'string',
+                'regex:/^[a-zA-Z0-9_]+$/'
+            ],
+        ], [
+            'login.required' => 'Vui lòng nhập tên đăng nhập.',
+            'login.regex' => 'Tên đăng nhập phải là email hợp lệ hoặc chỉ gồm chữ cái, số, gạch dưới.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
+            'password.regex' => 'Mật khẩu không được chứa ký tự đặc biệt.',
         ]);
+
+        // Trả lỗi về view nếu không hợp lệ
+        if ($validator->fails()) {
+            return redirect()->back()
+                            ->withErrors($validator)
+                            ->withInput();
+        }
 
         $login_type = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
@@ -28,10 +50,6 @@ class LoginController extends Controller
 
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
-
-            // Lưu user_id vào session
-            session(['user_id' => $user->user_id]);
-
             return redirect()->route('/');
         }
 
@@ -44,11 +62,10 @@ class LoginController extends Controller
     {
         Auth::logout();
 
-        // Hủy session, token, cookie nếu cần
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login'); // hoặc trang bạn muốn sau logout
+        return redirect()->route('login');
     }
 }
 

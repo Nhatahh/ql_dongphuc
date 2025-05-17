@@ -499,4 +499,26 @@ ul {
     }
 }
 
+@media (max-width: 768px) {
+    .fixed-bottom-mobile {
+        position: fixed;
+        bottom: 50px;
+        left: 0;
+        right: 0;
+        background-color: #f8f9fa;
+        z-index: 9;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 0 !important;
+        border-top: 1px solid #ccc;
+    }
+    .fixed-bottom-mobile .btn {
+        margin-top: 10px;
+    }
+}
 
+/* Đảm bảo phần nội dung chính không bị che */
+@media (max-width: 768px) {
+    .cart-list {
+        padding-bottom: 180px;
+    }
+}

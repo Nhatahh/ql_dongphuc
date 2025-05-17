@@ -20,32 +20,42 @@
     </div>
     <div class="login-form">
       <form action="{{ route('login.post') }}" method="POST">
-      @csrf
+        @csrf
         <h2>Xin chào, hãy tham gia cùng chúng tôi nhé!</h2>
 
+        <!-- Tên đăng nhập -->
         <div class="form-group mb-3">
-          <label>Tên tài khoản hoặc email</label>
-          <input name="login" type="text" class="form-control input-animate" placeholder="Nhập tên tài khoản hoặc email" required>
+            <label>Tên tài khoản hoặc email</label>
+            <input name="login" type="text" class="form-control input-animate @error('login') is-invalid @enderror"
+                  placeholder="Nhập tên tài khoản hoặc email" value="{{ old('login') }}">
+            @error('login')
+                <div class="invalid-feedback d-block">{{ $message }}</div>
+            @enderror
         </div>
 
+        <!-- Mật khẩu -->
         <div class="form-group mb-3">
-          <label>Mật khẩu</label>
-          <input name="password" type="password" class="form-control input-animate" placeholder="Nhập mật khẩu" required>
+            <label>Mật khẩu</label>
+            <input name="password" type="password" class="form-control input-animate @error('password') is-invalid @enderror"
+                  placeholder="Nhập mật khẩu">
+            @error('password')
+                <div class="invalid-feedback d-block">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="form-check mb-3">
-          <input type="checkbox" class="form-check-input" id="rememberMe">
-          <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
+            <input type="checkbox" class="form-check-input" id="rememberMe">
+            <label class="form-check-label" for="rememberMe">Ghi nhớ đăng nhập</label>
         </div>
 
         <button type="submit" class="signinBtn">Đăng nhập</button>
 
         <div class="form-footer">
-          <a href="#">Quên mật khẩu?</a> |
-          <a href="#" class="signupLink">Đăng ký tài khoản</a>
+            <a href="#">Quên mật khẩu?</a> |
+            <a href="#" class="signupLink">Đăng ký tài khoản</a>
         </div>
-
       </form>
+
     </div>
   </div>
 

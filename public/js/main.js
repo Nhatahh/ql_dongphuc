@@ -50,7 +50,7 @@ $("#nsxSelect2").select2({
 });
 // Phương thức thanh toán Select2
 $("#ptThanhToanSelect2").select2({
-    placeholder: "--- Chọn nhà phương thức thanh toán ---",
+    placeholder: "--- Chọn phương thức thanh toán ---",
     allowClear: true,
     ajax: {
         url: "/user/ptThanhToan",
@@ -230,6 +230,7 @@ $(".btn-update-quantity").on("click", function () {
                 switch (response) {
                     case "1":
                         toastr.success("Cập nhật thành công");
+                        window.location.reload();
                         $("#loading").hide();
                         break;
                     case "0":
