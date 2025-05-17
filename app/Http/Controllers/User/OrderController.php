@@ -200,7 +200,6 @@ class OrderController extends Controller
                     'tongtien' => $tongtien,
                     'tt_id' => 1, // Trạng thái mặc định: Chờ xác nhận
                     'pttt_id' => $pttt_id,
-                    'diachi' => '', // Nếu có địa chỉ thì lấy từ user hoặc form
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ]);

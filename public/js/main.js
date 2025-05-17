@@ -5,10 +5,40 @@ $(document).ready(function () {
         },
     });
 
-    update_Tongtien();
+    // Xử lí nút xem chi tiết
+    $(document).on("click", ".btn-detail-order", function () {
+        const hd_id = $(this).data("hd-id");
+        console.log("Bạn vừa click, hd_id =", hd_id);
+        loadOrderDetails(hd_id);
+    });
+
+    // Xử lí nút hủy đơn hàng
+    $(document).on("click", ".btn-cancel-order", function () {
+        let hd_id = $(this).data("hd-id");
+        let url = $(this).data("url-cancel-order");
+        cancelOrder(hd_id, url);
+    });
+
+    // Khi chọn hoặc bỏ chọn 1 sản phẩm
+    $(document).on("change", ".item-checkbox", function () {
+        updateTotalPrice();
+    });
+
+    // Khi chọn hoặc bỏ chọn "Chọn tất cả"
+    $("#select-all-checkbox").on("change", function () {
+        const checked = $(this).is(":checked");
+        $(".item-checkbox").prop("checked", checked);
+        updateTotalPrice();
+    });
+
+    loadbandau();
+});
+
+function loadbandau() {
+    updateTotalPrice();
     search_GH();
     btn_thanhtoan();
-});
+}
 
 // Size Select2
 $("#sizeSelect2").select2({
@@ -405,64 +435,6 @@ function showProductDetail(sp_id) {
     });
 }
 
-function showDetailAction() {
-    const imgMain = document.querySelector(".product-img__main");
-    const imgExtra = document.querySelectorAll(".product-img__extra-item");
-
-    imgExtra.forEach((item) => {
-        item.onclick = () => {
-            if (imgMain && item) {
-                imgMain.src = item.src;
-            }
-        };
-    });
-}
-function profileTab(selector) {
-    // Lấy ul, a, div và kiểm tra
-    this.container = document.querySelector(`${selector}`);
-    if (!this.container) {
-        console.log(`Không tìm thấy ${this.container}`);
-        return;
-    }
-
-    this.tabs = Array.from(this.container.querySelectorAll("li a"));
-
-    this.panels = this.tabs.map((tab) => {
-        const panel = document.querySelector(tab.getAttribute("href"));
-        return panel;
-    });
-
-    // Reset lại không có gì
-    this.tabs.forEach((tab) => {
-        tab.closest("li").classList.remove("tab--active");
-    });
-    this.panels.forEach((panel) => (panel.hidden = true));
-
-    // Lấy tab đầu tiên làm mặc định
-    this.tabs[0].closest("li").classList.add("tab--active");
-    this.panels[0].hidden = false;
-
-    this.tabs.forEach((tab) => {
-        tab.onclick = (e) => {
-            e.preventDefault();
-
-            // Reset lại không có gì
-            this.tabs.forEach((tab) => {
-                tab.closest("li").classList.remove("tab--active");
-            });
-            this.panels.forEach((panel) => (panel.hidden = true));
-
-            // Gán active cho từng thẻ
-            tab.closest("li").classList.add("tab--active");
-
-            const panelActive = document.querySelector(
-                tab.getAttribute("href")
-            );
-            panelActive.hidden = false;
-        };
-    });
-}
-
 // Định dạng đơn vị tiền
 function formatCurrency(value) {
     return new Intl.NumberFormat("vi-VN").format(value);
@@ -598,42 +570,17 @@ function search_GH() {
 }
 
 // Update tổng tiền
-function update_Tongtien() {
-    // Cập nhật tổng tiền khi nhấn vào checkbox
-    const checkboxes = document.querySelectorAll(".item-checkbox");
-    const totalPriceEl = document.getElementById("totalPrice");
-
-    function updateTotalPrice() {
-        let total = 0;
-
-        checkboxes.forEach((checkbox) => {
-            if (checkbox.checked) {
-                const item = checkbox.closest(".cart-item");
-                const quantityInput = item.querySelector(".quantity-input");
-                const quantity = quantityInput
-                    ? parseInt(quantityInput.value)
-                    : 1;
-
-                // Lấy giá từ thẻ <h3 class="text-danger">
-                const priceText =
-                    item.querySelector("h3.text-danger")?.innerText || "0";
-                const price = parseInt(priceText.replace(/[^\d]/g, "")) || 0;
-
-                total += price * quantity;
-            }
-        });
-
-        // Hiển thị tổng tiền theo định dạng Việt Nam
-        totalPriceEl.textContent =
-            new Intl.NumberFormat("vi-VN").format(total) + " ₫";
-    }
-
-    // Gắn sự kiện click cho tất cả checkbox
-    checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener("change", updateTotalPrice);
+function updateTotalPrice() {
+    let total = 0;
+    $(".item-checkbox:checked").each(function () {
+        const price = parseInt($(this).data("price")) || 0;
+        const quantity = parseInt($(this).data("quantity")) || 1;
+        total += price * quantity;
     });
 
-    updateTotalPrice();
+    // Format tiền
+    const formatted = total.toLocaleString("vi-VN") + " ₫";
+    $("#totalPrice").text(formatted);
 }
 
 // Thanh toán
@@ -713,9 +660,105 @@ function btn_thanhtoan() {
                 },
                 error: function (xhr) {
                     toastr.error("Có lỗi xảy ra khi đặt hàng.");
+                    $("#loading").hide();
                     // console.error("Lỗi từ server:", xhr.responseText);
                 },
             });
         }, 500);
     });
+}
+
+// Load chi tiêt đơn hàng
+function loadOrderDetails(hd_id) {
+    const url = `/user/orders/details/${hd_id}`;
+    const listContainer = $("#order-products-list");
+    listContainer.html('<p class="text-center">Đang tải...</p>');
+
+    $.ajax({
+        url: url,
+        method: "GET",
+        dataType: "json",
+        success: function (data) {
+            listContainer.empty();
+            if (data.length === 0) {
+                listContainer.html(
+                    '<p class="text-center fs-3">Không có sản phẩm.</p>'
+                );
+                return;
+            }
+
+            data.forEach(function (details) {
+                const html = `
+                <div class="col-12">
+                    <div class="d-flex w-100">
+                        <img src="/images/${
+                            details.image_url
+                        }" class="me-3 rounded" style="width: 90px; object-fit: cover;">
+                        <div class="w-100 p-1">
+                            <a href="uniforms/${
+                                details.sp_id
+                            }" class="text-decoration-none text-dark">
+                                <p class="fw-bold fs-3 mb-1">${
+                                    details.tensp
+                                }</p>
+                            </a>
+                            <p class="mb-1 fs-5">Số lượng: ${
+                                details.soluong
+                            }</p>
+                            <p class="mb-1 fs-5">Size: ${details.size}</p>
+                            <p class="text-danger fs-4 fw-bold mb-0">${Number(
+                                details.gia
+                            ).toLocaleString()} ₫</p>
+                        </div>
+                    </div>
+                </div>`;
+                listContainer.append(html);
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("Lỗi tải chi tiết đơn hàng:", error);
+            listContainer.html(
+                '<p class="text-danger text-center">Lỗi tải dữ liệu.</p>'
+            );
+        },
+    });
+}
+
+// Hủy đơn hàng
+function cancelOrder(hd_id, url) {
+    $("#loading").show();
+
+    setTimeout(() => {
+        $.ajax({
+            url: url,
+            method: "POST",
+            data: {
+                hd_id: hd_id,
+            },
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (response) {
+                switch (response) {
+                    case "1":
+                        toastr.success("Hủy đơn hàng thành công");
+                        window.location.reload();
+                        $("#loading").hide();
+                        break;
+                    case "0":
+                        toastr.warning("Hủy đơn hàng thất bại");
+                        $("#loading").hide();
+                        break;
+                    case "-1":
+                        toastr.error("Hệ thống lỗi");
+                        $("#loading").hide();
+                        break;
+                }
+            },
+            error: function (xhr) {
+                toastr.error("Lỗi không xác định");
+                $("#loading").hide();
+            },
+        });
+    }, 500);
 }

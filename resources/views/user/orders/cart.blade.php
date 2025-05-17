@@ -24,7 +24,7 @@
 
         <div class="row">
             <!-- Giỏ hàng -->
-            <div class="col-12 col-lg-8 cart-list mt-4" style="max-height: 75vh;">
+            <div class="col-12 col-lg-8 cart-list mt-4">
                 <div class="row g-0">
                     @if ($cartItems->isEmpty())
                         <div class="text-center w-100 py-5">
@@ -32,12 +32,16 @@
                             <h5 class="text-muted">Không có sản phẩm nào trong giỏ hàng.</h5>
                         </div>
                     @else
-                    @foreach ($cartItems as $item)
+                        <div class="d-flex align-items-center mb-3">
+                            <input type="checkbox" id="select-all-checkbox" class="form-check-input me-2" style="border: 1px solid black;">
+                            <label for="select-all-checkbox" class="form-check-label fw-bold">Chọn tất cả</label>
+                        </div>
+                        @foreach ($cartItems as $item)
                             <div class="col-12 mb-3 cart-item-wrapper">
                                 <div class="row cart-item border rounded p-2 align-items-center gx-2" data-name="{{ $item->tensp }}">
                                     <!-- Checkbox -->
                                     <div class="col-1 d-flex justify-content-center align-items-center">
-                                        <input type="checkbox" class="form-check-input item-checkbox" style="border: 1px solid black;">
+                                        <input type="checkbox" class="form-check-input item-checkbox" style="border: 1px solid black;" data-price="{{ $item->gia }}" data-quantity="{{ $item->soluong }}">
                                     </div>
                                     <!-- Hình ảnh -->
                                     <div class="col-2 d-flex justify-content-center align-items-center">
@@ -49,9 +53,9 @@
                                     <div class="col-3 d-flex justify-content-center align-items-center">
                                         <div>
                                             <a href="{{ route('uniforms.show_detail', $item->sp_id) }}" class="text-decoration-none text-dark">
-                                                <h2 class="fw-bold mb-1">{{ $item->tensp }}</h2>
+                                                <p class="fw-bold mb-1 fs-4">{{ $item->tensp }}</p>
                                             </a>
-                                            <h3 class="fw-bold text-danger mb-0">{{ number_format($item->gia, 0, ',', '.') }} ₫</h3>
+                                            <p class="fw-bold text-danger mb-0 fs-5">{{ number_format($item->gia, 0, ',', '.') }} ₫</p>
                                         </div>
                                     </div>
                                     <!-- Số lượng -->
@@ -94,22 +98,22 @@
             <!-- Tóm tắt đơn hàng -->
             <div class="col-12 col-lg-4 my-4">
                 <div class="order-summary-box my-3 p-3 rounded shadow-sm bg-light border fixed-bottom-mobile">
-                    <div class="d-flex flex-column gap-2 align-items-center">
-                        <h1>Tóm tắt đơn hàng</h1>
+                    <div class="d-flex flex-column gap-1 align-items-center">
+                        <h2><strong>Tóm tắt đơn hàng</strong></h2>
 
-                        <div class="col-12 text-center text-md-start pt-3" style="border-top: 1px solid black;">
-                            <strong>Tổng tiền hàng:</strong>
+                        <div class="col-12 text-center text-md-start pt-md-2 pt-1" style="border-top: 1px solid black;">
+                            <span class="fs-4">Tổng tiền hàng: </span>
                             <span class="text-danger fw-bold fs-5" id="totalPrice">
                                 {{ number_format($cartItems->sum(fn($item) => $item->gia * $item->soluong), 0, ',', '.') }} ₫
                             </span>
                         </div>
         
-                        <div class="col-12">
+                        <div class="col-12 mt-md-1 mt-1">
                             <select class="form-select w-100" id="ptThanhToanSelect2">
                             </select>
                         </div>
         
-                        <div class="col-12 text-center">
+                        <div class="col-12 text-center mt-md-2">
                             <button id="checkoutBtn" class="checkoutBtn btn btn-primary px-4 w-50 w-md-auto" data-url-checkout="{{ route('cart.checkout') }}">Thanh toán</button>
                         </div>
                     </div>

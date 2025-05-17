@@ -45,6 +45,10 @@ Route::prefix('user')->group(function () {
     Route::delete('/cart/delete', [OrderController::class, 'deleteSP'])->name('cart.delete');
     Route::post('/cart/checkout', [OrderController::class, 'checkout'])->name('cart.checkout');
 
+    Route::get('/orders', [UserController::class, 'showOrders']);
+    Route::get('/orders/details/{hd_id}', [UserController::class, 'getOrderDetails'])->name('getOrderDetails');
+    Route::post('/orders/cancel', [UserController::class, 'cancelOrder'])->name('orders.cancel');
+
 
     Route::get('/sizes', [SizeController::class, 'sizes']);
     Route::get('/danhmuc', [DanhmucController::class, 'danhmuc']);

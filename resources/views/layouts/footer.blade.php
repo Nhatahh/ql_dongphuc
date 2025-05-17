@@ -1,7 +1,7 @@
 
 <!-- Footer -->
 <div class="nav-footer">
-    <div class="nav d-flex justify-content-around">
+    <div class="nav-mobile d-flex justify-content-around">
         <a href="{{ route('uniforms.store') }}" class="nav-item"><i class="fas fa-shopping-bag"></i><span>Cửa hàng</span></a>
         <a href="#" class="nav-item"><i class="fa-solid fa-comment"></i><span>Chat</span></a>
         <a href="{{ route('home.index') }}" class="nav-item"><i class="fas fa-home"></i><span>Trang chủ</span></a>

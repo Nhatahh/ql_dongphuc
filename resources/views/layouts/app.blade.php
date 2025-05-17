@@ -59,7 +59,7 @@
 
     {{-- JS --}}
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}?v={{ time() }}"></script>
 
     @stack('scripts') {{-- Cho phép trang con đẩy thêm JS nếu cần --}}
 </body>

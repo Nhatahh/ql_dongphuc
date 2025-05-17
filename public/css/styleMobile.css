@@ -136,7 +136,7 @@ ul {
     color: rgb(78, 96, 179);
 }
 
-.nav {
+.nav-mobile {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -148,7 +148,7 @@ ul {
     z-index: 9;
 }
 
-.nav::before {
+.nav-mobile::before {
     position: absolute;
     display: block;
     content: "";
