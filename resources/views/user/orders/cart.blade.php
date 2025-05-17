@@ -110,88 +110,15 @@
                         </div>
         
                         <div class="col-12 text-center">
-                            <button id="checkoutBtn" class="btn btn-primary px-4 w-50 w-md-auto">Thanh toán</button>
+                            <button id="checkoutBtn" class="checkoutBtn btn btn-primary px-4 w-50 w-md-auto" data-url-checkout="{{ route('cart.checkout') }}">Thanh toán</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 @endsection
 
-@push('scripts')
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-
-        // Tìm kiếm trong giỏ hàng
-        const searchInput = document.getElementById("searchGioHang");
-        const noResultsMessage = document.getElementById("noResultsMessage");
-        const items = document.querySelectorAll(".cart-item");
-
-        searchInput.addEventListener("input", function () {
-            const query = removeVietnameseTones(this.value.trim()).toLowerCase();
-            let found = false;
-
-            items.forEach((item) => {
-                const name = removeVietnameseTones(item.getAttribute("data-name") || '').toLowerCase();
-                const wrapper = item.closest(".cart-item-wrapper");
-
-                if (name.includes(query)) {
-                    wrapper.style.display = "";
-                    found = true;
-                } else {
-                    wrapper.style.display = "none";
-                }
-            });
-
-            // Hiển thị hoặc ẩn thông báo không có sản phẩm
-            if (!found) {
-                noResultsMessage.style.display = "block";
-            } else {
-                noResultsMessage.style.display = "none";
-            }
-        });
-
-        // Cập nhật tổng tiền khi nhấn vào checkbox
-        const checkboxes = document.querySelectorAll(".item-checkbox");
-        const totalPriceEl = document.getElementById("totalPrice");
-
-        function updateTotalPrice() {
-            let total = 0;
-
-            checkboxes.forEach((checkbox) => {
-                if (checkbox.checked) {
-                    const item = checkbox.closest(".cart-item");
-                    const quantityInput = item.querySelector(".quantity-input");
-                    const quantity = quantityInput
-                        ? parseInt(quantityInput.value)
-                        : 1;
-
-                    // Lấy giá từ thẻ <h3 class="text-danger">
-                    const priceText =
-                        item.querySelector("h3.text-danger")?.innerText || "0";
-                    const price = parseInt(priceText.replace(/[^\d]/g, "")) || 0;
-
-                    total += price * quantity;
-                }
-            });
-
-            // Hiển thị tổng tiền theo định dạng Việt Nam
-            totalPriceEl.textContent =
-                new Intl.NumberFormat("vi-VN").format(total) + " ₫";
-        }
-
-        // Gắn sự kiện click cho tất cả checkbox
-        checkboxes.forEach((checkbox) => {
-            checkbox.addEventListener("change", updateTotalPrice);
-        });
-
-        updateTotalPrice();
-    });
-</script>
-@endpush
-
-
-
+<!-- @push('scripts')
+@endpush -->

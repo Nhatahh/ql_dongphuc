@@ -120,7 +120,6 @@ class UniformController extends Controller
             }
         } catch (\Exception $e) {
             DB::rollBack();
-            // return response("-1", 500);
             return response("-1", 500);
         }
     }

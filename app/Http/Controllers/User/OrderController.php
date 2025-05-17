@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -148,5 +149,99 @@ class OrderController extends Controller
         return view('user.orders.payment');
     }
 
+    // Thanh toán
+    public function checkout(Request $request)
+    {
+        $items = $request->input('items');
+        $pttt_id = $request->input('pttt_id');
 
+        if (empty($items)) {
+            return response("0", 200);
+        }
+
+        foreach ($items as $item) {
+            if (empty($item['size_id'])) {
+                return response("0", 200); 
+            }
+        }
+
+        DB::beginTransaction();
+        try {
+            // $user_id = $items[0]['user_id']; 
+
+            if (Auth::check()) {
+                $user_id = Auth::user()->user_id;
+            } else {
+                return redirect()->route('login');
+            }
+
+            // Tính tổng tiền
+            $tongtien = 0;
+
+            foreach ($items as $item) {
+                $giohang = DB::table('giohang')->where('gh_id', $item['gh_id'])->first();
+            
+                if ($giohang) {
+                    $sanpham = DB::table('sanpham')->where('sp_id', $giohang->sp_id)->first();
+                    if ($sanpham) {
+                        $gia = $sanpham->gia;
+                        $tongtien += $giohang->soluong * $gia;
+                    }
+                }
+            }
+
+            $maxId_hd = DB::table('hoadon')->max('hd_id');
+            $newId_hd = $maxId_hd + 1;
+            // Tạo hóa đơn
+            $hoadon_id = DB::table('hoadon')
+                ->insert([
+                    'hd_id' => $newId_hd,
+                    'user_id' => $user_id,
+                    'tongtien' => $tongtien,
+                    'tt_id' => 1, // Trạng thái mặc định: Chờ xác nhận
+                    'pttt_id' => $pttt_id,
+                    'diachi' => '', // Nếu có địa chỉ thì lấy từ user hoặc form
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+            
+           
+            // Duyệt qua từng item để tạo chi tiết hóa đơn
+            foreach ($items as $item) {
+                $maxId_cthd = DB::table('chitiethoadon')->max('cthd_id');
+                $newId_cthd = $maxId_cthd + 1;
+                $giohang = DB::table('giohang')
+                                ->where('gh_id', $item['gh_id'])
+                                ->first();
+                if ($giohang) {
+                    DB::table('chitiethoadon')->insert([
+                        'cthd_id' => $newId_cthd,
+                        'hd_id' => $newId_hd,
+                        'sp_id' => $giohang->sp_id,
+                        'size_id' => $giohang->size_id,
+                        'soluong' => $giohang->soluong,
+                        'gia' => $gia,
+                    ]);
+
+                    // Xóa khỏi giỏ hàng
+                    DB::table('giohang')->where('gh_id', $item['gh_id'])->delete();
+                }
+            }
+
+            DB::commit();
+
+            // return response()->json(['message' => 'Đặt hàng thành công', 'redirect_url' => route('orders.index')]);
+            return response("1", 200);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            // return response()->json([
+            //     'message' => 'Lỗi xử lý đơn hàng',
+            //     'error' => $e->getMessage(), 
+            //     'line' => $e->getLine(),     
+            //     'file' => $e->getFile(),    
+            // ], 500);
+            return response("-1", 500);
+        }
+    }
 }
