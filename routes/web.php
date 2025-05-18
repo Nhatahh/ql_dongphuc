@@ -35,7 +35,6 @@ Route::prefix('user')->group(function () {
     Route::get('/store/filter', [UniformController::class, 'filter'])->name('store.filter');
     Route::get('/uniforms/{sp_id}', [UniformController::class, 'showDetail'])->name('uniforms.show_detail');
     Route::post('/uniforms/addSP', [UniformController::class, 'addSP'])->name('addSP');
-    
 
 
 
@@ -45,7 +44,7 @@ Route::prefix('user')->group(function () {
     Route::delete('/cart/delete', [OrderController::class, 'deleteSP'])->name('cart.delete');
     Route::post('/cart/checkout', [OrderController::class, 'checkout'])->name('cart.checkout');
 
-    Route::get('/orders', [UserController::class, 'showOrders']);
+    // Route::get('/orders', [UserController::class, 'showOrders']);
     Route::get('/orders/details/{hd_id}', [UserController::class, 'getOrderDetails'])->name('getOrderDetails');
     Route::post('/orders/cancel', [UserController::class, 'cancelOrder'])->name('orders.cancel');
 
@@ -60,6 +59,9 @@ Route::prefix('user')->group(function () {
     Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
     Route::get('/dt_profile', [UserController::class, 'data_profile'])->name('user.dt_profile');
     Route::get('users', [UserController::class, 'index'])->name('user.index');
+
+    Route::get('/notifications', [UserController::class, 'getNotifications'])->name('notifications');
+    Route::get('/notifications/unread', [UserController::class, 'countUnread'])->name('notifications.countUnread');
 
     Route::get('/search', [SearchController::class, 'search'])->name('user.search');
 

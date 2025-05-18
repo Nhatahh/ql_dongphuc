@@ -5,6 +5,40 @@ $(document).ready(function () {
         },
     });
 
+    // Thông báo
+    $("#notificationBtn").on("click", function (e) {
+        e.preventDefault();
+        let url = $(this).data("url-notifications");
+        $.ajax({
+            url: url,
+            method: "GET",
+            success: function (data) {
+                let content = "";
+                if (data.length > 0) {
+                    data.forEach(function (noti) {
+                        content += `
+                    <div class="mb-3 border-bottom pb-2">
+                        <h6>${noti.title}</h6>
+                        <p class="mb-0">${noti.message}</p>
+                        <small class="text-muted">${new Date(
+                            noti.created_at
+                        ).toLocaleString()}</small>
+                    </div>
+                `;
+                    });
+                } else {
+                    content = "<p>Không có thông báo nào.</p>";
+                }
+                $("#notificationContent").html(content);
+                $("#notificationModal").modal("show");
+            },
+            error: function () {
+                $("#notificationContent").html("<p>Lỗi khi tải thông báo.</p>");
+                $("#notificationModal").modal("show");
+            },
+        });
+    });
+
     // Xử lí nút xem chi tiết
     $(document).on("click", ".btn-detail-order", function () {
         const hd_id = $(this).data("hd-id");
@@ -38,6 +72,7 @@ function loadbandau() {
     updateTotalPrice();
     search_GH();
     btn_thanhtoan();
+    countUnread();
 }
 
 // Size Select2
@@ -407,6 +442,7 @@ $(".btn-delete-item").on("click", function () {
     });
 });
 
+// Chi tiết sản phẩm
 function showProductDetail(sp_id) {
     $.ajax({
         url: "/show_detail/" + sp_id, // Gửi yêu cầu tới route đã định nghĩa
@@ -416,12 +452,12 @@ function showProductDetail(sp_id) {
                 // Xử lý dữ liệu sản phẩm trả về
                 const sanpham = res.sanpham;
                 const detailHtml = `
-                          <h3>${sanpham.tensp}</h3>
-                          <img src="{{ asset('images/') }}/${sanpham.image_url}" alt="${sanpham.tensp}" class="img-fluid">
-                          <p><strong>Giá:</strong> ${sanpham.gia} VND</p>
-                          <p><strong>Mô tả:</strong> ${sanpham.mota}</p>
-                          <p><strong>Size:</strong> ${sanpham.size}</p>
-                      `;
+                        <h3>${sanpham.tensp}</h3>
+                        <img src="{{ asset('images/') }}/${sanpham.image_url}" alt="${sanpham.tensp}" class="img-fluid">
+                        <p><strong>Giá:</strong> ${sanpham.gia} VND</p>
+                        <p><strong>Mô tả:</strong> ${sanpham.mota}</p>
+                        <p><strong>Size:</strong> ${sanpham.size}</p>
+                    `;
                 // Hiển thị thông tin chi tiết sản phẩm trong modal hoặc nơi bạn muốn
                 $("#product-detail-container").html(detailHtml); // Ví dụ sử dụng modal hoặc một div cụ thể
                 $("#product-detail-modal").modal("show"); // Hiển thị modal nếu có
@@ -526,6 +562,7 @@ $("#filterButton").on("click", function () {
     });
     window.location.href = `${url}?${params.toString()}`;
 });
+
 // Lọc - Mới nhất - Bán chạy - Phổ biến
 $(".sort-button").on("click", function () {
     const sortType = $(this).data("sort");
@@ -542,7 +579,7 @@ function search_GH() {
     const noResultsMessage = document.getElementById("noResultsMessage");
     const items = document.querySelectorAll(".cart-item");
 
-    searchInput.addEventListener("input", function () {
+    searchInput.addEventListener("keyup", function () {
         const query = removeVietnameseTones(this.value.trim()).toLowerCase();
         let found = false;
 
@@ -566,7 +603,17 @@ function search_GH() {
         } else {
             noResultsMessage.style.display = "none";
         }
+
+        // Ẩn hoặc hiện checkbox "Chọn tất cả"
+        const selectAllContainer =
+            document.getElementById("container-checkbox");
+        if (query.length > 0) {
+            selectAllContainer.classList.add("d-none");
+        } else {
+            selectAllContainer.classList.remove("d-none");
+        }
     });
+    // searchInput.addEventListener("keyup", function () {});
 }
 
 // Update tổng tiền

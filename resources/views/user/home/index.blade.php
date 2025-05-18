@@ -64,7 +64,7 @@
                                     <h5 class="card-title">{{ $sp->tensp }}</h5>
                                     <p class="card-text">{{ $sp->mota }}</p>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <p class="fs-4 fw-bold" style="color: red;">
+                                        <p class="fs-4 fw-bold " style="color: red;">
                                             {{ number_format($sp->gia, 0, ',', '.') }} ₫
                                         </p>
                                         <p class="fs-5">Đã bán: 111</p>

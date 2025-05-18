@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Notification;
 
 class UserController extends Controller
 {
@@ -25,9 +26,16 @@ class UserController extends Controller
 
         // Load đơn hàng chờ xác nhận
         $orders = DB::table('hoadon')
-            ->where('tt_id', 1) 
+            ->join('trangthai', 'hoadon.tt_id', '=', 'trangthai.tt_id')
+            ->where('hoadon.tt_id', 1) 
             ->where('user_id', $user_id) 
             ->orderByDesc('created_at')
+            ->select(
+                'hoadon.hd_id', 
+                'hoadon.created_at', 
+                'hoadon.tongtien', 
+                'trangthai.ten as trangthai', 
+            )
             ->get();
 
         // dd($orders);
@@ -91,4 +99,33 @@ class UserController extends Controller
         }
     }
 
+    // Load modal thông báo
+    public function getNotifications()
+    {
+        if (Auth::check()) {
+            $user_id = Auth::user()->user_id;
+        } else {
+            return redirect()->route('login');
+        }
+
+        $notifications = Notification::where('user_id', $user_id)
+                        ->orderBy('created_at', 'desc')->get();
+
+        return response()->json($notifications);
+    }
+
+    public function countUnread()
+    {
+        if (Auth::check()) {
+            $user_id = Auth::user()->user_id;
+        } else {
+            return redirect()->route('login');
+        }
+        $count = 0;
+        $count = Notification::where('user_id', $user_id)
+            ->where('is_read', false)
+            ->count();
+
+        return response()->json($count);
+    }
 }

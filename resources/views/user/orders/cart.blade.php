@@ -25,6 +25,10 @@
         <div class="row">
             <!-- Giỏ hàng -->
             <div class="col-12 col-lg-8 cart-list mt-4">
+                <div class="d-flex align-items-center mb-3" id="container-checkbox">
+                    <input type="checkbox" id="select-all-checkbox" class="form-check-input me-2" style="border: 1px solid black;">
+                    <label for="select-all-checkbox" class="form-check-label fw-bold">Chọn tất cả</label>
+                </div>
                 <div class="row g-0">
                     @if ($cartItems->isEmpty())
                         <div class="text-center w-100 py-5">
@@ -32,10 +36,6 @@
                             <h5 class="text-muted">Không có sản phẩm nào trong giỏ hàng.</h5>
                         </div>
                     @else
-                        <div class="d-flex align-items-center mb-3">
-                            <input type="checkbox" id="select-all-checkbox" class="form-check-input me-2" style="border: 1px solid black;">
-                            <label for="select-all-checkbox" class="form-check-label fw-bold">Chọn tất cả</label>
-                        </div>
                         @foreach ($cartItems as $item)
                             <div class="col-12 mb-3 cart-item-wrapper">
                                 <div class="row cart-item border rounded p-2 align-items-center gx-2" data-name="{{ $item->tensp }}">

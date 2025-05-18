@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 
+
 class OrderController extends Controller
 {
     public function cart() {
@@ -193,18 +194,27 @@ class OrderController extends Controller
             $maxId_hd = DB::table('hoadon')->max('hd_id');
             $newId_hd = $maxId_hd + 1;
             // Tạo hóa đơn
-            $hoadon_id = DB::table('hoadon')
+            DB::table('hoadon')
                 ->insert([
                     'hd_id' => $newId_hd,
                     'user_id' => $user_id,
                     'tongtien' => $tongtien,
                     'tt_id' => 1, // Trạng thái mặc định: Chờ xác nhận
                     'pttt_id' => $pttt_id,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ]);
             
-           
+            $maxId_noti = DB::table('thongbao')->max('noti_id');
+            $newId_noti = $maxId_noti + 1;
+            DB::table('thongbao')->insert([
+                'noti_id' => $newId_noti,
+                'user_id' => $user_id,
+                'title' => 'Đặt hàng thành công',
+                'message' => 'Bạn đã đặt đơn hàng mã HD' . $newId_hd,
+                'is_read' => false,
+            ]);
+
             // Duyệt qua từng item để tạo chi tiết hóa đơn
             foreach ($items as $item) {
                 $maxId_cthd = DB::table('chitiethoadon')->max('cthd_id');
@@ -228,19 +238,19 @@ class OrderController extends Controller
             }
 
             DB::commit();
-
-            // return response()->json(['message' => 'Đặt hàng thành công', 'redirect_url' => route('orders.index')]);
             return response("1", 200);
+            // return response()->json(['message' => 'Đặt hàng thành công', 'redirect_url' => route('orders.index')]);
 
         } catch (\Exception $e) {
             DB::rollback();
-            // return response()->json([
-            //     'message' => 'Lỗi xử lý đơn hàng',
-            //     'error' => $e->getMessage(), 
-            //     'line' => $e->getLine(),     
-            //     'file' => $e->getFile(),    
-            // ], 500);
-            return response("-1", 500);
+            return response()->json([
+                'message' => 'Lỗi xử lý đơn hàng',
+                'error' => $e->getMessage(), 
+                'line' => $e->getLine(),     
+                'file' => $e->getFile(),    
+            ], 500);
+            // return response("-1", 500);
         }
     }
+
 }
