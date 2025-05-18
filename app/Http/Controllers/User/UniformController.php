@@ -26,7 +26,7 @@ class UniformController extends Controller
             ->leftJoin('nhasanxuat', 'sp.nsx_id', '=', 'nhasanxuat.nsx_id')
             ->leftJoin('kho', 'kho.sp_id', '=', 'sp.sp_id')
             ->leftJoin('size', 'size.size_id', '=', 'kho.size_id')
-            ->leftJoin('danhgia', 'danhgia.kho_id', '=', 'kho.kho_id')
+            ->leftJoin('danhgia', 'danhgia.sp_id', '=', 'sp.sp_id')
             ->leftJoin('users', 'users.user_id', '=', 'danhgia.user_id')
             ->where('sp.sp_id', $sp_id)
             ->select(
@@ -50,8 +50,8 @@ class UniformController extends Controller
 
         $danhgias = DB::table('danhgia')
             ->join('users', 'danhgia.user_id', '=', 'users.id')
-            ->join('kho', 'danhgia.kho_id', '=', 'kho.kho_id')
-            ->join('sanpham', 'kho.sp_id', '=', 'sanpham.sp_id') 
+            // ->join('kho', 'danhgia.sp_id', '=', 'kho.sp_id')
+            ->join('sanpham', 'danhgia.sp_id', '=', 'sanpham.sp_id') 
             ->where('sanpham.sp_id', $sp_id)
             ->select(
                 'danhgia.*', 

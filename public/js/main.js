@@ -319,43 +319,10 @@ $(".btn-update-quantity").on("click", function () {
                             .find(".item-checkbox");
 
                         if (checkbox.is(":checked")) {
-                            // Lấy đơn giá từ HTML
-                            let giaText = $(
-                                ".btn-update-quantity[data-gh-id='" +
-                                    gh_id +
-                                    "']"
-                            )
-                                .closest(".cart-item")
-                                .find("h3.text-danger")
-                                .text()
-                                .replace(/\D/g, "");
-                            let gia = parseInt(giaText);
-
-                            let thanhTien = gia * parseInt(soluong);
-
-                            // Cập nhật lại tổng tiền
-                            let total = 0;
-                            $(".item-checkbox").each(function () {
-                                if ($(this).is(":checked")) {
-                                    let item = $(this).closest(".cart-item");
-                                    let giaItem = parseInt(
-                                        item
-                                            .find("h3.text-danger")
-                                            .text()
-                                            .replace(/\D/g, "")
-                                    );
-                                    let slItem = parseInt(
-                                        item.find(".quantity-input").val()
-                                    );
-                                    total += giaItem * slItem;
-                                }
-                            });
-
-                            // Hiển thị tổng tiền mới
-                            $("#totalPrice").text(
-                                total.toLocaleString("vi-VN") + " ₫"
-                            );
+                            checkbox.data("quantity", soluong);
                         }
+
+                        updateTotalPrice();
 
                         $("#loading").hide();
                         break;
