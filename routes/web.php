@@ -11,6 +11,7 @@ use App\Http\Controllers\User\DanhmucController;
 use App\Http\Controllers\User\nhaSXController;
 use App\Http\Controllers\User\ptThanhToanController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\User\DanhGiaController;
 
 
 /*
@@ -35,6 +36,8 @@ Route::prefix('user')->group(function () {
     Route::get('/store/filter', [UniformController::class, 'filter'])->name('store.filter');
     Route::get('/uniforms/{sp_id}', [UniformController::class, 'showDetail'])->name('uniforms.show_detail');
     Route::post('/uniforms/addSP', [UniformController::class, 'addSP'])->name('addSP');
+    Route::post('/mualai/{hd_id}', [UniformController::class, 'muaLai'])->name('uniforms.muaLai');
+    Route::post('/submit-review', [DanhGiaController::class, 'danhgia'])->name('reviews.danhgia');
 
 
 

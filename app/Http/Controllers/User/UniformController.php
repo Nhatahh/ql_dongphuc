@@ -63,6 +63,7 @@ class UniformController extends Controller
         return view('user.uniforms.show_detail', compact('ct_sp', 'sizes', 'danhgias','sanphams'));
     }
 
+    // Thêm sản phẩm
     public function addSP(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -211,5 +212,60 @@ class UniformController extends Controller
         $sanphams = $query->distinct()->get();
 
         return view('user.uniforms.store', compact('sanphams'));
+    }
+
+    public function muaLai($hd_id)
+    {
+        try {
+            $user_id = Auth::id();
+
+            if (!$user_id) {
+                return response()->json(['success' => false, 'error' => 'Chưa đăng nhập'], 401);
+            }
+
+            $sanphams = DB::table('chitiethoadon')
+                ->where('hd_id', $hd_id)
+                ->get();
+
+            if ($sanphams->isEmpty()) {
+                return response()->json(['success' => false, 'error' => 'Không tìm thấy sản phẩm trong hóa đơn'], 404);
+            }
+
+            foreach ($sanphams as $sp) {
+                $gio = DB::table('giohang')
+                    ->where('user_id', $user_id)
+                    ->where('sp_id', $sp->sp_id)
+                    ->first();
+
+                if ($gio) {
+                    DB::table('giohang')
+                        ->where('id', $gio->id)
+                        ->update(['soluong' => $gio->soluong + $sp->soluong]);
+                } else {
+                    $maxId = DB::table('giohang')->max('gh_id');
+                $newId = $maxId + 1;
+                $result = DB::table('giohang')
+                    ->insert([
+                        'gh_id' => $newId,
+                        'user_id' => $user_id,
+                        'sp_id' => $sp->sp_id,
+                        'size_id' => $sp->size_id,
+                        'soluong' => $sp->soluong,
+                        'created_at' => now(),
+                    ]);
+                }
+            }
+
+            return response()->json(['success' => true]);
+
+        }catch (\Exception $e) {
+                DB::rollBack();
+                return response("-1", 500);
+            }
+        // catch (\Exception $e) {
+        //     // Ghi log lỗi chi tiết
+        //     \Log::error('Lỗi khi mua lại: ' . $e->getMessage());
+        //     return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+        // }
     }
 }

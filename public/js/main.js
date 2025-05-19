@@ -5,65 +5,7 @@ $(document).ready(function () {
         },
     });
 
-    // Thông báo
-    $("#notificationBtn").on("click", function (e) {
-        e.preventDefault();
-        let url = $(this).data("url-notifications");
-        $.ajax({
-            url: url,
-            method: "GET",
-            success: function (data) {
-                let content = "";
-                if (data.length > 0) {
-                    data.forEach(function (noti) {
-                        content += `
-                    <div class="mb-3 border-bottom pb-2">
-                        <h6>${noti.title}</h6>
-                        <p class="mb-0">${noti.message}</p>
-                        <small class="text-muted">${new Date(
-                            noti.created_at
-                        ).toLocaleString()}</small>
-                    </div>
-                `;
-                    });
-                } else {
-                    content = "<p>Không có thông báo nào.</p>";
-                }
-                $("#notificationContent").html(content);
-                $("#notificationModal").modal("show");
-            },
-            error: function () {
-                $("#notificationContent").html("<p>Lỗi khi tải thông báo.</p>");
-                $("#notificationModal").modal("show");
-            },
-        });
-    });
-
-    // Xử lí nút xem chi tiết
-    $(document).on("click", ".btn-detail-order", function () {
-        const hd_id = $(this).data("hd-id");
-        console.log("Bạn vừa click, hd_id =", hd_id);
-        loadOrderDetails(hd_id);
-    });
-
-    // Xử lí nút hủy đơn hàng
-    $(document).on("click", ".btn-cancel-order", function () {
-        let hd_id = $(this).data("hd-id");
-        let url = $(this).data("url-cancel-order");
-        cancelOrder(hd_id, url);
-    });
-
-    // Khi chọn hoặc bỏ chọn 1 sản phẩm
-    $(document).on("change", ".item-checkbox", function () {
-        updateTotalPrice();
-    });
-
-    // Khi chọn hoặc bỏ chọn "Chọn tất cả"
-    $("#select-all-checkbox").on("change", function () {
-        const checked = $(this).is(":checked");
-        $(".item-checkbox").prop("checked", checked);
-        updateTotalPrice();
-    });
+    saukhiload();
 
     loadbandau();
 });
@@ -73,6 +15,16 @@ function loadbandau() {
     search_GH();
     btn_thanhtoan();
     countUnread();
+}
+
+function saukhiload() {
+    mualai();
+    formdanhgia();
+    btnXemchitiet();
+    thongbao();
+    huydonhang();
+    updateTotalsingle();
+    updateTotalall();
 }
 
 // Size Select2
@@ -775,4 +727,144 @@ function cancelOrder(hd_id, url) {
             },
         });
     }, 500);
+}
+
+// Xử lí form đánh giá
+function formdanhgia() {
+    $("#danhGiaForm").on("submit", function (e) {
+        e.preventDefault();
+        $(".err_del").text("");
+        var formData = new FormData(this);
+        $.ajax({
+            url: $(this).attr("action"), // route POST này cần khớp với route của bạn
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.status === "success") {
+                    toastr.success("Cảm ơn bạn đã đánh giá");
+                } else if (response.status === "fail") {
+                    toastr.error("Gửi đánh giá thất bại");
+                }
+                $("#danhGiaForm")[0].reset();
+                const modalEl = document.getElementById("reviewModal");
+                const modal =
+                    bootstrap.Modal.getInstance(modalEl) ||
+                    new bootstrap.Modal(modalEl);
+                modal.hide();
+            },
+            error: function (xhr) {
+                if (xhr.status === 422) {
+                    // Bắt lỗi validate
+                    var errors = xhr.responseJSON.errors;
+                    const keys = Object.keys(errors);
+                    for (let i = 0; i < keys.length; i++) {
+                        const field = keys[i];
+                        const messages = errors[field];
+                        $("#err_" + field).text(messages[0]);
+                    }
+                } else {
+                    toastr.error("Có lỗi trong quá trình xử lý!");
+                }
+            },
+        });
+    });
+}
+
+// Xử lí nút mua lại
+function mualai() {
+    $(".btn-mualai").on("click", function (e) {
+        e.preventDefault();
+        let hd_id = $(this).data("hdid");
+        $.ajax({
+            url: "/user/mualai/" + hd_id,
+            type: "POST",
+            data: {
+                _token: $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (res) {
+                if (res.success) {
+                    toastr.success("Đã thêm lại vào giỏ hàng!");
+                    // Hoặc chuyển đến trang giỏ hàng:
+                    window.location.href = "/user/cart";
+                } else {
+                    toastr.error("Không thể mua lại. Vui lòng thử lại!");
+                }
+            },
+            error: function (xhr) {
+                toastr.error("Có lỗi trong quá trình xử lý!");
+            },
+        });
+    });
+}
+
+// Xử lí nút xem chi tiết
+function btnXemchitiet() {
+    $(document).on("click", ".btn-detail-order", function () {
+        const hd_id = $(this).data("hd-id");
+        console.log("Bạn vừa click, hd_id =", hd_id);
+        loadOrderDetails(hd_id);
+    });
+}
+
+// Thông báo
+function thongbao() {
+    $("#notificationBtn").on("click", function (e) {
+        e.preventDefault();
+        let url = $(this).data("url-notifications");
+        $.ajax({
+            url: url,
+            method: "GET",
+            success: function (data) {
+                let content = "";
+                if (data.length > 0) {
+                    data.forEach(function (noti) {
+                        content += `
+                    <div class="mb-3 border-bottom pb-2">
+                        <h6>${noti.title}</h6>
+                        <p class="mb-0">${noti.message}</p>
+                        <small class="text-muted">${new Date(
+                            noti.created_at
+                        ).toLocaleString()}</small>
+                    </div>
+                `;
+                    });
+                } else {
+                    content = "<p>Không có thông báo nào.</p>";
+                }
+                $("#notificationContent").html(content);
+                $("#notificationModal").modal("show");
+            },
+            error: function () {
+                $("#notificationContent").html("<p>Lỗi khi tải thông báo.</p>");
+                $("#notificationModal").modal("show");
+            },
+        });
+    });
+}
+
+// Xử lí nút hủy đơn hàng
+function huydonhang() {
+    $(document).on("click", ".btn-cancel-order", function () {
+        let hd_id = $(this).data("hd-id");
+        let url = $(this).data("url-cancel-order");
+        cancelOrder(hd_id, url);
+    });
+}
+
+// Cập nhật tổng tiền khi chọn hoặc bỏ chọn 1 sản phẩm
+function updateTotalsingle() {
+    $(".item-checkbox").on("change", function () {
+        updateTotalPrice();
+    });
+}
+
+// Cập nhật tổng tiền khi chọn hoặc bỏ chọn "Chọn tất cả"
+function updateTotalall() {
+    $("#select-all-checkbox").on("change", function () {
+        const checked = $(this).is(":checked");
+        $(".item-checkbox").prop("checked", checked);
+        updateTotalPrice();
+    });
 }
