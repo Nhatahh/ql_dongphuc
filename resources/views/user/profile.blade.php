@@ -134,7 +134,7 @@
           </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Modal đơn hàng -->
         <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" style="max-width: 600px;">
             <div class="modal-content shadow-lg rounded-4 border-0">
@@ -153,6 +153,99 @@
       </div>
       <div class="tab-pane fade" id="pills-history" role="tabpanel" aria-labelledby="pills-history-tab">
         <!-- Nội dung Lịch sử mua -->
+        <div class="container my-4">
+          @foreach ($groupedHistory as $hd_id => $hoaDon)
+            <div class="p-3 border rounded shadow-sm bg-white mb-4">
+              {{-- Header hóa đơn --}}
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                  <strong>Mã hóa đơn: HD{{ $hd_id }}</strong>
+                </div>
+                <div>
+                  <span class="text-success me-3">🚚 Giao hàng thành công</span>
+                  <span class="text-danger fw-bold">{{ $hoaDon['trangthai'] }}</span>
+                </div>
+              </div>
+
+              {{-- Danh sách sản phẩm --}}
+              @foreach ($hoaDon['sanphams'] as $sp)
+                <div class="d-flex border-top py-3">
+                  <img src="{{ asset('images/' . $sp['hinhanh']) }}" alt="" width="60" class="me-3">
+                  <div class="flex-grow-1">
+                    <p class="mb-1 fw-bold">Tên sản phẩm: {{ $sp['tensp'] }}</p>
+                    <p class="text-muted mb-1">Phân loại hàng: {{ $sp['danhmuc'] }}</p>
+                    <p class="text-muted mb-1">x{{ $sp['soluong'] }}</p>
+                  </div>
+                  <div class="text-end text-danger fw-bold">
+                    {{-- Giá từng sản phẩm không có ở đây, nếu có thì thêm --}}
+                  </div>
+                </div>
+              @endforeach
+
+              {{-- Tổng tiền và nút --}}
+              <div class="d-flex justify-content-between align-items-center border-top pt-3 mt-3">
+                <div class="text-end w-100">
+                  <span class="me-2">Thành tiền:</span>
+                  <span class="fs-5 text-danger fw-bold">{{ number_format($hoaDon['tongtien'], 0, ',', '.') }} ₫</span>
+                </div>
+              </div>
+              <div class="d-flex justify-content-end mt-3">
+                <button class="btn btn-danger me-2 btn-mualai " data-hdid="{{ $hd_id }}">Mua Lại</button>
+                @if ($hoaDon['tt_id'] != 3)
+                  <button class="btn btn-outline-secondary btn-review" data-bs-toggle="modal" data-bs-target="#reviewModal" data-hdid="{{ $hd_id }}">
+                    Đánh giá
+                  </button>
+                @endif
+              </div>
+            </div>
+          @endforeach
+        </div>
+
+        <!-- Modal Đánh giá -->
+        <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true" >
+          <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" style="max-width: 600px;">
+            <form class="modal-content shadow-lg rounded-4 border-0" id="danhGiaForm" method="POST" action="{{ route('reviews.danhgia') }}" enctype="multipart/form-data">
+              @csrf
+              <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title fs-3" id="reviewModalLabel">Đánh giá sản phẩm</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                
+                <div class="mb-3">
+                  <label for="rating" class="form-label">Chọn số sao</label>
+                  <select id="rating" name="rating" class="form-select" >
+                    <option value="" selected disabled>Chọn đánh giá</option>
+                    <option value="5">5 - Xuất sắc</option>
+                    <option value="4">4 - Tốt</option>
+                    <option value="3">3 - Trung bình</option>
+                    <option value="2">2 - Kém</option>
+                    <option value="1">1 - Rất kém</option>
+                  </select>
+                  <span class="err_del" id="err_rating" style="color: red; font-size: 12px; background-color: #fff; display: block; margin-top: 2px;"></span>
+                </div>
+                <div class="mb-3">
+                  <label for="image" class="form-label">Upload hình ảnh (tùy chọn)</label>
+                  <input type="file" id="image" name="image" class="form-control" accept="image/*" >
+                  <span class="err_del" id="err_image" style="color: red; font-size: 12px; background-color: #fff; display: block; margin-top: 2px;"></span>
+                </div>
+                <div class="mb-3">
+                  <label for="comment" class="form-label">Bình luận</label>
+                  <textarea id="comment" name="comment" class="form-control" rows="3" placeholder="Viết cảm nhận của bạn..."></textarea>
+                  <span class="err_del" id="err_comment" style="color: red; font-size: 12px; background-color: #fff; display: block; margin-top: 2px;"></span>
+                </div>
+
+                <!-- Có thể thêm input ẩn để gửi id sản phẩm hoặc hóa đơn -->
+                <input type="hidden" id="hd_id" name="order_id" value="{{ $hd_id ?? '' }}">
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
       <div class="tab-pane fade" id="pills-rating" role="tabpanel" aria-labelledby="pills-rating-tab">
         <!-- Nội dung Hỗ trợ -->
@@ -331,8 +424,10 @@
 
 @push('scripts')
 <script>
-  
-
-  
+  document.querySelectorAll('.btn-review').forEach(button => {
+    button.addEventListener('click', function () {
+      document.getElementById('hd_id').value = this.dataset.hdid;
+    });
+  });
 </script>
 @endpush

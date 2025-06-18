@@ -12,6 +12,9 @@
     <link href="{{ asset('bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('bootstrap/bootstrap-icons-1.11.3/font/bootstrap-icons.css') }}" rel="stylesheet">
 
+    <!-- AdminLTE CSS -->
+    <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
+
     <!-- Select2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
@@ -32,18 +35,22 @@
 
     @stack('styles') {{-- Cho phép trang con đẩy thêm CSS nếu cần --}}
 </head>
-<body>
+<body class="hold-transition sidebar-mini sidebar-collapse layout-fixed">
 
     {{-- Nav --}}
     @include('layouts.navbar')
+    @include('layouts.nav-mobile')
 
-    {{-- Nội dung chính --}}
-    <div class="container mt-4">
+    {{-- Content --}}
+    <div class="container-fluid">
         @yield('content')
     </div>
 
     {{-- Footer --}}
-    @include('layouts.footer')
+    <footer class="main-footer text-center">
+        <strong>Copyright &copy; {{ date('Y') }}</strong> CTUT.
+    </footer>
+
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -56,6 +63,9 @@
 
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.5.1/dist/sweetalert2.min.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
 
     {{-- JS --}}
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.min.js') }}"></script>

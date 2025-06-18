@@ -5,7 +5,8 @@
 @section('content')
     <!-- Body -->
     <div class="body container p-3">
-        <div class="title text-center">
+        <div class="title text-center mt-5">
+            <img src="{{ asset('images/logo3.jpg') }}" alt="logo" style="max-height: 15vh;" class="rounded-circle"><br>
             <b class="fs-1">ĐỒNG PHỤC SINH VIÊN CTUT</b>
             <p class="fs-3">HỆ THỐNG ĐẶT MUA ĐỒNG PHỤC NHANH CHÓNG VÀ TIỆN LỢI</p>
         </div>
@@ -41,11 +42,11 @@
         </div>
 
         <!-- Banner -->
-        <div class="row mt-3">
+        <!-- <div class="row mt-3">
             <div class="col-12">
                 <img class="w-100" src="{{ asset('images/banner.jpg') }}" alt="">
             </div>
-        </div>
+        </div> -->
 
         <div class="suggest mt-4 d-flex justify-content-between">
             <span>Gợi ý cho bạn</span>

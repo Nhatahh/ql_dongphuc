@@ -19,9 +19,9 @@ body {
     --primary-color: #384289;
     --gray-color: #555;
 
-    --header-height: 70px;
-    --header-nav-pc: 60px;
-    --title-height: calc(var(--header-height) + var(--header-nav-pc));
+    /* --header-height: 70px; */
+    /* --header-nav-pc: 60px; */
+    /* --title-height: calc(var(--header-height) + var(--header-nav-pc)); */
 }
 
 .btn-primary {

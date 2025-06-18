@@ -10,6 +10,7 @@ use App\Models\Notification;
 
 class UserController extends Controller
 {
+    // load trang profile
     public function profile()
     {
         if (Auth::check()) {
@@ -40,12 +41,53 @@ class UserController extends Controller
 
         // dd($orders);
 
+        //Load lịch sử mua hàng 
+        $rawHistory = DB::table('hoadon')
+            ->join('chitiethoadon as cthd', 'hoadon.hd_id', '=', 'cthd.hd_id')
+            ->join('sanpham as sp', 'cthd.sp_id', '=', 'sp.sp_id')
+            ->join('danhmuc as dm', 'sp.dm_id', '=', 'dm.dm_id')
+            ->join('trangthai as tt', 'hoadon.tt_id', '=', 'tt.tt_id')
+            ->whereIn('hoadon.tt_id',[2, 3] ) 
+            ->where('hoadon.user_id', $user_id)
+            ->select(
+                'hoadon.hd_id',
+                'hoadon.tongtien',
+                'tt.ten',
+                'hoadon.tt_id',
+                'sp.tensp',
+                'dm.ten as danhmuc',
+                'cthd.soluong',
+                'sp.image_url'
+            )
+            ->orderBy('hoadon.hd_id', 'desc')
+            ->get()
+            ->groupBy('hd_id')
+            ->map(function ($items) {
+                return [
+                    'tongtien' => $items->first()->tongtien,
+                    'trangthai' => $items->first()->ten,
+                    'tt_id' => $items->first()->tt_id,
+                    'sanphams' => $items->map(function ($item) {
+                        return [
+                            'tensp' => $item->tensp,
+                            'danhmuc' => $item->danhmuc,
+                            'soluong' => $item->soluong,
+                            'hinhanh' => $item->image_url,
+                        ];
+                    })
+                ];
+            });
+
+        
+
         return view('user.profile', [
             'userInfo' => $userInfo,
             'orders' => $orders,
+            'groupedHistory' => $rawHistory
         ]);
     }
 
+    // load form đăng nhập
     public function formSignIn()
     {
         return view('user.form.sign_in');
@@ -114,18 +156,18 @@ class UserController extends Controller
         return response()->json($notifications);
     }
 
-    public function countUnread()
-    {
-        if (Auth::check()) {
-            $user_id = Auth::user()->user_id;
-        } else {
-            return redirect()->route('login');
-        }
-        $count = 0;
-        $count = Notification::where('user_id', $user_id)
-            ->where('is_read', false)
-            ->count();
+    // public function countUnread()
+    // {
+    //     if (Auth::check()) {
+    //         $user_id = Auth::user()->user_id;
+    //     } else {
+    //         return redirect()->route('login');
+    //     }
+    //     $count = 0;
+    //     $count = Notification::where('user_id', $user_id)
+    //         ->where('is_read', false)
+    //         ->count();
 
-        return response()->json($count);
-    }
+    //     return response()->json($count);
+    // }
 }
