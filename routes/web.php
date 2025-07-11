@@ -12,6 +12,7 @@ use App\Http\Controllers\User\nhaSXController;
 use App\Http\Controllers\User\ptThanhToanController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\User\DanhGiaController;
+use App\Http\Controllers\Admin\AdminController;
 
 
 /*
@@ -71,6 +72,30 @@ Route::prefix('user')->group(function () {
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login.post');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
+
+    
+});
+
+Route::prefix('admin')->group(function () {
+    Route::get('/banhang', [AdminController::class, 'banhang'])->name('admin.banhang');
+    Route::get('/taikhoan', [AdminController::class, 'taikhoan'])->name('admin.taikhoan');
+    Route::get('/loadTK', [AdminController::class, 'loadTK'])->name('admin.loadTK');
+    Route::post('/themTaiKhoan',[AdminController::class, 'themTaiKhoan'])->name('admin.themTaiKhoan');
+    
+    Route::get('/donhang', [AdminController::class, 'donhang'])->name('admin.donhang');
+    Route::get('/donhang/danhsach', [AdminController::class, 'getDanhSach'])->name('admin.donhang.danhsach');
+    Route::get('/chitiet/{dh_id}', [AdminController::class, 'getChiTietDonHang'])->name('admin.donhang.chitiet');
+    
+    Route::get('/danhmuc', [AdminController::class, 'danhmuc'])->name('admin.danhmuc');
+    Route::get('/loadDM', [AdminController::class, 'loadDM'])->name('admin.loadDM');
+    Route::post('/themDM', [AdminController::class, 'themDM'])->name('admin.themDM');
+    
+    Route::get('/sanpham', [AdminController::class, 'sanpham'])->name('admin.sanpham');
+    Route::get('/loadSP', [AdminController::class, 'loadSP'])->name('admin.loadSP');
+    
+    Route::get('/thongke', [AdminController::class, 'thongke'])->name('admin.thongke');
 
 });
 
