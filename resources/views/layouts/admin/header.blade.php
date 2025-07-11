@@ -16,6 +16,10 @@
                     <i class="bi bi-person-fill sidebar-icon"></i>
                     Quản lý tài khoản
                 </a>
+                <a href="{{ route('admin.banhang') }}" class="nav-link">
+                    <i class="bi bi-box-seam sidebar-icon"></i>
+                    Quản lý bán hàng
+                </a>
                 <a href="{{ route('admin.sanpham') }}" class="nav-link active">
                     <i class="bi bi-box-seam sidebar-icon"></i>
                     Quản lý sản phẩm

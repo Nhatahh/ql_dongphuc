@@ -361,8 +361,12 @@
         display: block;
     }
 
+    li.nav-item:hover {
+        background-color: #40498d;
+    }
+
     .main-sidebar {
-        background-color: #0056b3;
+        background-color: var(--primary-color);
 
         i,
         p,

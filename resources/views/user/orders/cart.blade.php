@@ -25,8 +25,8 @@
         <div class="row">
             <!-- Giỏ hàng -->
             <div class="col-12 col-lg-8 cart-list mt-4">
-                <div class="d-flex align-items-center mb-3" id="container-checkbox">
-                    <input type="checkbox" id="select-all-checkbox" class="form-check-input me-2" style="border: 1px solid black;">
+                <div class=" mb-3" id="container-checkbox">
+                    <input type="checkbox" id="select-all-checkbox" class="me-2" style="border: 1px solid black;">
                     <label for="select-all-checkbox" class="form-check-label fw-bold">Chọn tất cả</label>
                 </div>
                 <div class="row g-0">
