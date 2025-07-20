@@ -312,46 +312,88 @@
         border-color: #005c99;
         box-shadow: 0 6px 14px rgba(0, 86, 179, 0.4);
     }
-}
 
-#order-products-list > div {
-    display: flex;
-    gap: 15px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    align-items: center;
-    background-color: #f9f9f9;
-    transition: box-shadow 0.3s ease;
-}
+    #order-products-list > div {
+        display: flex;
+        gap: 15px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        align-items: center;
+        background-color: #f9f9f9;
+        transition: box-shadow 0.3s ease;
+    }
 
-#order-products-list > div:hover {
-    box-shadow: 0 4px 12px rgb(0 123 255 / 0.3);
-}
+    #order-products-list > div:hover {
+        box-shadow: 0 4px 12px rgb(0 123 255 / 0.3);
+    }
 
-#order-products-list img {
-    width: 90px;
-    height: 90px;
-    object-fit: cover;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
+    #order-products-list img {
+        width: 90px;
+        height: 90px;
+        object-fit: cover;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
 
-#order-products-list .product-info p {
-    margin: 2px 0;
-}
+    #order-products-list .product-info p {
+        margin: 2px 0;
+    }
 
-#order-products-list .product-info .product-name {
-    font-weight: 600;
-    font-size: 1.05rem;
-}
+    #order-products-list .product-info .product-name {
+        font-weight: 600;
+        font-size: 1.05rem;
+    }
 
-#order-products-list .product-info .quantity {
-    color: #555;
-}
+    #order-products-list .product-info .quantity {
+        color: #555;
+    }
 
-#order-products-list .product-info .price {
-    color: #d6336c; /* màu đỏ Bootstrap */
-    font-weight: 700;
-    font-size: 1rem;
+    #order-products-list .product-info .price {
+        color: #d6336c; /* màu đỏ Bootstrap */
+        font-weight: 700;
+        font-size: 1rem;
+    }
+
+    /* Sidebar */
+    .main-sidebar,
+    .main-header {
+        display: block;
+    }
+
+    li.nav-item:hover {
+        background-color: #40498d;
+    }
+
+    .main-sidebar {
+        background-color: var(--primary-color);
+
+        i,
+        p,
+        a {
+            color: #ffffff;
+        }
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .brand-link .brand-image {
+        margin-left: 0;
+    }
+
+    .main-header .nav-link {
+        min-height: 4.5rem;
+    }
+
+    .brand-link {
+        min-height: 5.5rem;
+    }
+
+    .nav-item {
+        align-items: flex-start;
+        padding: 0;
+    }
+
 }

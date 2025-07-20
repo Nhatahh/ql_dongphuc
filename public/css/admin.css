@@ -1,0 +1,55 @@
+/* Sidebar */
+.sidebar {
+    background-color: #384289;
+    color: white;
+    min-height: calc(100vh - 56px);
+}
+.sidebar .nav-link {
+    color: white;
+    padding: 15px;
+}
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.sidebar-icon {
+    margin-right: 10px;
+}
+
+.navbar {
+    background-color: #384289;
+}
+
+/* Main content */
+.btn-con {
+    display: flex;
+    gap: 5px;
+}
+.add-btn {
+    background-color: #e53935;
+    border: none;
+}
+.add-btn:hover {
+    background-color: #c62828;
+}
+.main-content {
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+.con-hang {
+    color: #4caf50;
+}
+.het-hang {
+    color: #f44336;
+}
+.form-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.table-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

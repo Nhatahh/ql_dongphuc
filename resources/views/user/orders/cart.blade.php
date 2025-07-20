@@ -25,8 +25,8 @@
         <div class="row">
             <!-- Giỏ hàng -->
             <div class="col-12 col-lg-8 cart-list mt-4">
-                <div class="d-flex align-items-center mb-3" id="container-checkbox">
-                    <input type="checkbox" id="select-all-checkbox" class="form-check-input me-2" style="border: 1px solid black;">
+                <div class=" mb-3" id="container-checkbox">
+                    <input type="checkbox" id="select-all-checkbox" class="me-2" style="border: 1px solid black;">
                     <label for="select-all-checkbox" class="form-check-label fw-bold">Chọn tất cả</label>
                 </div>
                 <div class="row g-0">
@@ -56,6 +56,9 @@
                                                 <p class="fw-bold mb-1 fs-4">{{ $item->tensp }}</p>
                                             </a>
                                             <p class="fw-bold text-danger mb-0 fs-5">{{ number_format($item->gia, 0, ',', '.') }} ₫</p>
+                                            <small class="text-muted" id="tonkho_{{ $item->gh_id }}">
+                                                {{ $item->tonkho }} sản phẩm còn lại
+                                            </small>
                                         </div>
                                     </div>
                                     <!-- Số lượng -->

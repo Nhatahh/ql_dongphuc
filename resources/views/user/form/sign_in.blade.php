@@ -52,7 +52,7 @@
 
         <div class="form-footer">
             <a href="#">Quên mật khẩu?</a> |
-            <a href="#" class="signupLink">Đăng ký tài khoản</a>
+            <a href="{{ route('register.form') }}" class="signupLink">Đăng ký tài khoản</a>
         </div>
       </form>
 

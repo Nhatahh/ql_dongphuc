@@ -12,6 +12,13 @@ use App\Http\Controllers\User\nhaSXController;
 use App\Http\Controllers\User\ptThanhToanController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\User\DanhGiaController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AdminSanphamController;
+use App\Http\Controllers\Admin\AdminDonHangController;
+use App\Http\Controllers\Admin\AdminDanhMucController;
+use App\Http\Controllers\Admin\AdminNSXController;
+use App\Http\Controllers\Admin\AdminSizeController;
+use App\Http\Controllers\AuthController;
 
 
 /*
@@ -68,9 +75,56 @@ Route::prefix('user')->group(function () {
 
     Route::get('/search', [SearchController::class, 'search'])->name('user.search');
 
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register.form');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login'])->name('login.post');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+});
+
+Route::prefix('admin')->group(function () {
+
+    // Quản lí tài khoản
+    Route::get('/', [AdminController::class, 'indexAdmin'])->name('admin.index');
+    Route::get('/users/data', [AdminController::class, 'getUserData'])->name('admin.taikhoan.users.data');
+    Route::get('/admins/data', [AdminController::class, 'getAdminData'])->name('admin.taikhoan.admins.data');
+
+    // Quản lí đơn hàng
+    Route::get('/donhang', [AdminDonHangController::class, 'index'])->name('admin.donhang');
+    Route::get('/donhang/data', [AdminDonHangController::class, 'getData'])->name('admin.donhang.data');
+    Route::get('/donhang/chitiet/{hd_id}', [AdminDonhangController::class, 'getChitietHoadon'])->name('admin.donhang.chitiet');
+
+    // Quản lí danh mục
+    Route::get('/danhmuc', [AdminDanhMucController::class, 'index'])->name('admin.danhmuc');
+    Route::get('/danhmuc/data', [AdminDanhMucController::class, 'getData'])->name('admin.getDataDanhMuc');
+    Route::get('/danhmuc/max', [AdminDanhMucController::class, 'getMaxDmId']);
+    Route::post('/danhmuc/add', [AdminDanhMucController::class, 'add']);
+    Route::get('/danhmuc/{dm_id}', [AdminDanhMucController::class, 'show']);
+    Route::put('/danhmuc/{dm_id}', [AdminDanhMucController::class, 'update']);
+    Route::delete('/danhmuc/{dm_id}', [AdminDanhMucController::class, 'delete'])->name('admin.danhmuc.delete');
+
+
+    // Quản lí nhà sản xuất
+    Route::get('/nhasanxuat', [AdminNSXController::class, 'index'])->name('admin.NSX');
+    Route::get('/nhasanxuat/data', [AdminNSXController::class, 'getData'])->name('admin.getDataNSX');
+    Route::get('/nhasanxuat/max', [AdminNSXController::class, 'getMaxNSXId']);
+    Route::post('/nhasanxuat/add', [AdminNSXController::class, 'add']);
+    Route::get('/nhasanxuat/{nsx_id}', [AdminNSXController::class, 'show']);
+    Route::put('/nhasanxuat/{nsx_id}', [AdminNSXController::class, 'update']);
+    Route::delete('/nhasanxuat/{nsx_id}', [AdminNSXController::class, 'delete'])->name('admin.NSX.delete');
+
+    // Quản lí size
+    Route::get('/size', [AdminSizeController::class, 'index'])->name('admin.size');
+    Route::get('/size/data', [AdminSizeController::class, 'getData'])->name('admin.getDataSize');
+
+    // Quản lí sản phẩm
+    Route::get('/sanpham', [AdminSanphamController::class, 'sanpham'])->name('admin.sanpham');
+    Route::get('/sanpham/data', [AdminSanphamController::class, 'getSanphamData'])->name('admin.sanpham.data');
+
+
+    
+    Route::get('/thongke', [AdminController::class, 'thongke'])->name('admin.thongke');
 
 });
 
