@@ -128,7 +128,7 @@ Route::prefix('admin')->group(function () {
     // Quản lí sản phẩm
     Route::get('/sanpham', [AdminSanphamController::class, 'sanpham'])->name('admin.sanpham');
     Route::get('/sanpham/data', [AdminSanphamController::class, 'getSanphamData'])->name('admin.sanpham.data');
-    Route::get('/sanpham/{sp_id}', [AdminSanphamController::class, 'edit']); 
+    Route::get('/sanpham/{sp_id}', [AdminSanphamController::class, 'show']); 
     Route::put('/sanpham/{sp_id}', [AdminSanphamController::class, 'update']); 
     Route::delete('/sanpham/{sp_id}', [AdminSanphamController::class, 'delete'])->name('admin.sanpham.delete');
     

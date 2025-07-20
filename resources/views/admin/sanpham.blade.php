@@ -98,6 +98,38 @@
 
 <script>
     const sanphamDataUrl = "{{ route('admin.sanpham.data') }}";
+
+    $("#edit_dm_id").select2({
+        placeholder: "Chọn danh mục",
+        ajax: {
+            url: "/admin/danhmuc/select2",
+            dataType: "json",
+            processResults: function (data) {
+                return {
+                    results: data.map((item) => ({
+                        id: item.id,
+                        text: item.text,
+                    })),
+                };
+            },
+        },
+    });
+
+    $("#edit_nsx_id").select2({
+        placeholder: "Chọn nhà sản xuất",
+        ajax: {
+            url: "/admin/nhasanxuat/select2",
+            dataType: "json",
+            processResults: function (data) {
+                return {
+                    results: data.map((item) => ({
+                        id: item.id,
+                        text: item.text,
+                    })),
+                };
+            },
+        },
+    });
 </script>
 @push('scripts')
 <script src="{{ asset('js/admin/sanpham.js') }}"></script>

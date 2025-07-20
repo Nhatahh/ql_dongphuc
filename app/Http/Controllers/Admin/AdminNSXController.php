@@ -78,6 +78,6 @@ class AdminNSXController extends Controller
 
     public function select2()
     {
-        return nhaSX::select('nsx_id', 'ten')->get();
+        return nhaSX::select('nsx_id as id', 'ten as text')->get();
     }
 }

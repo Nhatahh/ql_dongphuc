@@ -33,46 +33,15 @@ $(document).ready(function () {
         ],
     });
 
-    $("#edit_dm_id").select2({
-        placeholder: "Chọn danh mục",
-        ajax: {
-            url: "/danhmuc/select2",
-            dataType: "json",
-            processResults: function (data) {
-                return {
-                    results: data.map((item) => ({
-                        id: item.id,
-                        text: item.ten,
-                    })),
-                };
-            },
-        },
-    });
-
-    $("#edit_nsx_id").select2({
-        placeholder: "Chọn nhà sản xuất",
-        ajax: {
-            url: "/nhasanxuat/select2",
-            dataType: "json",
-            processResults: function (data) {
-                return {
-                    results: data.map((item) => ({
-                        id: item.id,
-                        text: item.ten,
-                    })),
-                };
-            },
-        },
-    });
-
     // Khi nhấn nút sửa
     $(document).on("click", ".btn-edit", function () {
         const sp_id = $(this).data("sp-id");
 
         $.ajax({
-            url: `sanpham/${sp_id}`,
+            url: `/admin/sanpham/${sp_id}`,
             method: "GET",
             success: function (sp) {
+                console.log("Dữ liệu trả về:", sp);
                 $("#edit_sp_id").val(sp.sp_id);
                 $("#edit_tensp").val(sp.tensp);
                 $("#edit_mota").val(sp.mota);
@@ -80,21 +49,25 @@ $(document).ready(function () {
                 $("#current_image").attr("src", `/images/${sp.image_url}`);
 
                 // Load Select2 và gán giá trị
+                // Danh mục
                 let newDM = new Option(
                     sp.danhmuc?.ten || "",
                     sp.dm_id,
-                    true,
-                    true
+                    false,
+                    false
                 );
+                $("#edit_dm_id").append(newDM).val(sp.dm_id).trigger("change");
+                // Nhà sản xuất
                 let newNSX = new Option(
                     sp.nhasanxuat?.ten || "",
                     sp.nsx_id,
-                    true,
-                    true
+                    false,
+                    false
                 );
-                $("#edit_dm_id").val(newDM).trigger("change");
-                $("#edit_nsx_id").val(newNSX).trigger("change");
-                console.log("Đổ dữ liệu xong, mở modal");
+                $("#edit_nsx_id")
+                    .append(newNSX)
+                    .val(sp.nsx_id)
+                    .trigger("change");
 
                 $("#editModal").modal("show");
             },
@@ -109,10 +82,10 @@ $(document).ready(function () {
 
         let formData = new FormData(this);
         formData.append("_method", "PUT");
-        const id = $("#edit_sp_id").val();
+        const sp_id = $("#edit_sp_id").val();
 
         $.ajax({
-            url: `/sanpham/${id}`,
+            url: `/admin/sanpham/${sp_id}`,
             method: "POST", // gửi POST kèm _method=PUT
             data: formData,
             processData: false,
@@ -148,7 +121,7 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/sanpham/${sp_id}`,
+                    url: `/admin/sanpham/${sp_id}`,
                     method: "DELETE",
                     data: {
                         _token: $('meta[name="csrf-token"]').attr("content"),

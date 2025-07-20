@@ -75,6 +75,6 @@ class AdminDanhMucController extends Controller
 
     public function select2()
     {
-        return Danhmuc::select('dm_id', 'ten')->get();
+        return Danhmuc::select('dm_id as id', 'ten as text')->get();
     }
 }

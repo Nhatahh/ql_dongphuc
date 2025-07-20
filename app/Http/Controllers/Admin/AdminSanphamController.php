@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Sanpham;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class AdminSanphamController extends Controller
@@ -51,9 +52,18 @@ class AdminSanphamController extends Controller
             ->make(true);
     }
 
-    public function edit($sp_id)
+    public function show($sp_id)
     {
-        $sanpham = Sanpham::with(['danhmuc', 'nhasanxuat'])->find($sp_id);
+        $sanpham = DB::table('sanpham')
+            ->Join('danhmuc', 'sanpham.dm_id', '=', 'danhmuc.dm_id')
+            ->Join('nhasanxuat', 'sanpham.nsx_id', '=', 'nhasanxuat.nsx_id')
+            ->select(
+                'sanpham.*',
+                'danhmuc.ten as danhmuc_ten',
+                'nhasanxuat.ten as nhasanxuat_ten'
+            )
+            ->where('sanpham.sp_id', $sp_id)
+            ->first();
 
         if (!$sanpham) {
             return response()->json(['message' => 'Không tìm thấy sản phẩm'], 404);

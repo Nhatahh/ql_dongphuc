@@ -65,7 +65,7 @@ class AdminController extends Controller
     public function danhmuc() {
         return view('admin.danhmuc');
     }
-    
+
     public function thongke() {
         return view('admin.thongke');
     }
