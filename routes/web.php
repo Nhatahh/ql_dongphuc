@@ -103,6 +103,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/danhmuc/{dm_id}', [AdminDanhMucController::class, 'show']);
     Route::put('/danhmuc/{dm_id}', [AdminDanhMucController::class, 'update']);
     Route::delete('/danhmuc/{dm_id}', [AdminDanhMucController::class, 'delete'])->name('admin.danhmuc.delete');
+    Route::get('/danhmuc/select2', [AdminDanhMucController::class, 'select2']);
 
 
     // Quản lí nhà sản xuất
@@ -113,14 +114,26 @@ Route::prefix('admin')->group(function () {
     Route::get('/nhasanxuat/{nsx_id}', [AdminNSXController::class, 'show']);
     Route::put('/nhasanxuat/{nsx_id}', [AdminNSXController::class, 'update']);
     Route::delete('/nhasanxuat/{nsx_id}', [AdminNSXController::class, 'delete'])->name('admin.NSX.delete');
+    Route::get('/nhasanxuat/select2', [AdminNSXController::class, 'select2']);
 
     // Quản lí size
     Route::get('/size', [AdminSizeController::class, 'index'])->name('admin.size');
     Route::get('/size/data', [AdminSizeController::class, 'getData'])->name('admin.getDataSize');
+    Route::get('/size/max', [AdminSizeController::class, 'getMaxSizeId']);
+    Route::post('/size/add', [AdminSizeController::class, 'add']);
+    Route::get('/size/{size_id}', [AdminSizeController::class, 'show']);
+    Route::put('/size/{size_id}', [AdminSizeController::class, 'update']);
+    Route::delete('/size/{size_id}', [AdminSizeController::class, 'delete'])->name('admin.size.delete');
 
     // Quản lí sản phẩm
     Route::get('/sanpham', [AdminSanphamController::class, 'sanpham'])->name('admin.sanpham');
     Route::get('/sanpham/data', [AdminSanphamController::class, 'getSanphamData'])->name('admin.sanpham.data');
+    Route::get('/sanpham/{sp_id}', [AdminSanphamController::class, 'edit']); 
+    Route::put('/sanpham/{sp_id}', [AdminSanphamController::class, 'update']); 
+    Route::delete('/sanpham/{sp_id}', [AdminSanphamController::class, 'delete'])->name('admin.sanpham.delete');
+    
+    
+
 
 
     

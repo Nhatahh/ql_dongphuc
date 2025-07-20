@@ -72,4 +72,9 @@ class AdminDanhMucController extends Controller
         $dm->delete();
         return response()->json(['success' => true]);
     }
+
+    public function select2()
+    {
+        return Danhmuc::select('dm_id', 'ten')->get();
+    }
 }
