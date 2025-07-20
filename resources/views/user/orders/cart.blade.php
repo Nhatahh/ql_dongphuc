@@ -56,6 +56,9 @@
                                                 <p class="fw-bold mb-1 fs-4">{{ $item->tensp }}</p>
                                             </a>
                                             <p class="fw-bold text-danger mb-0 fs-5">{{ number_format($item->gia, 0, ',', '.') }} ₫</p>
+                                            <small class="text-muted" id="tonkho_{{ $item->gh_id }}">
+                                                {{ $item->tonkho }} sản phẩm còn lại
+                                            </small>
                                         </div>
                                     </div>
                                     <!-- Số lượng -->

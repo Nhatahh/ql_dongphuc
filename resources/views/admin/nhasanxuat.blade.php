@@ -1,6 +1,6 @@
 @extends('layouts.admin.body')
 
-@section('title', 'Loại sản phẩm')
+@section('title', 'Nhà sản xuất')
 
 @section('content')
 <!-- Body -->
@@ -11,20 +11,20 @@
             <div class="card shadow-sm border-0 mb-4">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">
-                        <i class="bi bi-folder-fill me-2"></i> Danh sách loại sản phẩm
+                        <i class="bi bi-folder-fill me-2"></i> Danh sách nhà sản xuất
                     </h5>
-                    <button class="btn btn-light btn-sm" id="btnShowAddDanhMuc">
-                        <i class="bi bi-plus-circle me-1"></i> Thêm loại sản phẩm
+                    <button class="btn btn-light btn-sm" id="btnShowAddNSX">
+                        <i class="bi bi-plus-circle me-1"></i> Thêm nhà sản xuất
                     </button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle table-bordered table-striped" id="tableDanhMuc">
+                        <table class="table table-hover align-middle table-bordered table-striped" id="tableNhaSanXuat">
                             <thead class="table-light">
                                 <tr class="text-center">
                                     <th scope="col">STT</th>
-                                    <th scope="col">Mã loại sản phẩm</th>
-                                    <th scope="col">Tên loại sản phẩm</th>
+                                    <th scope="col">Mã nhà sản xuất</th>
+                                    <th scope="col">Tên nhà sản xuất</th>
                                     <th scope="col">Hành động</th>
                                 </tr>
                             </thead>
@@ -38,18 +38,18 @@
         </div>
     </div>
 </div>
-<!-- Modal Thêm Danh Mục -->
-<div class="modal fade" id="modalAddDanhMuc" tabindex="-1" aria-labelledby="modalAddDanhMucLabel" aria-hidden="true">
+<!-- Modal Thêm NSX -->
+<div class="modal fade" id="modalAddNSX" tabindex="-1" aria-labelledby="modalAddNSXLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        <form id="formAddDanhMuc">
+        <form id="formAddNSX">
             <div class="modal-header">
-            <h5 class="modal-title" id="modalAddDanhMucLabel">Thêm loại sản phẩm</h5>
+            <h5 class="modal-title" id="modalAddNSXLabel">Thêm nhà sản xuất</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
             </div>
             <div class="modal-body">
             <div class="mb-3">
-                <label for="add_ten" class="form-label">Tên danh mục</label>
+                <label for="add_ten" class="form-label">Tên nhà sản xuất</label>
                 <input type="text" class="form-control" name="ten" id="add_ten" required>
             </div>
             </div>
@@ -61,22 +61,22 @@
         </div>
     </div>
 </div>
-<!-- Modal Sửa Danh Mục -->
-<div class="modal fade" id="modalEditDanhMuc" tabindex="-1" aria-labelledby="modalEditDanhMucLabel" aria-hidden="true">
+<!-- Modal Sửa nhà sản xuất -->
+<div class="modal fade" id="modalEditNSX" tabindex="-1" aria-labelledby="modalEditNSXLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        <form id="formEditDanhMuc">
+        <form id="formEditNSX">
             <div class="modal-header">
-            <h5 class="modal-title" id="modalEditDanhMucLabel">Chỉnh sửa danh mục</h5>
+            <h5 class="modal-title" id="modalEditNSXLabel">Chỉnh sửa nhà sản xuất</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
             </div>
             <div class="modal-body">
             <div class="mb-3">
-                <label for="edit_dm_id" class="form-label">Mã danh mục</label>
-                <input type="text" class="form-control" name="dm_id" id="edit_dm_id" readonly>
+                <label for="edit_nsx_id" class="form-label">Mã nhà sản xuất</label>
+                <input type="text" class="form-control" name="nsx_id" id="edit_nsx_id" readonly>
             </div>
             <div class="mb-3">
-                <label for="edit_ten" class="form-label">Tên danh mục</label>
+                <label for="edit_ten" class="form-label">Tên nhà sản xuất</label>
                 <input type="text" class="form-control" name="ten" id="edit_ten" required>
             </div>
             </div>
@@ -88,13 +88,11 @@
         </div>
     </div>
 </div>
-
-
 @endsection
 
 <script>
-    const DanhMucDataUrl = "{{ route('admin.getDataDanhMuc') }}";
+    const NSXDataUrl = "{{ route('admin.getDataNSX') }}";
 </script>
 @push('scripts')
-    <script src="{{ asset('js/admin/danhmuc.js') }}"></script>
+    <script src="{{ asset('js/admin/nhasanxuat.js') }}"></script>
 @endpush

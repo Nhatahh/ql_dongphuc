@@ -7,26 +7,21 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\TrangThai;
 
-class User extends Authenticatable
+class Admin extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'users'; // tên bảng
+    protected $table = 'admin'; // tên bảng
 
     protected $primaryKey = 'id'; // khóa chính nếu không phải 'id'
 
-    public $timestamps = false; // hoặc false nếu bảng không có created_at, updated_at
+    public $timestamps = true; // hoặc false nếu bảng không có created_at, updated_at
 
     protected $fillable = [
-        'user_id',
+        'admin_id',
         'username',
         'password',
-        'mssv',
-        'email',
-        'sdt',
-        'hoten',
-        'diachi',
-        'avt_url',
+        'created_at',
         'trangthai',
     ];
 
@@ -34,7 +29,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
     public function trangThai()
     {
         return $this->hasOne(TrangThai::class, 'tt_id', 'trangthai');

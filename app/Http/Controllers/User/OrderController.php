@@ -14,29 +14,33 @@ use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
-    public function cart() {
-        if (Auth::check()) {
-            $user_id = Auth::user()->user_id;
-        } else {
+    public function cart()
+    {
+        if (!Auth::check()) {
             return redirect()->route('login');
         }
-        // $user_id = Auth::user()->user_id; 
+
+        $user_id = Auth::user()->user_id;
+
         $cartItems = DB::table('giohang as gh')
-                    ->join('sanpham', 'sanpham.sp_id', '=', 'gh.sp_id')
-                    ->join('users', 'users.user_id', '=', 'gh.user_id')
-                    ->join('kho', 'sanpham.kho_id', '=', 'kho.kho_id')
-                    ->join('size', 'gh.size_id', '=', 'size.size_id')
-                    ->where('gh.user_id', $user_id)
-                    ->select(
-                        'gh.*',
-                        'sanpham.tensp as tensp',
-                        'sanpham.sp_id as sp_id',
-                        'sanpham.gia',
-                        'sanpham.image_url',
-                        'size.ten as tensize',
-                        'kho.kho_id as kho_id',                        
-                    )
-                    ->get();
+            ->join('sanpham', 'sanpham.sp_id', '=', 'gh.sp_id')
+            ->join('size', 'gh.size_id', '=', 'size.size_id')
+            ->join('kho', function ($join) {
+                $join->on('kho.sp_id', '=', 'gh.sp_id')
+                    ->on('kho.size_id', '=', 'gh.size_id');
+            })
+            ->where('gh.user_id', $user_id)
+            ->select(
+                'gh.*',
+                'sanpham.tensp as tensp',
+                'sanpham.sp_id',
+                'sanpham.gia',
+                'sanpham.image_url',
+                'size.ten as tensize',
+                'kho.kho_id',
+                'kho.tonkho'
+            )
+            ->get();
 
         return view('user.orders.cart', compact('cartItems'));
     }
@@ -63,52 +67,50 @@ class OrderController extends Controller
         $validator = Validator::make($request->all(), [
             'gh_id' => 'required|integer|exists:giohang,gh_id',
             'soluong' => 'required|integer|min:1',
-            'size_id' => 'required|integer|exists:size,size_id', // validate size_id
+            'size_id' => 'required|integer|exists:size,size_id',
         ]);
-    
+
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validator->errors(),
+            ], 422);
         }
-    
+
         try {
             DB::beginTransaction();
 
             $giohang = DB::table('giohang')->where('gh_id', $request->gh_id)->first();
-
             if (!$giohang) {
                 DB::rollBack();
-                return response("0", 200); // không tồn tại
+                return response()->json(['status' => 'not_found']);
             }
 
             $user_id = $giohang->user_id;
             $sp_id = $giohang->sp_id;
 
-            // Kiểm tra có dòng nào khác giống sp_id + size_id không?
+            // Kiểm tra có bản ghi trùng khác không
             $existing = DB::table('giohang')
-                        ->where('user_id', $user_id)
-                        ->where('sp_id', $sp_id)
-                        ->where('size_id', $request->size_id)
-                        ->where('gh_id', '!=', $request->gh_id)
-                        ->first();
-    
+                ->where('user_id', $user_id)
+                ->where('sp_id', $sp_id)
+                ->where('size_id', $request->size_id)
+                ->where('gh_id', '!=', $request->gh_id)
+                ->first();
+
             if ($existing) {
                 // Gộp số lượng
-                $tongSoluong = $existing->soluong + $request->soluong;
-    
-                // Cập nhật dòng còn lại
                 DB::table('giohang')
                     ->where('gh_id', $existing->gh_id)
                     ->update([
-                        'soluong' => $tongSoluong,
+                        'soluong' => $existing->soluong + $request->soluong,
                         'created_at' => now(),
                     ]);
-    
-                // Xóa dòng hiện tại
+
                 DB::table('giohang')
                     ->where('gh_id', $request->gh_id)
                     ->delete();
             } else {
-                // Cập nhật bình thường
+                // Cập nhật dòng hiện tại
                 DB::table('giohang')
                     ->where('gh_id', $request->gh_id)
                     ->update([
@@ -118,11 +120,23 @@ class OrderController extends Controller
                     ]);
             }
 
+            // Lấy lại tồn kho từ DB
+            $tonkho = DB::table('kho')
+                ->where('sp_id', $sp_id)
+                ->where('size_id', $request->size_id)
+                ->value('tonkho');
+
             DB::commit();
-            return response("1", 200);
+
+            return response()->json([
+                'status' => 'success',
+                'new_quantity' => $request->soluong,
+                'new_size_id' => $request->size_id,
+                'tonkho' => $tonkho,
+            ]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response("-1", 500); // lỗi hệ thống
+            return response()->json(['status' => 'error', 'message' => 'Lỗi hệ thống'], 500);
         }
     }
 

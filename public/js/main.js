@@ -205,112 +205,77 @@ $(".btn-addSP").on("click", function () {
 // Cập nhật sản phẩm
 $(".btn-update-quantity").on("click", function () {
     let gh_id = $(this).data("gh-id");
-    let user_id = $(this).data("user_id");
     let url = $(this).data("url");
     let soluong = $("#soluong_" + gh_id).val();
-
-    // Lấy giá trị size hiện tại của select2 tương ứng
     let size_id = $(".getsizeSelect2[data-gh-id='" + gh_id + "']").val();
 
-    // Kiểm tra nếu chưa chọn size
     if (!size_id) {
-        toastr.error("Vui lòng chọn size!!!");
-        return; // dừng gửi ajax
+        toastr.error("Vui lòng chọn size!");
+        return;
     }
 
-    // Lấy giá trị hiện tại từ data attribute
+    // Kiểm tra thay đổi
     let currentQuantity = $("#soluong_" + gh_id).data("current-quantity");
-    let currentSize =
-        $(".getsizeSelect2[data-gh-id='" + gh_id + "']").data("current-size") ||
-        "";
+    let currentSize = $(".getsizeSelect2[data-gh-id='" + gh_id + "']").data(
+        "current-size"
+    );
 
-    // Kiểm tra có thay đổi gì không
     if (soluong == currentQuantity && size_id == currentSize) {
         toastr.info("Bạn chưa thay đổi số lượng hoặc size.");
         return;
     }
 
-    $(".err_soluong").text(""); // clear lỗi
-
     $("#loading").show();
 
-    setTimeout(() => {
-        $.ajax({
-            url: url,
-            method: "POST",
-            data: {
-                gh_id: gh_id,
-                user_id: user_id,
-                soluong: soluong,
-                size_id: size_id,
-            },
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-            success: function (response) {
-                switch (response) {
-                    case "1":
-                        toastr.success("Cập nhật thành công");
-                        // window.location.reload();
+    $.ajax({
+        url: url,
+        method: "POST",
+        data: {
+            gh_id: gh_id,
+            soluong: soluong,
+            size_id: size_id,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (res) {
+            $("#loading").hide();
 
-                        // Cập nhật lại quantity hiện tại để lần sau check
-                        $("#soluong_" + gh_id).data(
-                            "current-quantity",
-                            soluong
-                        );
-                        $(".getsizeSelect2[data-gh-id='" + gh_id + "']").data(
-                            "current-size",
-                            size_id
-                        );
+            if (res.status === "success") {
+                toastr.success("Cập nhật thành công");
 
-                        // Tính lại tổng tiền nếu checkbox được tick
-                        let checkbox = $(
-                            ".btn-update-quantity[data-gh-id='" + gh_id + "']"
-                        )
-                            .closest(".cart-item")
-                            .find(".item-checkbox");
+                // Cập nhật lại data
+                $("#soluong_" + gh_id).data(
+                    "current-quantity",
+                    res.new_quantity
+                );
+                $(".getsizeSelect2[data-gh-id='" + gh_id + "']").data(
+                    "current-size",
+                    res.new_size_id
+                );
 
-                        if (checkbox.is(":checked")) {
-                            checkbox.data("quantity", soluong);
-                        }
+                // Hiển thị lại tồn kho
+                $("#tonkho_" + gh_id).text(res.tonkho + " sản phẩm còn lại");
 
-                        updateTotalPrice();
-
-                        $("#loading").hide();
-                        break;
-                    case "0":
-                        toastr.warning("Sản phẩm không tồn tại trong giỏ hàng");
-                        $("#loading").hide();
-                        break;
-                    case "-1":
-                        toastr.error("Hệ thống lỗi");
-                        $("#loading").hide();
-                        break;
-                    default:
-                        const keys = Object.keys(response);
-                        for (let i = 0; i < keys.length; i++) {
-                            $("#err_soluong_" + keys[i]).text(
-                                response[keys[i]]
-                            );
-                        }
-                        break;
+                updateTotalPrice(); // nếu có tính lại tổng tiền
+            } else if (res.status === "not_found") {
+                toastr.warning("Sản phẩm không tồn tại trong giỏ hàng");
+            }
+        },
+        error: function (xhr) {
+            $("#loading").hide();
+            if (xhr.status === 422) {
+                let errors = xhr.responseJSON.errors;
+                for (let field in errors) {
+                    toastr.error(errors[field][0]);
                 }
-            },
-            error: function (xhr) {
-                // if (xhr.status === 422) {
-                //     let errors = xhr.responseJSON;
-                //     const keys = Object.keys(errors);
-                //     for (let i = 0; i < keys.length; i++) {
-                //         $("#err_soluong_" + keys[i]).text(errors[keys[i]]);
-                //     }
-                // } else {
+            } else {
                 toastr.error("Lỗi không xác định");
-                // $("#loading").hide();
-                // }
-            },
-        });
-    }, 500);
+            }
+        },
+    });
 });
+
 
 // Xóa sản phẩm
 $(".btn-delete-item").on("click", function () {

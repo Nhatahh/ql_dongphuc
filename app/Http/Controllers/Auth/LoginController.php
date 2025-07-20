@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Admin;
 
 class LoginController extends Controller
 {
@@ -18,8 +19,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        $validator = Validator::make( $request->all(),
-            [
+        $validator = Validator::make($request->all(), [
             'login' => [
                 'required',
                 'string',
@@ -36,21 +36,30 @@ class LoginController extends Controller
             'password.required' => 'Vui lòng nhập mật khẩu.',
             'password.regex' => 'Mật khẩu không được chứa ký tự đặc biệt.',
         ]);
-
-        // Trả lỗi về view nếu không hợp lệ
+    
         if ($validator->fails()) {
             return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
-
-        $login_type = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
+    
+        // Xác định kiểu đăng nhập: username
+        $login_type = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? : 'username';
+    
+        // Tìm người dùng theo username
         $user = User::where($login_type, $request->login)->first();
-
+    
+        // Kiểm tra tồn tại và mật khẩu
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
-            return redirect()->route('/');
+            return redirect()->route('/'); 
+        }
+
+        $admin = Admin::where($login_type, $request->login)->first();
+        // Kiểm tra tồn tại và mật khẩu
+        if ($admin) {
+            Auth::login($admin);
+            return redirect()->route('admin.index'); 
         }
 
         return back()->withErrors([

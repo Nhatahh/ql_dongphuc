@@ -1,36 +1,74 @@
 @extends('layouts.admin.body')
 
-@section('title', 'Danh sách Đơn Hàng')
+@section('title', 'Đơn Hàng')
 
 @section('content')
-<!-- Body -->
-<div id="donhang-table"
-    data-url="{{ route('/') }}"
-    data-trangthai-url="{{ route('/') }}" hidden>
-</div>
 <div class="col-md-10 main-content">
-    <div class="table-container">
-        <h5 class="mb-3">DANH SÁCH ĐƠN HÀNG</h5>
-        <div class="table-responsive">
-            <div id="donhang-table" data-url="{{ route('admin.donhang.danhsach') }}">
-                <table class="table table-bordered table-hover table-striped" style="width: 100%" id="dsDonhang"></table>
-            </div>
-        </div>
+    <h4 class="mb-3">Danh sách đơn hàng</h4>
+    <div class="table-responsive">
+        <table id="donhangTable" class="table table-bordered table-striped w-100">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Khách hàng</th>
+                    <th>Sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Ngày đặt</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+        </table>
     </div>
 </div>
-<!-- Modal Chi Tiết Đơn Hàng -->
-<div class="modal fade" id="chiTietDonHangModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-primary" style="color: white;">
-                <h5 class="modal-title fs-3" id="exampleModalLabel">Chi tiết đơn hàng</h5>
+
+<!-- Modal chi tiết hóa đơn -->
+<div class="modal fade" id="modalChiTietHD" tabindex="-1" aria-labelledby="modalChiTietHDLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content shadow-lg border-0 rounded-3">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalChiTietHDLabel">Chi tiết đơn hàng</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Đóng"></button>
             </div>
-            <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
-                <div id="chiTietSanPham">
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped align-middle mb-0" id="tableChiTietHD">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Hình ảnh</th>
+                                <th>Sản phẩm</th>
+                                <th>Size</th>
+                                <th>Số lượng</th>
+                                <th>Giá</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Nội dung sẽ được load bằng JS -->
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="5" class="text-end">Tổng cộng:</th>
+                                <th id="tongTienFooter" class="text-danger fw-bold">0đ</th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
+            </div>
+            <div class="modal-footer justify-content-end">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
             </div>
         </div>
     </div>
 </div>
 
 @endsection
+
+<script>
+    const donhangDataUrl = "{{ route('admin.donhang.data') }}";
+    const donhangChiTietUrl = "{{ url('/admin/donhang/chitiet') }}";
+</script>
+@push('scripts')
+<script src="{{ asset('js/admin/donhang.js') }}"></script>
+@endpush

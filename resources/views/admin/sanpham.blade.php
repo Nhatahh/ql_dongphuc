@@ -3,63 +3,98 @@
 @section('title', 'Sản Phẩm')
 
 @section('content')
-<!-- Body -->
-    <div class="col-md-10 main-content">
-        <div class="row">
-            <!-- Form Column -->
-            <div class="col-md-3">
-                <div class="form-container mb-4">
-                    <form method="" enctype="multipart/form-data" action="">
+<div class="col-md-10 main-content">
+    <div class="row g-4">
+        <!-- Form nhập sản phẩm -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white py-2">
+                    <h6 class="mb-0">Thêm sản phẩm</h6>
+                </div>
+                <div class="card-body">
+                    <form id="formSanpham" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
-                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Tên sản phẩm</label>
-                            <input  type="text" class="form-control search" id="sanphamInput" style="height:28px;">
-                            <span class="err_del" id="err_sanphamInput" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
+                            <label for="sanphamInput" class="form-label">Tên sản phẩm</label>
+                            <input type="text" class="form-control" id="sanphamInput">
+                            <span class="text-danger small" id="err_sanphamInput"></span>
                         </div>
+
                         <div class="mb-3">
-                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Hình ảnh</label>
-                            <input type="file" class="form-control" id="imgIP" name="image" accept="image/*" style="height:28px;">
-                            <span class="err_del" id="err_imgIP" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
+                            <label for="imgIP" class="form-label">Hình ảnh</label>
+                            <input type="file" class="form-control" id="imgIP" name="image" accept="image/*">
+                            <span class="text-danger small" id="err_imgIP"></span>
                         </div>
+
                         <div class="mb-3">
-                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Mô tả</label>
-                            <input  type="text" class="form-control search" id="motaInput" style="height:28px;">
-                            <span class="err_del" id="err_motaInput" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
+                            <label for="motaInput" class="form-label">Mô tả</label>
+                            <textarea class="form-control" id="motaInput" rows="2"></textarea>
+                            <span class="text-danger small" id="err_motaInput"></span>
                         </div>
+
                         <div class="mb-3">
-                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Giá</label>
-                            <input  type="number" class="form-control search" id="giaInput" style="height:28px;">
-                            <span class="err_del" id="err_giaInput" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
+                            <label for="giaInput" class="form-label">Giá</label>
+                            <input type="number" class="form-control" id="giaInput">
+                            <span class="text-danger small" id="err_giaInput"></span>
                         </div>
+
                         <div class="mb-3">
-                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Tồn kho</label>
-                            <input  type="number" class="form-control search" id="tonkhoInput" style="height:28px;">
-                            <span class="err_del" id="err_tonkhoInput" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
+                            <label for="tonkhoInput" class="form-label">Tồn kho</label>
+                            <input type="number" class="form-control" id="tonkhoInput">
+                            <span class="text-danger small" id="err_tonkhoInput"></span>
                         </div>
+
                         <div class="mb-3">
-                            <label for="" class="col-sm-12 col-form-label" style="padding-bottom: 0px">Danh mục</label>
-                            <select class="form-control" id="select2DM" onchange="" style="width: 100%;"></select>
-                            <span class="err_del" id="err_select2DM" style="color: red; font-size: small; font-weight: bold; background-color: #fff; display: block; margin-top: 2px;"></span>
+                            <label for="select2DM" class="form-label">Danh mục</label>
+                            <select class="form-select" id="select2DM" style="width: 100%;"></select>
+                            <span class="text-danger small" id="err_select2DM"></span>
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6 col-6">
-                                <button type="button" id="addSP" onclick="" class="btn btn-block btn-primary btn-xs"><i class="fa-solid fa-upload"></i>&nbsp;&nbsp;&nbsp;Thêm</button>
-                            </div>
+
+                        <div class="d-grid mt-3">
+                            <button type="button" id="addSP" class="btn btn-success">
+                                <i class="fas fa-upload"></i> Thêm sản phẩm
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
+        </div>
 
-            <!-- Table Column -->
-            <div class="col-md-9">
-                <div class="table-container">
-                    <h5 class="mb-3">DANH SÁCH SẢN PHẨM</h5>
+        <!-- Danh sách sản phẩm -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-secondary text-white py-2">
+                    <h6 class="mb-0">Danh sách sản phẩm</h6>
+                </div>
+                <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover table-striped" style="width: 100%" id="dsSanpham">
+                        <table id="productsTable" class="table table-striped table-hover table-bordered w-100">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Hình ảnh</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Mô tả</th>
+                                    <th>Giá</th>
+                                    <th>Danh mục</th>
+                                    <th>Nhà sản xuất</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <!-- tbody sẽ được DataTable render -->
                         </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
 @endsection
+
+<script>
+    const sanphamDataUrl = "{{ route('admin.sanpham.data') }}";
+</script>
+@push('scripts')
+<script src="{{ asset('js/admin/sanpham.js') }}"></script>
+@endpush
