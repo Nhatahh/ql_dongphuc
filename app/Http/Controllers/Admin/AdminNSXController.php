@@ -67,13 +67,16 @@ class AdminNSXController extends Controller
     // Xóa nhà sản xuất
     public function delete($nsx_id)
     {
-        try{
-
+        // try{
             $nsx = nhaSX::where('nsx_id', $nsx_id)->firstOrFail();
             $nsx->delete();
             return response()->json(['success' => true]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Lỗi xóa NSX: ' . $e->getMessage()], 500);
-        }
+        // } catch (\Exception $e) {
+        //     return response()->json(['error' => 'Lỗi xóa NSX: ' . $e->getMessage()], 500);
+        // }
+    }
+
+    public function select2() {
+        return response()->json(nhaSX::all(['nsx_id as id', 'ten as text']));
     }
 }

@@ -68,7 +68,7 @@
                                         <p class="fs-4 fw-bold " style="color: red;">
                                             {{ number_format($sp->gia, 0, ',', '.') }} ₫
                                         </p>
-                                        <p class="fs-5">Đã bán: 111</p>
+                                        <p class="fs-5">Đã bán: {{ $sp->so_luong_da_ban ?? 0 }}</p>
                                     </div>
                                 </div>
                             </div>

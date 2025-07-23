@@ -8,7 +8,7 @@
     <div class="row">
         <!-- Table Column -->
         <div class="col-12">
-            <div class="card shadow-sm border-0 mb-4">
+            <div class="card shadow-sm border-0 mb-4" style="min-height: 600px;">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">
                         <i class="bi bi-folder-fill me-2"></i> Danh sách loại sản phẩm

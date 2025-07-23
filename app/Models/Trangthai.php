@@ -14,4 +14,18 @@ class TrangThai extends Model
     public $timestamps = false;
 
     protected $fillable = ['tt_id', 'ten'];
+
+    public function accAdmin()
+    {
+        return $this->hasOne(Admin::class, 'tt_id', 'trangthai');
+    }
+
+    public function accUser()
+    {
+        return $this->hasOne(User::class, 'tt_id', 'trangthai');
+    }
+    public function hoaDon()
+    {
+        return $this->hasOne(Hoadon::class, 'tt_id', 'trangthai');
+    }
 }

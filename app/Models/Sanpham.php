@@ -21,4 +21,12 @@ class Sanpham extends Model
     {
         return $this->belongsTo(nhaSX::class, 'nsx_id', 'nsx_id');
     }
+    public function tonkho()
+    {
+        return $this->hasMany(Tonkho::class, 'sp_id', 'sp_id');
+    }
+    public function chitiethoadon()
+    {
+        return $this->hasMany(Chitiethoadon::class, 'sp_id', 'sp_id');
+    }
 }

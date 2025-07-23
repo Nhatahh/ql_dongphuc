@@ -1,28 +1,37 @@
 $(document).ready(function () {
-    if ($.fn.DataTable.isDataTable("#donhangTable")) {
-        $("#donhangTable").DataTable().destroy();
-    }
-
     $("#donhangTable").DataTable({
         destroy: true,
         processing: true,
         serverSide: true,
         ajax: donhangDataUrl,
         columns: [
-            { data: "hd_id" },
-            { data: "username" },
-            { data: "sanpham" },
-            { data: "soluong" },
-            { data: "tongtien" },
-            { data: "trangthai" },
-            { data: "created_at" },
-            { data: "action", orderable: false, searchable: false },
+            { data: "hd_id", className: "text-center" },
+            { data: "username", className: "text-center" },
+            { data: "tongtien", className: "text-center" },
+            { data: "pttt", className: "text-center" },
+            { data: "trangthai", className: "text-center" },
+            { data: "created_at", className: "text-center" },
+            {
+                data: "hd_id",
+                className: "text-center",
+                render: function (data) {
+                    return `
+                        <button class="btn btn-sm btn-warning me-1 btn-edit" data-hd-id="${data}">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+                        <button class="btn btn-sm btn-success btn-view-details" data-hd-id="${data}">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    `;
+                },
+                className: "text-center",
+            },
         ],
     });
 
     // Xử lý nút "Xem chi tiết"
-    $("#donhangTable").on("click", ".view-details", function () {
-        const hd_id = $(this).data("id");
+    $("#donhangTable").on("click", ".btn-view-details", function () {
+        const hd_id = $(this).data("hd-id");
         $.get(`${donhangChiTietUrl}/${hd_id}`, function (data) {
             const tbody = $("#tableChiTietHD tbody");
             tbody.empty();
@@ -47,7 +56,9 @@ $(document).ready(function () {
             });
 
             // Cập nhật tổng tiền footer
-            $("#tongTienFooter").text(Number(tongTien).toLocaleString() + "đ");
+            $("#tongTienFooter").text(
+                Number(tongTien).toLocaleString() + "VND"
+            );
 
             // Hiển thị modal
             $("#modalChiTietHD").modal("show");

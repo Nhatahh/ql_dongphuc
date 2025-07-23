@@ -13,4 +13,6 @@ class ptThanhToan extends Model
         'pttt_id', 'ten', 
     ];
     public $timestamps = false;
+
+
 }

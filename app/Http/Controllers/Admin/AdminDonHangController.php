@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
+use Carbon\Carbon;
+
 use App\Models\Hoadon;
 use App\Models\Chitiethoadon;
-use Yajra\DataTables\Facades\DataTables;
 
 class AdminDonHangController extends Controller
 {
@@ -17,27 +19,24 @@ class AdminDonHangController extends Controller
 
     public function getData()
     {
-        $hoadon = Hoadon::with(['user', 'trangthai', 'chitietHoadon.sanpham'])
-            ->select(['hd_id', 'user_id', 'tongtien', 'tt_id', 'created_at']);
+        $hoadon = Hoadon::with(['user', 'trangThai', 'chitietHoadon.sanpham', 'ptThanhToan'])
+            ->select(['hd_id', 'user_id', 'tongtien', 'tt_id', 'pttt_id', 'created_at']);
 
         return DataTables::of($hoadon)
             ->addColumn('username', function ($hd) {
                 return optional($hd->user)->username;
             })
-            ->addColumn('sanpham', function ($hd) {
-                $items = $hd->chitietHoadon->map(function ($ct) {
-                    return $ct->sanpham->tensp ?? '[Sản phẩm đã xóa]';
-                });
-                return $items->implode(', ');
-            })
-            ->addColumn('soluong', function ($hd) {
-                return $hd->chitietHoadon->sum('soluong');
-            })
             ->editColumn('tongtien', function ($hd) {
-                return number_format($hd->tongtien) . 'đ';
+                return number_format($hd->tongtien) . 'VND';
+            })
+            ->addColumn('pttt', function ($hd) {
+                return optional($hd->ptThanhToan)->ten ?? 'Không rõ';
             })
             ->addColumn('trangthai', function ($hd) {
                 return optional($hd->trangthai)->ten ?? 'Không rõ';
+            })
+            ->editColumn('created_at', function ($hd) {
+                return Carbon::parse($hd->created_at)->format('d-m-Y H:i:s');
             })
             ->addColumn('action', function ($hd) {
                 $btnEdit = '<a href="#" class="btn btn-sm btn-primary">Sửa</a> ';

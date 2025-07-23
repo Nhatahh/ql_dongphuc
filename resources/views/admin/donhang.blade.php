@@ -3,26 +3,41 @@
 @section('title', 'Đơn Hàng')
 
 @section('content')
+<!-- Body -->
 <div class="col-md-10 main-content">
-    <h4 class="mb-3">Danh sách đơn hàng</h4>
-    <div class="table-responsive">
-        <table id="donhangTable" class="table table-bordered table-striped w-100">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Khách hàng</th>
-                    <th>Sản phẩm</th>
-                    <th>Số lượng</th>
-                    <th>Tổng tiền</th>
-                    <th>Trạng thái</th>
-                    <th>Ngày đặt</th>
-                    <th>Hành động</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
+    <div class="row">
+        <!-- Danh sách đơn hàng -->
+        <div class="col-12">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">
+                        <i class="bi bi-cart"></i> Danh sách đơn hàng
+                    </h5>
+                    <button class="btn btn-light btn-sm" id="btnShowAddDonhang">
+                        <i class="bi bi-plus-circle me-1"></i> Chưa biết 
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="donhangTable" class="table table-hover align-middle table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Mã hóa đơn</th>
+                                    <th>Khách hàng</th>
+                                    <th>Tổng tiền</th>
+                                    <th>Phương thức thanh toán</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
 </div>
-
 <!-- Modal chi tiết hóa đơn -->
 <div class="modal fade" id="modalChiTietHD" tabindex="-1" aria-labelledby="modalChiTietHDLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">

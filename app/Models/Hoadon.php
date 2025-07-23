@@ -20,7 +20,7 @@ class Hoadon extends Model
         return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 
-    public function trangthai()
+    public function trangThai()
     {
         return $this->belongsTo(Trangthai::class, 'tt_id', 'tt_id');
     }
@@ -28,5 +28,9 @@ class Hoadon extends Model
     public function chitietHoadon()
     {
         return $this->hasMany(Chitiethoadon::class, 'hd_id', 'hd_id');
+    }
+    public function ptThanhToan()
+    {
+        return $this->belongsTo(ptThanhToan::class, 'pttt_id', 'pttt_id');
     }
 }

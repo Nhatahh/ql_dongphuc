@@ -29,6 +29,10 @@
         margin-top: var(--search-height);
     }
 
+    .nav-search-mobile {
+        display: none !important;
+    }
+
     .title {
         margin-top: var(--title-height);
     }
