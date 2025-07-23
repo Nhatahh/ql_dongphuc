@@ -34,11 +34,14 @@
             <!-- Product Infomation -->
             <div class="col-12 col-md-6">
                 <div class="product-info col-12 ps-md-5 mt-md-0 d-flex flex-column mt-4">
-                    <div class="fs-1"><strong>{{ $ct_sp->tensp }}</strong></div>
+                    <div class="fs-1 mb-3"><strong>{{ $ct_sp->tensp }}</strong></div>
                     <div class="d-flex flex-column">
-                        <label>Tồn kho: <span class="product-info__stock">{{ $ct_sp->tonkho }}</span></label>
-                        <label>Loại: <span class="product-info__cate">{{ $ct_sp->ten_danhmuc }}</span></label>
-                        <label>Nhà sản xuất: <span class="product-info__nsx">{{ $ct_sp->ten_nsx }}</span></label>
+                        <p>Loại: <span class="product-info__cate">{{ $ct_sp->ten_danhmuc }}</span></p>
+                        <p>Nhà sản xuất: <span class="product-info__nsx">{{ $ct_sp->ten_nsx }}</span></p>
+                        <div class="d-flex w-50 justify-content-between">
+                            <p>Tồn kho: <span class="product-info__stock">{{ $ct_sp->tonkho }}</span></p>
+                            <p>Đã bán: {{ $sp->so_luong_da_ban ?? 0 }}</p>
+                        </div>
                     </div>
                     <span class="product-info__price fw-bold" style="color: red;">{{ number_format($ct_sp->gia, 0, ',', '.') }} ₫</span>
                     <div class="gap-3 d-flex justify-content-center mt-3">
@@ -84,36 +87,45 @@
                         <h5 class="text-muted">Chưa có đánh giá cho sản phẩm này.</h5>
                     </div>
                 @else
-                @foreach ($danhgias as $dg)
-                    <div class="product-rating__content mt-4 p-3 border rounded">
-                    <div class="d-flex align-items-center mb-2"> 
-                        <img src="{{ asset('images/avt/' . $dg->avt_url) }}" alt="avatar" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
-
-                        <div>
-                            <strong>{{ $dg->user_name ?? 'Khách hàng' }}</strong>
-                            <div class="text-warning">
-                                @for ($i = 0; $i < $dg->rating; $i++)
-                                    <i class="fa-solid fa-star"></i>
-                                @endfor
-                                @for ($i = $dg->rating; $i < 5; $i++)
-                                    <i class="fa-regular fa-star"></i>
-                                @endfor
+                    @foreach ($danhgias as $dg)
+                        <div class="product-rating__content mt-4 p-3 border rounded">
+                            <div class="d-flex align-items-center mb-2"> 
+                                <img src="{{ $dg->avt_url ? asset('images/avt/' . $dg->avt_url) : asset('images/default-avatar.png') }}"
+                                    alt="avatar"
+                                    class="rounded-circle me-3"
+                                    style="width: 40px; height: 40px; object-fit: cover;">
+                                
+                                <div>
+                                    <strong>{{ $dg->user_name ?? 'Khách hàng' }}</strong>
+                                    <div class="text-warning">
+                                        @for ($i = 0; $i < $dg->rating; $i++)
+                                            <i class="fa-solid fa-star"></i>
+                                        @endfor
+                                        @for ($i = $dg->rating; $i < 5; $i++)
+                                            <i class="fa-regular fa-star"></i>
+                                        @endfor
+                                    </div>
+                                    <small class="text-muted">{{ \Carbon\Carbon::parse($dg->created_at)->diffForHumans() }}</small>
+                                </div>
                             </div>
-                            <small class="text-muted">{{ $dg->created_at}} 
+
+                            <p class="mt-2 fs-5 text-dark">{{ $dg->binhluan }}</p>
+
+                            {{-- Hình ảnh đánh giá --}}
+                            @if($dg->anh_url)
+                                <div class="d-flex gap-2 mt-3">
+                                    <img src="{{ asset('images/danhgia/' . $dg->anh_url) }}"
+                                        alt="hình đánh giá"
+                                        style="width: 80px; height: auto;"
+                                        class="rounded">
+                                </div>
+                            @endif
                         </div>
+                    @endforeach
+                    <!-- PHÂN TRANG -->
+                    <div class="mt-3">
+                        {{ $danhgias->links() }}
                     </div>
-
-                    <p class="mt-2 fs-5 text-dark">{{ $dg->binhluan }}</p>
-
-                    {{-- Hình ảnh đánh giá --}}
-                    <div class="d-flex gap-2 mt-3">
-                        @if($dg->anh_url)
-                        <img src="{{ asset('images/danhgia/' . $dg->anh_url) }}" alt="hình đánh giá" style="width: 80px; height: auto;" class="rounded">
-                        @endif
-                    </div>
-
-                </div>
-                @endforeach
                 @endif
             </div>
 
@@ -135,7 +147,7 @@
                                             <p class="fs-4 fw-bold" style="color: red;">
                                                 {{ number_format($sp->gia, 0, ',', '.') }} ₫
                                             </p>
-                                            <p class="fs-5">Đã bán: 111</p>
+                                            <p class="fs-5">Đã bán: Đã bán: {{ $sp->so_luong_da_ban ?? 0 }}</p>
                                         </div>
                                     </div>
                                 </div>

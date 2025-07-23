@@ -73,8 +73,7 @@ class AdminDanhMucController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function select2()
-    {
-        return Danhmuc::select('dm_id as id', 'ten as text')->get();
+    public function select2() {
+        return response()->json(DanhMuc::all(['dm_id as id', 'ten as text']));
     }
 }

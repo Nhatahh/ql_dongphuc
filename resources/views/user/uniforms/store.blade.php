@@ -5,7 +5,7 @@
 @section('content')
 <!-- Body content here... -->
 <div class="body container p-3">
-    <div class="nav-search row d-flex align-items-center justify-content-around bg-white p-3">
+    <div class="nav-search nav-search-mobile row d-flex align-items-center justify-content-around bg-white p-3">
         <div class="position-relative w-75">
             <input id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm...">
             <div id="searchResults" class="dropdown-menu w-100 shadow" style="max-height: 400px; overflow-y: auto;"></div>
@@ -50,7 +50,7 @@
                                     <p class="fs-4 fw-bold" style="color: red;">
                                         {{ number_format($sp->gia, 0, ',', '.') }} ₫
                                     </p>
-                                    <p class="fs-5">Đã bán: 111</p>
+                                    <p class="fs-5">Đã bán: {{ $sp->so_luong_da_ban ?? 0 }}</p>
                                 </div>
                             </div>
                         </div>
@@ -60,19 +60,22 @@
         </div>
     </div>
 @endsection
+
+<script>
+    const navLinks = document.querySelectorAll('.nav-footer .nav-item')
+    navLinks.forEach((item, i) => {
+        item.onclick = () => {
+            localStorage.setItem('navLink', i)
+        }
+    })
+    document.addEventListener("DOMContentLoaded", function () {
+        const activeId = localStorage.getItem("activeLink");
+        if (activeId) {
+            document.querySelector(`.nav-footer .nav-item[data-id="${activeId}"]`)?.classList.add("active");
+        }
+    });
+</script>
+
 @push('scripts')
-    <script>
-        const navLinks = document.querySelectorAll('.nav-footer .nav-item')
-        navLinks.forEach((item, i) => {
-            item.onclick = () => {
-                localStorage.setItem('navLink', i)
-            }
-        })
-        document.addEventListener("DOMContentLoaded", function () {
-            const activeId = localStorage.getItem("activeLink");
-            if (activeId) {
-                document.querySelector(`.nav-footer .nav-item[data-id="${activeId}"]`)?.classList.add("active");
-            }
-        });
-    </script>
+    <script src="{{ asset('js/users/filter.js') }}"></script>
 @endpush

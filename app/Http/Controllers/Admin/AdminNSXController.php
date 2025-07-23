@@ -76,8 +76,7 @@ class AdminNSXController extends Controller
         // }
     }
 
-    public function select2()
-    {
-        return nhaSX::select('nsx_id as id', 'ten as text')->get();
+    public function select2() {
+        return response()->json(nhaSX::all(['nsx_id as id', 'ten as text']));
     }
 }

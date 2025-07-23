@@ -23,4 +23,13 @@ class SearchController extends Controller
 
         return response()->json($sanphams);  
     }
+    public function searchSidebar(Request $request)
+    {
+        $query = $request->query('keyword');
+
+        $results = Sanpham::where('tensp', 'like', '%' . $query . '%')
+            ->get();
+
+        return response()->json($results);
+    }
 }

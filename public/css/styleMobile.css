@@ -158,6 +158,9 @@ ul {
     border-radius: 50%;
     z-index: -1;
 }
+ .nav-search-mobile {
+        display: block;
+    }
 
 .nav-item {
     display: flex;

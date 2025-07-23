@@ -25,4 +25,8 @@ class Sanpham extends Model
     {
         return $this->hasMany(Tonkho::class, 'sp_id', 'sp_id');
     }
+    public function chitiethoadon()
+    {
+        return $this->hasMany(Chitiethoadon::class, 'sp_id', 'sp_id');
+    }
 }

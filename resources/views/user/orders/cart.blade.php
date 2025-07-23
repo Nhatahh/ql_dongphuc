@@ -9,7 +9,7 @@
     </div>
     <div class="container">
         <!-- Search -->
-        <div class="nav-search row d-flex align-items-center">
+        <div class="nav-search nav-search-mobile row d-flex align-items-center">
             <div class="col-1 text-center py-3">
                 <a href="{{ route('uniforms.store') }}" class="text-decoration-none">
                     <i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i>

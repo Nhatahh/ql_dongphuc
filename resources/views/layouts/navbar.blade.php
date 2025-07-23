@@ -20,12 +20,19 @@
 
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
-    <ul class="navbar-nav">
-        <li class="fs-1">
+    <div class="navbar-nav row w-100">
+        <div class="col-1 fs-1">
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-        </li>
-    </ul>
+        </div>
+        <div class="col-11 nav-search p-3 row justify-content-center">
+            <div class="position-relative w-75">
+                <input id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+                <div id="searchResults" class="dropdown-menu w-100 shadow" style="max-height: 400px; overflow-y: auto;"></div>
+            </div>
+        </div>
+    </div>
     <!-- Right navbar links -->
+    
 </nav>
 
 <!-- Main Sidebar Container -->
@@ -49,15 +56,18 @@
         </div> -->
 
         <!-- SidebarSearch Form -->
-        <div class="form-inline">
+        <div class="form-inline position-relative">
             <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <input id="sidebar-search-input" class="form-control form-control-sidebar" type="search" placeholder="Tìm sản phẩm..." aria-label="Search" autocomplete="off">
                 <div class="input-group-append">
                     <button class="btn btn-sidebar">
                         <i class="fas fa-search fa-fw"></i>
                     </button>
                 </div>
             </div>
+
+            <!-- Kết quả tìm kiếm -->
+            <div id="sidebar-search-result" class="position-absolute w-100 bg-white shadow rounded mt-3" style="z-index: 9999; display: none;"></div>
         </div>
 
         <!-- Sidebar Menu -->
