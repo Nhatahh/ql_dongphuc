@@ -172,3 +172,45 @@ $("#addAdminForm").on("submit", function (e) {
         },
     });
 });
+// Cập nhật trạng thái User
+$("#usersTable").on("change", ".trangthaiU-select", function () {
+    const tt_id = $(this).val();
+    const user_id = $(this).data("id");
+
+    $.ajax({
+        url: `/admin/userTT/${user_id}`,
+        type: "POST",
+        data: {
+            tt_id: tt_id,
+            _token: $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (res) {
+            $("#usersTable").DataTable().ajax.reload(null, false);
+            Swal.fire("Thành công", res.message, "success");
+        },
+        error: function () {
+            Swal.fire("Lỗi", "Không thể cập nhật trạng thái.", "error");
+        },
+    });
+});
+// Cập nhật trạng thái Admin
+$("#adminsTable").on("change", ".trangthai-select", function () {
+    const tt_id = $(this).val();
+    const admin_id = $(this).data("id");
+
+    $.ajax({
+        url: `/admin/adminTT/${admin_id}`,
+        type: "POST",
+        data: {
+            tt_id: tt_id,
+            _token: $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (res) {
+            $("#adminsTable").DataTable().ajax.reload(null, false);
+            Swal.fire("Thành công", res.message, "success");
+        },
+        error: function () {
+            Swal.fire("Lỗi", "Không thể cập nhật trạng thái.", "error");
+        },
+    });
+});

@@ -93,10 +93,12 @@ Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'indexAdmin'])->name('admin.index');
     Route::get('/users/data', [AdminController::class, 'getUserData'])->name('admin.taikhoan.users.data');
     Route::delete('/user-del/{user_id}', [AdminController::class, 'userDel'])->name('users.delete');
+    Route::post('/userTT/{user_id}', [AdminController::class, 'updateTTuser']);
 
     Route::get('/admins/data', [AdminController::class, 'getAdminData'])->name('admin.taikhoan.admins.data');
     Route::delete('/admin-del/{admin_id}', [AdminController::class, 'adminDel'])->name('admins.delete');
     Route::post('/admin-add', [AdminController::class, 'adminAdd'])->name('admins.add');
+    Route::post('/adminTT/{admin_id}', [AdminController::class, 'updateTTadmin']);
 
 
 
@@ -104,6 +106,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/donhang', [AdminDonHangController::class, 'index'])->name('admin.donhang');
     Route::get('/donhang/data', [AdminDonHangController::class, 'getData'])->name('admin.donhang.data');
     Route::get('/donhang/chitiet/{hd_id}', [AdminDonhangController::class, 'getChitietHoadon'])->name('admin.donhang.chitiet');
+    Route::post('/donhang/update-trangthai/{hd_id}', [AdminDonhangController::class, 'updateTrangthai']);
 
     // Quản lí danh mục
     Route::get('/danhmuc', [AdminDanhMucController::class, 'index'])->name('admin.danhmuc');

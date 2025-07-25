@@ -159,6 +159,7 @@
             </div>
 
             <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
             <button type="submit" class="btn btn-success">Cập nhật</button>
             </div>
         </form>

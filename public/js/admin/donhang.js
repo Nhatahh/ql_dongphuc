@@ -1,4 +1,10 @@
 $(document).ready(function () {
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+
     $("#donhangTable").DataTable({
         destroy: true,
         processing: true,
@@ -28,20 +34,43 @@ $(document).ready(function () {
             },
         ],
     });
+});
 
-    // Xử lý nút "Xem chi tiết"
-    $("#donhangTable").on("click", ".btn-view-details", function () {
-        const hd_id = $(this).data("hd-id");
-        $.get(`${donhangChiTietUrl}/${hd_id}`, function (data) {
-            const tbody = $("#tableChiTietHD tbody");
-            tbody.empty();
-            let tongTien = 0;
+// Cập nhật trạng thái
+$("#donhangTable").on("change", ".trangthai-select", function () {
+    const tt_id = $(this).val();
+    const hd_id = $(this).data("id");
 
-            data.forEach(function (item) {
-                const thanhTien = item.gia * item.soluong;
-                tongTien += thanhTien;
+    $.ajax({
+        url: `/admin/donhang/update-trangthai/${hd_id}`,
+        type: "POST",
+        data: {
+            tt_id: tt_id,
+            _token: $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (res) {
+            $("#donhangTable").DataTable().ajax.reload(null, false);
+            Swal.fire("Thành công", res.message, "success");
+        },
+        error: function () {
+            Swal.fire("Lỗi", "Không thể cập nhật trạng thái.", "error");
+        },
+    });
+});
 
-                const row = `
+// Xử lý nút "Xem chi tiết"
+$("#donhangTable").on("click", ".btn-view-details", function () {
+    const hd_id = $(this).data("hd-id");
+    $.get(`${donhangChiTietUrl}/${hd_id}`, function (data) {
+        const tbody = $("#tableChiTietHD tbody");
+        tbody.empty();
+        let tongTien = 0;
+
+        data.forEach(function (item) {
+            const thanhTien = item.gia * item.soluong;
+            tongTien += thanhTien;
+
+            const row = `
                 <tr>
                     <td><img src="/images/${
                         item.sanpham?.image_url ?? "default.png"
@@ -52,16 +81,13 @@ $(document).ready(function () {
                     <td>${Number(item.gia).toLocaleString()}đ</td>
                     <td>${Number(thanhTien).toLocaleString()}đ</td>
                 </tr>`;
-                tbody.append(row);
-            });
-
-            // Cập nhật tổng tiền footer
-            $("#tongTienFooter").text(
-                Number(tongTien).toLocaleString() + "VND"
-            );
-
-            // Hiển thị modal
-            $("#modalChiTietHD").modal("show");
+            tbody.append(row);
         });
+
+        // Cập nhật tổng tiền footer
+        $("#tongTienFooter").text(Number(tongTien).toLocaleString() + "VND");
+
+        // Hiển thị modal
+        $("#modalChiTietHD").modal("show");
     });
 });

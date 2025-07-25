@@ -15,7 +15,7 @@ class Admin extends Authenticatable
 
     protected $primaryKey = 'id'; // khóa chính nếu không phải 'id'
 
-    public $timestamps = true; // hoặc false nếu bảng không có created_at, updated_at
+    public $timestamps = false; // hoặc false nếu bảng không có created_at, updated_at
 
     protected $fillable = [
         'admin_id',

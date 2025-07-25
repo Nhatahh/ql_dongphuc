@@ -44,8 +44,13 @@
                         <p>Loại: <span class="product-info__cate">{{ $ct_sp->ten_danhmuc }}</span></p>
                         <p>Nhà sản xuất: <span class="product-info__nsx">{{ $ct_sp->ten_nsx }}</span></p>
                         <div class="d-flex w-50 justify-content-between">
-                            <p>Tồn kho: <span class="product-info__stock">{{ $ct_sp->tonkho }}</span></p>
-                            <p>Đã bán: {{ $soLuongDaBan  }}</p>
+                            <!-- <p>Tồn kho: <span class="product-info__stock" >{{ $ct_sp->tonkho }}</span></p> -->
+                            <small class="text-muted"
+                                id="tonkho_{{ $ct_sp->sp_id }}"
+                                data-tonkho="{{ $ct_sp->tonkho }}">
+                                {{ $ct_sp->tonkho }} sản phẩm còn lại
+                            </small>
+                            <small class="text-muted">Đã bán: {{ $soLuongDaBan  }}</small>
                         </div>
                     </div>
                     <span class="product-info__price fw-bold" style="color: red;">{{ number_format($ct_sp->gia, 0, ',', '.') }} ₫</span>
@@ -65,7 +70,7 @@
                         <!-- select 2 size -->
                         <select id="sizeSelect2" class="form-select sizeSelect2" style="max-width: 200px;" data-sp-id="{{ $ct_sp->sp_id }}">
                             <option value="">--- Chọn size ---</option>
-                        </select>                        
+                        </select>            
                     </div>
                     <div class="gap-3 d-flex justify-content-center mt-3">
                         <button class="btn btn-danger fs-4 w-50" data-sp-id="{{ $ct_sp->sp_id }}" data-url=""><i class="bi bi-bag-check-fill"></i> Mua ngay</button>

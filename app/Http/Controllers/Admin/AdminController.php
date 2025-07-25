@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Admin;
+use App\Models\TrangThai;
 use App\Models\User;
 
 class AdminController extends Controller
@@ -34,25 +35,15 @@ class AdminController extends Controller
         ]);
 
         return DataTables::of($users)
-            ->addColumn('trangthai', function ($users) {
-                $text = $users->trangThai ? $users->trangThai->ten : 'Không rõ';
+            ->addColumn('trangthai', function ($user) {
+                $options = Trangthai::whereIn('tt_id', [4, 5])->get()->map(function ($tt) use ($user) {
+                    $selected = $user->trangthai == $tt->tt_id ? 'selected' : '';
+                    return "<option value='{$tt->tt_id}' {$selected}>{$tt->ten}</option>";
+                })->implode('');
 
-                switch ($users->trangthai) {
-                    case 4:
-                        $class = 'text-success';
-                        $icon = 'bi bi-check-circle';
-                        break;
-                    case 5:
-                        $class = 'text-danger';
-                        $icon = 'bi bi-x-circle';
-                        break;
-                    default:
-                        $class = 'text-secondary';
-                        $icon = 'bi bi-dash-circle';
-                        break;
-                }
-
-                return "<span class=\"$class\"><i class=\"$icon\"></i> $text</span>";
+                return "<select class='form-select form-select-sm trangthaiU-select' data-id='{$user->user_id}' style='width: fit-content'>
+                            {$options}
+                        </select>";
             })
             ->addColumn('action', function ($user) {
                 return '<a href="#" class="btn btn-sm btn-primary">Sửa</a> 
@@ -73,24 +64,14 @@ class AdminController extends Controller
 
         return DataTables::of($admins)
             ->addColumn('trangthai', function ($admin) {
-                $text = $admin->trangThai ? $admin->trangThai->ten : 'Không rõ';
+                $options = Trangthai::whereIn('tt_id', [4, 5])->get()->map(function ($tt) use ($admin) {
+                    $selected = $admin->trangthai == $tt->tt_id ? 'selected' : '';
+                    return "<option value='{$tt->tt_id}' {$selected}>{$tt->ten}</option>";
+                })->implode('');
 
-                switch ($admin->trangthai) {
-                    case 4:
-                        $class = 'text-success';
-                        $icon = 'bi bi-check-circle';
-                        break;
-                    case 5:
-                        $class = 'text-danger';
-                        $icon = 'bi bi-x-circle';
-                        break;
-                    default:
-                        $class = 'text-secondary';
-                        $icon = 'bi bi-dash-circle';
-                        break;
-                }
-
-                return "<span class=\"$class\"><i class=\"$icon\"></i> $text</span>";
+                return "<select class='form-select form-select-sm trangthai-select' data-id='{$admin->admin_id}' style='width: fit-content'>
+                            {$options}
+                        </select>";
             })
             ->editColumn('created_at', function ($admin) {
                 return Carbon::parse($admin->created_at)->format('d-m-Y H:i:s');
@@ -170,5 +151,36 @@ class AdminController extends Controller
         return view('admin.danhmuc');
     }
 
-    
+    public function updateTTuser(Request $request, $user_id)
+    {
+        $request->validate([
+            'tt_id' => 'required|integer|exists:trangthai,tt_id',
+        ]);
+
+        try {
+            DB::table('users')
+                ->where('user_id', $user_id)
+                ->update(['trangthai' => $request->tt_id]);
+
+            return response()->json(['message' => 'Cập nhật trạng thái thành công']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Lỗi khi cập nhật trạng thái'], 500);
+        }
+    }
+    public function updateTTadmin(Request $request, $admin_id)
+    {
+        $request->validate([
+            'tt_id' => 'required|integer|exists:trangthai,tt_id',
+        ]);
+
+        try {
+            DB::table('admin')
+                ->where('admin_id', $admin_id)
+                ->update(['trangthai' => $request->tt_id]);
+
+            return response()->json(['message' => 'Cập nhật trạng thái thành công.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Lỗi khi cập nhật trạng thái'], 500);
+        }
+    }
 }
