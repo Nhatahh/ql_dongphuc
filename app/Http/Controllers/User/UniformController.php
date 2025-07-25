@@ -58,7 +58,11 @@ class UniformController extends Controller
         ->orderByDesc('danhgia.created_at')
         ->paginate(5);
 
-        return view('user.uniforms.show_detail', compact('ct_sp', 'sizes', 'sanphams', 'sp_id', 'danhgias'));
+        $soLuongDaBan = DB::table('chitiethoadon')
+        ->where('sp_id', $sp_id)
+        ->sum('soluong');
+
+        return view('user.uniforms.show_detail', compact('ct_sp', 'sizes', 'sanphams', 'sp_id', 'danhgias', 'soLuongDaBan'));
     }
 
     // Thêm sản phẩm

@@ -208,9 +208,9 @@ $("#editSanphamForm").on("submit", function (e) {
         contentType: false,
         success: function (response) {
             toastr.success("Cập nhật sản phẩm thành công");
-            $("#editSanphamForm").modal("hide");
+            $("#editModal").modal("hide");
             $("#editSanphamForm")[0].reset();
-            $("#productsTable").DataTable().ajax.reload();
+            $("#productsTable").DataTable().ajax.reload(null, false);
         },
         error: function (xhr) {
             if (xhr.status === 422) {

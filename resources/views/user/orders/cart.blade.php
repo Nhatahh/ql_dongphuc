@@ -3,7 +3,7 @@
 @section('title', 'Giỏ Hàng')
 
 @section('content')
-<div class="body p-3 mt-2 bg-white">
+<div class="body p-3 mt-2 bg-white" style="min-height: 600px;">
     <div id="loading" class="loader" style="display:none;">
         <div class="spinner"></div>
     </div>
@@ -55,10 +55,7 @@
                                             <a href="{{ route('uniforms.show_detail', $item->sp_id) }}" class="text-decoration-none text-dark">
                                                 <p class="fw-bold mb-1 fs-4">{{ $item->tensp }}</p>
                                             </a>
-                                            <p class="fw-bold text-danger mb-0 fs-5">{{ number_format($item->gia, 0, ',', '.') }} ₫</p>
-                                            <small class="text-muted" id="tonkho_{{ $item->gh_id }}">
-                                                {{ $item->tonkho }} sản phẩm còn lại
-                                            </small>
+                                            <p class="fw-bold text-danger mb-0 fs-5">{{ number_format($item->gia, 0, ',', '.') }} VND</p>
                                         </div>
                                     </div>
                                     <!-- Số lượng -->
@@ -77,13 +74,22 @@
                                             </button>
                                         </div>
                                         <!-- select 2 size -->
-                                        <select class="form-select getsizeSelect2" data-gh-id="{{ $item->gh_id }}" data-current-size="{{ $item->size_id ?? '' }}">
+                                        <select class="form-select getsizeSelect2"
+                                                data-gh-id="{{ $item->gh_id }}"
+                                                data-sp-id="{{ $item->sp_id }}"
+                                                data-current-size="{{ $item->size_id ?? '' }}">
                                             <option value="">--- Chọn size ---</option>
                                         </select>
+
+                                        <small class="text-muted"
+                                            id="tonkho_{{ $item->gh_id }}"
+                                            data-tonkho="{{ $item->tonkho }}">
+                                            {{ $item->tonkho }} sản phẩm còn lại
+                                        </small>
                                     </div>
                                     <!-- Nút thao tác -->
                                     <div class="col-3 d-flex justify-content-center align-items-center gap-2 flex-column flex-md-row">
-                                        <button class="btn btn-success btn-update-quantity" data-gh-id="{{ $item->gh_id }}" data-user-id="{{ $item->user_id }}" data-url="{{ route('cart.updateQuantity') }}">Cập nhật</button>
+                                        <button class="btn btn-success btn-update-quantity" data-gh-id="{{ $item->gh_id }}" data-user-id="{{ $item->user_id }}" data-tonkho="{{ $item->tonkho }}" data-url="{{ route('cart.updateQuantity') }}">Cập nhật</button>
                                         <button class="btn btn-danger btn-delete-item" data-gh-id="{{ $item->gh_id }}" data-url="{{ route('cart.delete') }}">Xóa</button>
                                     </div>
                                 </div>

@@ -82,7 +82,7 @@ class AdminSanphamController extends Controller
             ],
             'mota' => [
                 'nullable',
-                'regex:/^[\p{L}\p{N}\s]*$/u' // có thể null, nhưng nếu có thì không chứa kí tự đặc biệt
+                // 'regex:/^[\p{L}\p{N}\s]*$/u' // có thể null, nhưng nếu có thì không chứa kí tự đặc biệt
             ],
             'gia' => 'required|numeric|min:0',
             'dm_id' => 'required|exists:danhmuc,dm_id',
@@ -91,7 +91,7 @@ class AdminSanphamController extends Controller
         ], [
             'tensp.required' => 'Tên sản phẩm không được để trống.',
             'tensp.regex' => 'Tên sản phẩm không được chứa ký tự đặc biệt.',
-            'mota.regex' => 'Mô tả không được chứa ký tự đặc biệt.',
+            // 'mota.regex' => 'Mô tả không được chứa ký tự đặc biệt.',
             'gia.required' => 'Giá sản phẩm không được để trống.',
             'gia.numeric' => 'Giá phải là một số.',
             'gia.min' => 'Giá không được âm.',
@@ -149,7 +149,7 @@ class AdminSanphamController extends Controller
             ],
             'mota' => [
                 'nullable',
-                'regex:/^[\p{L}\p{N}\s]*$/u' // có thể null, nhưng nếu có thì không chứa kí tự đặc biệt
+                // 'regex:/^[\p{L}\p{N}\s]*$/u' // có thể null, nhưng nếu có thì không chứa kí tự đặc biệt
             ],
             'gia' => 'required|numeric|min:0',
             'dm_id' => 'required|exists:danhmuc,dm_id',
@@ -158,7 +158,7 @@ class AdminSanphamController extends Controller
         ], [
             'tensp.required' => 'Tên sản phẩm không được để trống.',
             'tensp.regex' => 'Tên sản phẩm không được chứa ký tự đặc biệt.',
-            'mota.regex' => 'Mô tả không được chứa ký tự đặc biệt.',
+            // 'mota.regex' => 'Mô tả không được chứa ký tự đặc biệt.',
             'gia.required' => 'Giá sản phẩm không được để trống.',
             'gia.numeric' => 'Giá phải là một số.',
             'gia.min' => 'Giá không được âm.',

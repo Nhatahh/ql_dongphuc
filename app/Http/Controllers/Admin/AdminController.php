@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Admin;
 use App\Models\User;
@@ -100,6 +102,47 @@ class AdminController extends Controller
             ->rawColumns(['action', 'trangthai'])
             ->make(true);
     }
+
+    // Add Admin
+    public function adminAdd(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'username' => [
+                'required',
+                'string',
+                'max:255',
+                'unique:admin,username',
+                'regex:/^[a-zA-Z0-9_]+$/', // Không cho phép ký tự đặc biệt
+            ],
+            'password' => 'required|string|min:6',
+        ], [
+            'username.required' => 'Vui lòng nhập tên tài khoản.',
+            'username.unique' => 'Tên tài khoản đã tồn tại.',
+            'username.regex' => 'Tên tài khoản chỉ được chứa chữ, số và dấu gạch dưới (_), không có ký tự đặc biệt.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
+            'password.min' => 'Mật khẩu phải có ít nhất 6 kí tự.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Tìm admin_id lớn nhất hiện có và +1
+        $maxAdminId = DB::table('admin')->max('admin_id');
+        $newAdminId = $maxAdminId ? $maxAdminId + 1 : 1;
+
+        // Tạo admin mới
+        DB::table('admin')->insert([
+            'admin_id' => $newAdminId,
+            'username' => $request->username,
+            'password' => bcrypt($request->password),            
+            'created_at' => now(),
+            'trangthai' => 4,
+        ]);
+
+        return response()->json(['success' => 'Thêm sản Admin thành công']);
+    }
+
     // Xóa  Admin
     public function adminDel($admin_id)
     {

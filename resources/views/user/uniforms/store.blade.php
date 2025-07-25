@@ -36,21 +36,45 @@
             <button class="btn btn-danger" id="filterButton" data-url="{{ route('store.filter') }}">Lọc</button>
         </div>
     </ul>
-    <div class="product-list">
+    <!-- <div class="product-list">
         <div class="row">
             @foreach($sanphams as $sp)
                 <div class="col-6 col-md-3 mt-4">
                     <a href="{{ route('uniforms.show_detail', $sp->sp_id) }}" class="text-decoration-none text-dark">
-                        <div class="card">
+                        <div class="card h-100 shadow-sm border-0 product-card">
                             <img src="{{ asset('images/' . $sp->image_url) }}" class="card-img-top" alt="{{ $sp->tensp }}">
-                            <div class="card-body">
+                            <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ $sp->tensp }}</h5>
-                                <p class="card-text">{{ $sp->mota }}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <p class="fs-4 fw-bold" style="color: red;">
+                                <p class="card-text flex-grow-1">{{ $sp->mota }}</p>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <p class="fs-5 fw-bold text-danger mb-0">
                                         {{ number_format($sp->gia, 0, ',', '.') }} ₫
                                     </p>
-                                    <p class="fs-5">Đã bán: {{ $sp->so_luong_da_ban ?? 0 }}</p>
+                                    <p class="fs-6 text-muted mb-0">Đã bán: {{ $sp->so_luong_da_ban ?? 0 }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endforeach
+        </div>
+    </div> -->
+    <!-- Product -->
+    <div class="product row mt-2">
+        <div class="row d-flex overflow-auto">
+            @foreach($sanphams as $sp)
+                <div class="col-6 col-md-3 mt-4 d-flex">
+                    <a href="{{ route('uniforms.show_detail', $sp->sp_id) }}" class="text-decoration-none text-dark w-100">
+                        <div class="card h-100 shadow-sm border-0 product-card">
+                            <img src="{{ asset('images/' . $sp->image_url) }}" class="card-img-top" alt="{{ $sp->tensp }}" style="height: 200px; object-fit: cover;">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title text-truncate">{{ $sp->tensp }}</h5>
+                                <p class="card-text text-truncate small">{{ $sp->mota }}</p>
+                                <div class="mt-auto d-flex justify-content-between align-items-center">
+                                    <p class="fs-5 fw-bold text-danger mb-0">
+                                        {{ number_format($sp->gia, 0, ',', '.') }} ₫
+                                    </p>
+                                    <p class="fs-6 text-muted mb-0">Đã bán: {{ $sp->so_luong_da_ban ?? 0 }}</p>
                                 </div>
                             </div>
                         </div>

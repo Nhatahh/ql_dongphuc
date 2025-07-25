@@ -25,7 +25,10 @@
                     <i class="bi bi-box-seam sidebar-icon"></i>
                     Quản lý sản phẩm
                 </a>
-                <!-- Quản lý danh mục với menu con -->
+                <a href="{{ route('admin.kho') }}" class="nav-link active">
+                    <i class="bi bi-box-seam sidebar-icon"></i>
+                    Quản lý kho
+                </a>
                 <div class="accordion" id="accordionSidebar">
                     <div class="accordion-item border-0 bg-transparent">
                         <h2 class="accordion-header">

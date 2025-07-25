@@ -1,4 +1,10 @@
 $(document).ready(function () {
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+    // Tabl User
     $("#usersTable").DataTable({
         processing: true,
         serverSide: true,
@@ -29,7 +35,7 @@ $(document).ready(function () {
             },
         ],
     });
-
+    // Tabl Admin
     $("#adminsTable").DataTable({
         processing: true,
         serverSide: true,
@@ -120,5 +126,49 @@ $("#usersTable").on("click", ".btn-delete", function () {
                 },
             });
         }
+    });
+});
+
+// Show Modal Add Admin
+$("#btnShowAddAdmin").on("click", function () {
+    $("#addAdminForm")[0].reset();
+    $("#addAdminModal").modal("show");
+});
+// Add Admin
+$("#addAdminForm").on("submit", function (e) {
+    e.preventDefault();
+    let formData = new FormData(this);
+
+    // Thêm CSRF token
+    formData.append("_token", $('meta[name="csrf-token"]').attr("content"));
+
+    // Xóa lỗi cũ
+    $(".invalid-feedback").text("");
+    $(".form-control").removeClass("is-invalid");
+
+    $.ajax({
+        url: "/admin/admin-add",
+        method: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function () {
+            $("#addAdminModal").modal("hide");
+            $("#adminsTable").DataTable().ajax.reload(null, false);
+            toastr.success("Đã thêm Admin!");
+        },
+        error: function (xhr) {
+            if (xhr.status === 422) {
+                let errors = xhr.responseJSON.errors;
+                for (let key in errors) {
+                    let input = $("#" + key);
+                    input.addClass("is-invalid");
+                    $("#error-" + key).text(errors[key][0]);
+                }
+                toastr.error("Vui lòng kiểm tra lại thông tin.");
+            } else {
+                toastr.error("Đã xảy ra lỗi khi thêm tài khoản!");
+            }
+        },
     });
 });

@@ -38,7 +38,7 @@ class OrderController extends Controller
                 'sanpham.image_url',
                 'size.ten as tensize',
                 'kho.kho_id',
-                'kho.tonkho'
+                'kho.tonkho as tonkho'
             )
             ->get();
 
@@ -59,6 +59,28 @@ class OrderController extends Controller
             return response()->json([]);
         }
         return response()->json([$cartSize]);
+    }
+
+    public function getTonkho(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'sp_id' => 'required|integer|exists:sanpham,sp_id',
+            'size_id' => 'required|integer|exists:size,size_id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status' => 'error', 'errors' => $validator->errors()], 422);
+        }
+
+        $tonkho = DB::table('kho')
+            ->where('sp_id', $request->sp_id)
+            ->where('size_id', $request->size_id)
+            ->value('tonkho');
+
+        return response()->json([
+            'status' => 'success',
+            'tonkho' => $tonkho ?? 0,
+        ]);
     }
 
     // Cập nhật số lượng sản phẩm
@@ -246,6 +268,24 @@ class OrderController extends Controller
                         'gia' => $gia,
                     ]);
 
+                    // kiểm tra tồn kho đủ trước khi trừ
+                    $tonkho = DB::table('kho')
+                        ->where('sp_id', $giohang->sp_id)
+                        ->where('size_id', $giohang->size_id)
+                        ->value('tonkho');
+                    if ($giohang->soluong > $tonkho) {
+                        DB::rollBack();
+                        return response()->json([
+                            'status' => 'error',
+                            'message' => 'Sản phẩm ' . $sanpham->tensp . ' size không đủ tồn kho.',
+                        ], 400);
+                    }
+                    // Cập nhật tồn kho - trừ số lượng đã đặt
+                    DB::table('kho')
+                        ->where('sp_id', $giohang->sp_id)
+                        ->where('size_id', $giohang->size_id)
+                        ->decrement('tonkho', $giohang->soluong);
+                    
                     // Xóa khỏi giỏ hàng
                     DB::table('giohang')->where('gh_id', $item['gh_id'])->delete();
                 }

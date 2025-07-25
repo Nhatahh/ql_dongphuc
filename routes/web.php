@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\AdminDonHangController;
 use App\Http\Controllers\Admin\AdminDanhMucController;
 use App\Http\Controllers\Admin\AdminNSXController;
 use App\Http\Controllers\Admin\AdminSizeController;
+use App\Http\Controllers\Admin\AdminKhoController;
 use App\Http\Controllers\AuthController;
 
 
@@ -47,10 +48,9 @@ Route::prefix('user')->group(function () {
     Route::post('/mualai/{hd_id}', [UniformController::class, 'muaLai'])->name('uniforms.muaLai');
     Route::post('/submit-review', [DanhGiaController::class, 'danhgia'])->name('reviews.danhgia');
 
-
-
     Route::get('/cart', [OrderController::class, 'cart'])->name('orders.cart');
     Route::get('/getSizes', [OrderController::class, 'getSizes']);
+    Route::post('/getTonkho', [OrderController::class, 'getTonkho']);
     Route::post('/cart/update', [OrderController::class, 'updateQuantity'])->name('cart.updateQuantity');
     Route::delete('/cart/delete', [OrderController::class, 'deleteSP'])->name('cart.delete');
     Route::post('/cart/checkout', [OrderController::class, 'checkout'])->name('cart.checkout');
@@ -92,8 +92,12 @@ Route::prefix('admin')->group(function () {
     Route::get('/', [AdminController::class, 'indexAdmin'])->name('admin.index');
     Route::get('/users/data', [AdminController::class, 'getUserData'])->name('admin.taikhoan.users.data');
     Route::delete('/user-del/{user_id}', [AdminController::class, 'userDel'])->name('users.delete');
+
     Route::get('/admins/data', [AdminController::class, 'getAdminData'])->name('admin.taikhoan.admins.data');
     Route::delete('/admin-del/{admin_id}', [AdminController::class, 'adminDel'])->name('admins.delete');
+    Route::post('/admin-add', [AdminController::class, 'adminAdd'])->name('admins.add');
+
+
 
     // Quản lí đơn hàng
     Route::get('/donhang', [AdminDonHangController::class, 'index'])->name('admin.donhang');
@@ -109,7 +113,6 @@ Route::prefix('admin')->group(function () {
     Route::put('/danhmuc/{dm_id}', [AdminDanhMucController::class, 'update']);
     Route::delete('/danhmuc/{dm_id}', [AdminDanhMucController::class, 'delete'])->name('admin.danhmuc.delete');
     Route::get('/danhmuc/select2', [AdminDanhMucController::class, 'select2']);
-
 
     // Quản lí nhà sản xuất
     Route::get('/nhasanxuat', [AdminNSXController::class, 'index'])->name('admin.NSX');
@@ -139,10 +142,11 @@ Route::prefix('admin')->group(function () {
     Route::post('/sanpham/{sp_id}/update', [AdminSanphamController::class, 'update']);
     Route::get('/danhmuc-nsx', [AdminSanphamController::class, 'getDanhmucNhasanxuat']);
 
+    // Quản lí kho
+    Route::get('/kho', [AdminKhoController::class, 'index'])->name('admin.kho');
+    Route::get('/kho/data', [AdminKhoController::class, 'getKhoData'])->name('admin.kho.data');
+    Route::post('/kho/update-stock', [AdminKhoController::class, 'updateStock'])->name('admin.kho.updateStock');
 
-
-    
-    
 
 
 

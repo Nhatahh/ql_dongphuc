@@ -34,6 +34,34 @@
                 </div>
             </div>
         </div>
+        <!-- Modal thêm Admin -->
+        <div class="modal fade" id="addAdminModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <form id="addAdminForm" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-header bg-danger text-white">
+                            <h5 class="modal-title">Thêm Tài Khoản Admin</h5>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" name="username" id="username" class="form-control" />
+                                <div id="error-username" class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" name="password" id="password" class="form-control"/>
+                                <div id="error-password" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger">Thêm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <!-- Users -->        
         <div class="col-8">
@@ -41,7 +69,7 @@
                 <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
                     <h5 class="mb-0"><i class="bi bi-person-circle"></i> Danh sách người dùng</h5>
                     <button class="btn btn-light btn-sm" id="btnShowAddUser">
-                        <i class="bi bi-plus-circle me-1"></i> Thêm tài khoản User
+                        <i class="bi bi-plus-circle me-1"></i> ###
                     </button>
                 </div>
                 <div class="card-body">

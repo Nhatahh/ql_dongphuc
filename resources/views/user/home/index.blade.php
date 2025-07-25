@@ -16,20 +16,20 @@
             <div class="col-12">
                 <div id="carouselExampleIndicators" class="carousel" data-bs-ride="carousel">
                     <div class="carousel-indicators">
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
                     </div>
                     <div class="slider-img carousel-inner">
-                      <div class="carousel-item active">
-                        <img src="{{ asset('images/slider1.jpg') }}" class="d-block w-100" alt="slider1">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="{{ asset('images/slider3.jpg') }}" class="d-block w-100" alt="slider3">
-                      </div>
-                      <div class="carousel-item">
-                        <img src="{{ asset('images/slider2.jpg') }}" class="d-block w-100" alt="slider2">
-                      </div>
+                        <div class="carousel-item active">
+                            <img src="{{ asset('images/slider1.jpg') }}" class="d-block w-100" alt="slider1">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ asset('images/slider3.jpg') }}" class="d-block w-100" alt="slider3">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="{{ asset('images/slider2.jpg') }}" class="d-block w-100" alt="slider2">
+                        </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                         <i class="fa-solid fa-circle-chevron-left fs-2 fw-bold text-white"></i>
@@ -48,27 +48,29 @@
             </div>
         </div> -->
 
-        <div class="suggest mt-4 d-flex justify-content-between">
-            <span>Gợi ý cho bạn</span>
-            <span><a class="text-warning fst-italic fw-bold" href="{{ route('uniforms.store') }}">Xem thêm <i class="fa-solid fa-angles-right"></i></a></span>
+        <div class="suggest mt-4 d-flex justify-content-between align-items-center">
+            <span class="fw-bold fst-italic fs-4">Gợi ý cho bạn</span>
+            <a class="text-warning fst-italic fw-bold text-decoration-none" href="{{ route('uniforms.store') }}">
+                Xem thêm <i class="fa-solid fa-angles-right"></i>
+            </a>
         </div>
 
         <!-- Product -->
         <div class="product row mt-2">
             <div class="row d-flex flex-nowrap overflow-auto">
                 @foreach($sanphams as $sp)
-                    <div class="col-6 col-md-3 mt-4">
-                        <a href="{{ route('uniforms.show_detail', $sp->sp_id) }}" class="text-decoration-none text-dark">
-                            <div class="card">
-                                <img src="{{ asset('images/' . $sp->image_url) }}" class="card-img-top" alt="{{ $sp->tensp }}">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $sp->tensp }}</h5>
-                                    <p class="card-text">{{ $sp->mota }}</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <p class="fs-4 fw-bold " style="color: red;">
+                    <div class="col-6 col-md-3 mt-4 d-flex">
+                        <a href="{{ route('uniforms.show_detail', $sp->sp_id) }}" class="text-decoration-none text-dark w-100">
+                            <div class="card h-100 shadow-sm border-0 product-card">
+                                <img src="{{ asset('images/' . $sp->image_url) }}" class="card-img-top" alt="{{ $sp->tensp }}" style="height: 200px; object-fit: cover;">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title text-truncate">{{ $sp->tensp }}</h5>
+                                    <p class="card-text text-truncate small">{{ $sp->mota }}</p>
+                                    <div class="mt-auto d-flex justify-content-between align-items-center">
+                                        <p class="fs-5 fw-bold text-danger mb-0">
                                             {{ number_format($sp->gia, 0, ',', '.') }} ₫
                                         </p>
-                                        <p class="fs-5">Đã bán: {{ $sp->so_luong_da_ban ?? 0 }}</p>
+                                        <p class="fs-6 text-muted mb-0">Đã bán: {{ $sp->so_luong_da_ban ?? 0 }}</p>
                                     </div>
                                 </div>
                             </div>

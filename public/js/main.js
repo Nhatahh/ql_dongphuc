@@ -202,25 +202,66 @@ $(".btn-addSP").on("click", function () {
     });
 });
 
-// Cập nhật sản phẩm
+// Khi người dùng chọn size mới, gọi AJAX lấy tồn kho
+$(".getsizeSelect2").on("change", function () {
+    let size_id = $(this).val();
+    let gh_id = $(this).data("gh-id");
+    let sp_id = $(this).data("sp-id");
+
+    if (!size_id || !sp_id) return;
+
+    $.ajax({
+        url: "/user/getTonkho",
+        method: "POST",
+        data: {
+            sp_id: sp_id,
+            size_id: size_id,
+        },
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        success: function (res) {
+            if (res.status === "success") {
+                let tonkho = res.tonkho;
+                $("#tonkho_" + gh_id)
+                    .data("tonkho", tonkho)
+                    .text(tonkho + " sản phẩm còn lại");
+            }
+        },
+        error: function () {
+            toastr.error("Không thể lấy tồn kho.");
+        },
+    });
+});
+// Khi nhấn nút cập nhật
 $(".btn-update-quantity").on("click", function () {
     let gh_id = $(this).data("gh-id");
     let url = $(this).data("url");
-    let soluong = $("#soluong_" + gh_id).val();
+    let soluong = parseInt($("#soluong_" + gh_id).val());
     let size_id = $(".getsizeSelect2[data-gh-id='" + gh_id + "']").val();
+    let tonkho = parseInt($("#tonkho_" + gh_id).data("tonkho"));
 
     if (!size_id) {
         toastr.error("Vui lòng chọn size!");
         return;
     }
 
-    // Kiểm tra thay đổi
+    if (isNaN(soluong) || soluong <= 0) {
+        toastr.error("Số lượng phải lớn hơn 0!");
+        return;
+    }
+
+    if (soluong > tonkho) {
+        toastr.error("Số lượng vượt quá tồn kho!");
+        return;
+    }
+
     let currentQuantity = $("#soluong_" + gh_id).data("current-quantity");
     let currentSize = $(".getsizeSelect2[data-gh-id='" + gh_id + "']").data(
         "current-size"
     );
 
-    if (soluong == currentQuantity && size_id == currentSize) {
+    if (soluong === currentQuantity && size_id == currentSize) {
         toastr.info("Bạn chưa thay đổi số lượng hoặc size.");
         return;
     }
@@ -244,7 +285,6 @@ $(".btn-update-quantity").on("click", function () {
             if (res.status === "success") {
                 toastr.success("Cập nhật thành công");
 
-                // Cập nhật lại data
                 $("#soluong_" + gh_id).data(
                     "current-quantity",
                     res.new_quantity
@@ -254,10 +294,11 @@ $(".btn-update-quantity").on("click", function () {
                     res.new_size_id
                 );
 
-                // Hiển thị lại tồn kho
-                $("#tonkho_" + gh_id).text(res.tonkho + " sản phẩm còn lại");
+                $("#tonkho_" + gh_id)
+                    .data("tonkho", res.tonkho)
+                    .text(res.tonkho + " sản phẩm còn lại");
 
-                updateTotalPrice(); // nếu có tính lại tổng tiền
+                updateTotalPrice();
             } else if (res.status === "not_found") {
                 toastr.warning("Sản phẩm không tồn tại trong giỏ hàng");
             }
@@ -275,7 +316,6 @@ $(".btn-update-quantity").on("click", function () {
         },
     });
 });
-
 
 // Xóa sản phẩm
 $(".btn-delete-item").on("click", function () {

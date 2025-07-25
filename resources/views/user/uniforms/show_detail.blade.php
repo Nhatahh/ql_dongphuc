@@ -5,30 +5,35 @@
 @section('content')
     <!-- Body -->
       <div class="body show-detail container p-3 bg-white">
-        <!-- Search -->
-        <div class="nav-searchShowDetail row d-flex align-items-center bg-white" style="margin-top: 130px">
-            <div class="col-1 text-center py-3">
-                <a href="{{ route('uniforms.store') }}" class=" text-decoration-none"><i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i></a>
-            </div>
-            <div class="col-11 d-flex justify-content-center">
-                <div class="position-relative w-75">
-                    <input id="searchInput" class="form-control" placeholder="Tìm kiếm sản phẩm...">
-                    <div id="searchResults" class="dropdown-menu w-100 shadow" style="max-height: 400px; overflow-y: auto;"></div>
-                </div>
-            </div>
-        </div>
         <!-- Product-Detail -->
         <div class="product-detail row mt-4">
             <!-- Product-img -->
             <div class="product-img col-12 col-md-6">
                 <div class="row">
-                    <img src="{{ asset('images/' . $ct_sp->image_url) }}" alt="" class="product-img__main img-fluid">
+                    <img id="mainImage" 
+                        src="{{ asset('images/' . $ct_sp->image_url) }}" 
+                        alt="Ảnh sản phẩm" 
+                        class="product-img__main img-fluid zoomable" 
+                        style="cursor: zoom-in;" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#imageModal">                
+                </div>
+                <!-- Modal hiển thị ảnh lớn -->
+                <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content bg-transparent border-0">
+                            <div class="modal-body text-center p-0">
+                                <img id="modalImage" src="{{ asset('images/' . $ct_sp->image_url) }}" 
+                                    class="img-fluid" style="max-height: 90vh; object-fit: contain;">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="product-img__extra row mt-3 flex-nowrap overflow-auto">
-                    <img src="{{ asset('images/' . $ct_sp->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3">
-                    <img src="{{ asset('images/product1.jpg') }}" alt="" class="product-img__extra-item img-fluid col-3">
-                    <img src="{{ asset('images/product2.jpg') }}" alt="" class="product-img__extra-item img-fluid col-3">
-                    <img src="{{ asset('images/product3.jpg') }}" alt="" class="product-img__extra-item img-fluid col-3">
+                    <img src="{{ asset('images/' . $ct_sp->image_url) }}" alt="" class="product-img__extra-item img-fluid col-3 thumbnail" style="cursor:pointer">
+                    <img src="{{ asset('images/product1.jpg') }}" alt="" class="product-img__extra-item img-fluid col-3 thumbnail" style="cursor:pointer">
+                    <img src="{{ asset('images/product2.jpg') }}" alt="" class="product-img__extra-item img-fluid col-3 thumbnail" style="cursor:pointer">
+                    <img src="{{ asset('images/product3.jpg') }}" alt="" class="product-img__extra-item img-fluid col-3 thumbnail" style="cursor:pointer">
                 </div>
             </div>
             <!-- Product Infomation -->
@@ -40,7 +45,7 @@
                         <p>Nhà sản xuất: <span class="product-info__nsx">{{ $ct_sp->ten_nsx }}</span></p>
                         <div class="d-flex w-50 justify-content-between">
                             <p>Tồn kho: <span class="product-info__stock">{{ $ct_sp->tonkho }}</span></p>
-                            <p>Đã bán: {{ $sp->so_luong_da_ban ?? 0 }}</p>
+                            <p>Đã bán: {{ $soLuongDaBan  }}</p>
                         </div>
                     </div>
                     <span class="product-info__price fw-bold" style="color: red;">{{ number_format($ct_sp->gia, 0, ',', '.') }} ₫</span>
@@ -136,18 +141,30 @@
                 </div>
                 <div class="row">
                     @foreach($sanphams as $sp)
-                        <div class="col-6 col-md-3 mt-4">
-                            <a href="{{ route('uniforms.show_detail', $sp->sp_id) }}" class="text-decoration-none text-dark">
-                                <div class="card">
-                                    <img src="{{ asset('images/' . $sp->image_url) }}" class="card-img-top" alt="{{ $sp->tensp }}">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ $sp->tensp }}</h5>
-                                        <p class="card-text">{{ $sp->mota }}</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <p class="fs-4 fw-bold" style="color: red;">
+                        <div class="col-6 col-md-3 mt-4 d-flex">
+                            <a href="{{ route('uniforms.show_detail', $sp->sp_id) }}" class="text-decoration-none text-dark w-100">
+                                <div class="card h-100 d-flex flex-column shadow-sm border-0 position-relative hover-shadow" style="transition: transform 0.3s ease;">
+                                    {{-- Hình ảnh sản phẩm --}}
+                                    <img src="{{ asset('images/' . $sp->image_url) }}" class="card-img-top" alt="{{ $sp->tensp }}"
+                                        style="height: 220px; object-fit: cover; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem;">
+
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title text-truncate" title="{{ $sp->tensp }}">{{ $sp->tensp }}</h5>
+
+                                        <p class="card-text" style="
+                                            flex-grow: 1;
+                                            overflow: hidden;
+                                            display: -webkit-box;
+                                            -webkit-line-clamp: 2;
+                                            -webkit-box-orient: vertical;">
+                                            {{ $sp->mota }}
+                                        </p>
+
+                                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                                            <p class="fs-5 fw-bold text-danger mb-0">
                                                 {{ number_format($sp->gia, 0, ',', '.') }} ₫
                                             </p>
-                                            <p class="fs-5">Đã bán: Đã bán: {{ $sp->so_luong_da_ban ?? 0 }}</p>
+                                            <p class="fs-6 mb-0">Đã bán: {{ $sp->so_luong_da_ban ?? 0 }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -161,7 +178,5 @@
 @endsection
 
 @push('scripts')
-    <script>
-        showDetailAction()
-    </script>
+    <script src="{{ asset('js/users/changeImage.js') }}"></script>
 @endpush
