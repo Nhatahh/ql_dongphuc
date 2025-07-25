@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminSanphamController;
 use App\Http\Controllers\Admin\AdminDonHangController;
 use App\Http\Controllers\Admin\AdminDanhMucController;
+use App\Http\Controllers\Admin\AdminThongkeController;
 use App\Http\Controllers\Admin\AdminNSXController;
 use App\Http\Controllers\Admin\AdminSizeController;
 use App\Http\Controllers\Admin\AdminKhoController;
@@ -147,10 +148,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/kho/data', [AdminKhoController::class, 'getKhoData'])->name('admin.kho.data');
     Route::post('/kho/update-stock', [AdminKhoController::class, 'updateStock'])->name('admin.kho.updateStock');
 
-
-
-
-    
-    Route::get('/thongke', [AdminController::class, 'thongke'])->name('admin.thongke');
+    // Thống kê
+    Route::get('/thongke', [AdminThongkeController::class, 'thongke'])->name('admin.thongke.index');
 
 });

@@ -170,7 +170,5 @@ class AdminController extends Controller
         return view('admin.danhmuc');
     }
 
-    public function thongke() {
-        return view('admin.thongke');
-    }
+    
 }

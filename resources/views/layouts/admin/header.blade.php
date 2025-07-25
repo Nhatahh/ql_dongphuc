@@ -47,7 +47,7 @@
                     </div>
                 </div>
 
-                <a href="{{ route('admin.thongke') }}" class="nav-link">
+                <a href="{{ route('admin.thongke.index') }}" class="nav-link">
                     <i class="bi bi-bar-chart-fill sidebar-icon"></i>
                     Thống kê
                 </a>
