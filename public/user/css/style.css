@@ -1,0 +1,98 @@
+
+
+
+
+body{
+    font-size: 14px;
+}
+
+.error{
+    color: red;
+    text-align: right;
+    width: 100% "
+}
+
+
+
+.numbers{
+    background-color: inherit;
+    height: inherit;
+    width: inherit;
+    border: none;
+}
+
+.input-custom{
+    background-color: inherit;
+    color: black;
+    font-weight: bold;
+    border: none;
+    text-align: right;
+    width: 100%;
+}
+
+.load{
+    border: none;
+    height: 100%;
+    width: 100%;
+    background-color: inherit;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+}
+
+.table td{
+    padding: 0;
+    width: fit-content;
+}
+
+.table th{
+    padding: 0;
+    text-align: center;
+
+
+}
+
+
+.navbar-badge{
+    right: 0;
+    top: 0;
+}
+
+.dropdown-divider{
+    margin: 0;
+}
+
+
+input{
+    height: 30px;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered{
+    margin-top: -8px;
+    padding-left: 0px;
+
+}
+.select2-selection select2-selection--single{
+    height: 30px;
+}
+
+
+.add_school{
+    color: #17a2b8
+}
+
+.warning_result{
+    border-style: solid 1px;
+    border-color: red;
+
+}
+
+input:disabled{
+    background-color: inherit;
+}
+
+
+/*
+.select2 .select2-selection {
+border-color: red
+} */

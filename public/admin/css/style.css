@@ -1,0 +1,343 @@
+
+body{
+    font-size: 14px;
+}
+
+.error{
+    color: red;
+    text-align: right;
+    width: 100% "
+}
+
+.numbers{
+    background-color: inherit;
+    height: inherit;
+    width: inherit;
+    border: none;
+}
+
+.input-custom{
+    background-color: inherit;
+    color: black;
+    font-weight: bold;
+    border: none;
+    text-align: right;
+    width: 100%;
+}
+
+.load{
+    border: none;
+    height: 100%;
+    width: 100%;
+    background-color: inherit;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+}
+
+
+.table td{
+    padding: 0;
+    width: fit-content;
+}
+
+.table th{
+    padding: 0;
+    text-align: center;
+    /* background-color: #343a40;
+    color: #fff; */
+}
+
+input{
+    height: 30px;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered{
+    margin-top: -8px;
+    padding-left: 0px;
+}
+
+.select2-selection select2-selection--single{
+    height: 30px;
+}
+
+.select_background{
+    background-color: #ececec;
+    /* background-color:  red; */
+}
+
+.row_odd{
+    background-color: RGBA( 105, 105, 105, 0.1 );
+    /* background-color:  red; */
+}
+
+.blur{
+    z-index: 10;
+    background-color: rgba(0, 0, 255, 0.2);
+    /* filter: blur(4px); */
+}
+
+.blur{
+    top: 0px;
+    left: 0px;
+    height:  100%;
+    width: 100%;
+    filter: blur(5px);
+}
+
+
+.blur1{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height:  100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index:9999;
+}
+
+.login-box{
+    position: fixed;
+    margin: auto;
+    z-index:10001;
+}
+
+
+
+.logo_login{
+    position: fixed;
+    margin-top: -350px;
+    height:  40%;
+    z-index:10001;
+}
+
+.form-group{
+    margin-bottom: 0rem;
+}
+
+.img-slide-config{
+    height: 80vh;
+    margin-top: 10vh;
+    object-fit: contain;
+}
+
+
+.card-header{
+    padding: .75rem 1.25rem .25rem 1.25rem;
+}
+
+.card-body{
+    padding: .75rem 1.25rem .25rem 1.25rem;
+}
+
+.card-footer{
+    padding: .25rem 1.25rem .25rem 1.25rem;
+}
+
+button{
+    height: 28px;
+}
+
+legend{
+    font-size:0.9rem;
+    font-weight:bold
+}
+
+
+/* Định dạng Card */
+/* .card{
+    height: calc(100vh - 150px)
+} */
+.card-header{
+    padding: 5 0;
+    margin-left: 10px;
+    font-weight: bold;
+}
+.card-body{
+    padding: 5 0;
+    margin-bottom: 1px;
+    /* height:100%; */
+    /* border:1px solid black; */
+}
+
+.card-footer{
+    background-color: transparent;
+}
+
+.style_all_button{
+    border-top: 1px solid rgba(0,0,0,.125);
+    padding: 3px 0 0 0;
+}
+/* End Định dạng Card */
+
+/* Định dạng Block trái phải */
+/* .block-left{
+    min-height: 530px;
+} */
+/*
+.block-right{
+    min-height: 530px;
+} */
+
+/* Định dạng button */
+.lammoi{
+    background-color: #fff;
+    color:#007bff;
+}
+
+
+
+/* Dịnh dạng table */
+.tr_click{
+    background-color:rgba(0,0,0,.05)
+    /* pointer-events:none; */
+    /* background-color: red; */
+}
+
+.title_datatables{
+    text-align: center;
+}
+.div_datatables{
+    border-top:2px solid #dee2e6;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:relative;
+}
+
+.input_text_datatables{
+    width:90%;
+    height:22px;
+    border:none;
+    padding-right:30px;
+}
+
+.i_input_text_datatables{
+    color:#dee2e6;
+    position:absolute;
+    right:5px;
+    top:50%;
+    transform:translateY(-50%);
+    pointer-events:none;
+}
+
+.select_datatables{
+    height:22px;
+    border:none;
+    color:#8a8c8f;
+}
+
+.search_tmp{
+    display: none;
+}
+
+
+.table_checkbox{
+    height: 14px;
+    cursor: not-allowed;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.loader1 {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    }
+/*
+.lammo_index {
+    background-color: #6c757d;
+    border: 1px solid #6c757d;
+    border-radius: 10px;
+    transition: filter 0.3s ease;
+} */
+
+.load-index {
+    position: relative; /* Để phần tử con có thể định vị tuyệt đối bên trong */
+}
+.load-index-overlay {
+    position: absolute; /* Đặt vị trí tuyệt đối để nằm đè lên phần tử cha */
+    top: -2px; /* Đẩy lên trên 2px */
+    left: -2px; /* Đẩy sang trái 2px */
+    width: calc(100% + 4px); /* Tăng chiều rộng thêm 4px (2px mỗi bên) */
+    height: calc(100% + 4px); /* Tăng chiều cao thêm 4px (2px mỗi bên) */
+    background-color: #f4f6f9; /* Màu đỏ với độ trong suốt 50% */
+    z-index: 10; /* Chỉ số z cao hơn để hiển thị trên các phần tử khác */
+    opacity: 1; /* Phần tử bắt đầu với độ mờ hoàn toàn */
+    transition: opacity 1s ease; /* Hiệu ứng mờ dần khi thay đổi opacity */
+}
+.load-index-overlay .hide {
+    opacity: 0; /* Khi thêm class 'hide', phần tử sẽ mờ dần */
+    visibility: hidden; /* Ẩn hoàn toàn sau khi đã mờ */
+}
+
+#preloader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f6f9;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+
+#preloader img {
+    animation: snake-animation 1s ease-in-out infinite; /* Hiệu ứng snake */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+@keyframes snake-animation {
+    0% {
+        transform: translateY(0);
+    }
+    25% {
+        transform: translateY(-10px);
+    }
+    50% {
+        transform: translateY(0);
+    }
+    75% {
+        transform: translateY(10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+

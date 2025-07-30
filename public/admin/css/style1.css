@@ -1,0 +1,48 @@
+
+body{
+    font-size: 14px;
+}
+
+.error{
+    color: red;
+    text-align: right;
+    width: 100% "
+}
+
+.numbers{
+    background-color: inherit;
+    height: inherit;
+    width: inherit;
+    border: none;
+}
+
+.input-custom{
+    background-color: inherit;
+    color: black;
+    font-weight: bold;
+    border: none;
+    text-align: right;
+    width: 100%;
+}
+
+.load{
+    border: none;
+    height: 100%;
+    width: 100%;
+    background-color: inherit;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+}
+
+.table td{
+    padding: 0;
+}
+
+.table th{
+    padding: 0;
+    text-align: center;
+
+
+}
+

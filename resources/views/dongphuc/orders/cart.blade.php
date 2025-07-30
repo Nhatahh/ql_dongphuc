@@ -1,0 +1,137 @@
+@extends('layouts.app')
+
+@section('title', 'Giỏ Hàng')
+
+@section('content')
+<div class="body p-3 mt-2 bg-white" style="min-height: 600px;">
+    <div id="loading" class="loader" style="display:none;">
+        <div class="spinner"></div>
+    </div>
+    <div class="container">
+        <!-- Search -->
+        <div class="nav-search nav-search-mobile row d-flex align-items-center">
+            <div class="col-1 text-center py-3">
+                <a href="{{ route('uniforms.store') }}" class="text-decoration-none">
+                    <i class="back-icon fa-solid fa-chevron-left p-3 d-block"></i>
+                </a>
+            </div>
+            <div class="col-11 d-flex justify-content-center">
+                <div class="position-relative w-75">
+                    <input id="searchGioHang" class="form-control" placeholder="Tìm kiếm sản phẩm trong giỏ hàng...">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Giỏ hàng -->
+            <div class="col-12 col-lg-8 cart-list mt-4">
+                <div class=" mb-3" id="container-checkbox">
+                    <input type="checkbox" id="select-all-checkbox" class="me-2" style="border: 1px solid black;">
+                    <label for="select-all-checkbox" class="form-check-label fw-bold">Chọn tất cả</label>
+                </div>
+                <div class="row g-0">
+                    @if ($cartItems->isEmpty())
+                        <div class="text-center w-100 py-5">
+                            <i class="fa fa-shopping-cart fa-3x text-muted mb-3"></i>
+                            <h5 class="text-muted">Không có sản phẩm nào trong giỏ hàng.</h5>
+                        </div>
+                    @else
+                        @foreach ($cartItems as $item)
+                            <div class="col-12 mb-3 cart-item-wrapper">
+                                <div class="row cart-item border rounded p-2 align-items-center gx-2" data-name="{{ $item->tensp }}">
+                                    <!-- Checkbox -->
+                                    <div class="col-1 d-flex justify-content-center align-items-center">
+                                        <input type="checkbox" class="form-check-input item-checkbox" style="border: 1px solid black;" data-price="{{ $item->gia }}" data-quantity="{{ $item->soluong }}">
+                                    </div>
+                                    <!-- Hình ảnh -->
+                                    <div class="col-2 d-flex justify-content-center align-items-center">
+                                        <a href="{{ route('uniforms.show_detail', $item->sp_id) }}" class="text-decoration-none text-dark">
+                                            <img src="{{ asset('images/' . $item->image_url) }}" class="img-fluid rounded w-100" style="max-width: 100px;">
+                                        </a>
+                                    </div>
+                                    <!-- Tên và giá -->
+                                    <div class="col-3 d-flex justify-content-center align-items-center">
+                                        <div>
+                                            <a href="{{ route('uniforms.show_detail', $item->sp_id) }}" class="text-decoration-none text-dark">
+                                                <p class="fw-bold mb-1 fs-4">{{ $item->tensp }}</p>
+                                            </a>
+                                            <p class="fw-bold text-danger mb-0 fs-5">{{ number_format($item->gia, 0, ',', '.') }} VND</p>
+                                        </div>
+                                    </div>
+                                    <!-- Số lượng -->
+                                    <div class="col-3 gap-3 d-flex flex-column justify-content-center align-items-center">
+                                        <div class="input-group quantity-group" style="max-width: 100px;">
+                                            <button class="btn btn-outline-secondary btn-sm" type="button" onclick="changeQuantity(this, -1)">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <input type="number"
+                                                class="form-control text-center form-control-sm quantity-input"
+                                                value="{{ $item->soluong }}" min="1"
+                                                data-gh-id="{{ $item->gh_id }}" id="soluong_{{ $item->gh_id }}"
+                                                data-current-quantity="{{ $item->soluong }}">
+                                            <button class="btn btn-outline-secondary btn-sm" type="button" onclick="changeQuantity(this, 1)">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- select 2 size -->
+                                        <select class="form-select getsizeSelect2"
+                                                data-gh-id="{{ $item->gh_id }}"
+                                                data-sp-id="{{ $item->sp_id }}"
+                                                data-current-size="{{ $item->size_id ?? '' }}">
+                                            <option value="">--- Chọn size ---</option>
+                                        </select>
+
+                                        <small class="text-muted"
+                                            id="tonkho_{{ $item->gh_id }}"
+                                            data-tonkho="{{ $item->tonkho }}">
+                                            {{ $item->tonkho }} sản phẩm còn lại
+                                        </small>
+                                    </div>
+                                    <!-- Nút thao tác -->
+                                    <div class="col-3 d-flex justify-content-center align-items-center gap-2 flex-column flex-md-row">
+                                        <button class="btn btn-success btn-update-quantity" data-gh-id="{{ $item->gh_id }}" data-user-id="{{ $item->user_id }}" data-tonkho="{{ $item->tonkho }}" data-url="{{ route('cart.updateQuantity') }}">Cập nhật</button>
+                                        <button class="btn btn-danger btn-delete-item" data-gh-id="{{ $item->gh_id }}" data-url="{{ route('cart.delete') }}">Xóa</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+                <!-- Thông báo không tìm thấy sản phẩm -->
+                <div id="noResultsMessage" class="text-center py-5" style="display: none;">
+                    <i class="fa fa-search fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">Không tìm thấy sản phẩm trong giỏ hàng.</h5>
+                </div>
+            </div>
+
+            <!-- Tóm tắt đơn hàng -->
+            <div class="col-12 col-lg-4 my-4">
+                <div class="order-summary-box my-3 p-3 rounded shadow-sm bg-light border fixed-bottom-mobile">
+                    <div class="d-flex flex-column gap-1 align-items-center">
+                        <h2><strong>Tóm tắt đơn hàng</strong></h2>
+
+                        <div class="col-12 text-center text-md-start pt-md-2 pt-1" style="border-top: 1px solid black;">
+                            <span class="fs-4">Tổng tiền hàng: </span>
+                            <span class="text-danger fw-bold fs-5" id="totalPrice">
+                                {{ number_format($cartItems->sum(fn($item) => $item->gia * $item->soluong), 0, ',', '.') }} ₫
+                            </span>
+                        </div>
+        
+                        <div class="col-12 mt-md-1 mt-1">
+                            <select class="form-select w-100" id="ptThanhToanSelect2">
+                            </select>
+                        </div>
+        
+                        <div class="col-12 text-center mt-md-2">
+                            <button id="checkoutBtn" class="checkoutBtn btn btn-primary px-4 w-50 w-md-auto" data-url-checkout="{{ route('cart.checkout') }}">Thanh toán</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+<!-- @push('scripts')
+@endpush -->
